@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多模态语音与音频 AI · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="多模态语音与音频 AI：视觉 token、实时语音延迟预算、打断、说话人分离。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t7)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">多模态语音与音频 AI</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T7</p>
+<h1>多模态语音与音频 AI</h1>
+<p class="iv-meta"><span class="iv-kind">10 道题</span><span class="iv-min">5 道附原文答案</span><span class="iv-min">10 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">视觉 token、实时语音延迟预算、打断、说话人分离。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">10 / 10 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="视觉语言模型如何把图像送进 LLM:投影器、交叉注意力,还是原生 token?" data-cat="t7">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q0.html">视觉语言模型如何把图像送进 LLM：投影器、交叉注意力，还是原生 token？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>主流做法是“投影器 + 原生 token”：用视觉编码器（ViT/SigLIP）出 patch 特征，经 MLP/Resampler 投影到 LLM 的词嵌入空间，作为一段视觉 token 拼进序列。交叉注意力的变体（Flamingo）成本更低但生态少；原生 token 方案（LLaVA、Qwen-VL）训练简单、效果最好。</p><ul><li>投影器：2 层 MLP 最常见；Q-Former/Resampler 把变长 patch 压成固定数量 query，省 token。</li><li>分辨率决定 OCR 与小字能力：切图（tiling）+ 位置编码插值是常见手段。</li><li>训练通常分阶段：先冻结 LLM 对齐投影器，再联合微调。</li><li>token 成本：一张图可能占几百到几千 token，直接影响延迟与价格。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/multimodal-ai" target="_blank" rel="noopener">多模态 AI</a> · <a href="https://outcomeschool.com/blog/decoding-vision-transformer-vit" target="_blank" rel="noopener">解读视觉 Transformer(ViT)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="从图像到视频,会有什么变化?" data-cat="t7">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q1.html">从图像到视频，会有什么变化？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>视频多了时间维：帧采样策略（均匀/关键帧/场景切分）、时序位置编码、以及 token 爆炸。常见做法是每帧独立编码后加时间嵌入，或用时空注意力/3D patch；帧数、分辨率和上下文长度三者互相挤压。</p><ul><li>关键权衡：帧率 ↑ 时序理解 ↑ 但 token 线性增长；长视频要做层次化摘要或检索。</li><li>音频轨是重要信号（说话人、事件），纯视觉会漏掉一半信息。</li><li>评估要看时序因果（先后顺序）而不只是单帧描述。</li><li>工程：抽帧 + 缩略图 + 关键片段检索，比整段塞进上下文更实用。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为实时语音 agent 做延迟预算:VAD、ASR、LLM、TTS、网络。时间花在哪里?" data-cat="t7">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q2.html">为实时语音 agent 做延迟预算：VAD、ASR、LLM、TTS、网络。时间花在哪里？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/elevenlabs.html">ElevenLabs</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>实时语音的延迟预算通常按端到端 800 ms–1.2 s 设计：VAD 100–200 ms、ASR 150–300 ms（流式部分结果）、LLM 首 token 200–400 ms、TTS 首包 100–200 ms、网络往返 50–150 ms。时间主要花在 LLM 首 token 和 TTS 首包上，所以要做流式与预合成。</p><ul><li>ASR 用流式部分结果可以提前触发 LLM，但会增加误触发，需要用稳定度阈值。</li><li>TTS 首包延迟比总时长更影响体感；按句切分流式合成。</li><li>LLM 侧用短系统提示、限制输出长度、缓存常用回复模板。</li><li>要留抖动缓冲，否则网络抖动会造成断音。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/design-a-real-time-voice-ai-agent" target="_blank" rel="noopener">设计一个实时语音 AI Agent</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为语音 agent 设计打断(barge-in)处理。" data-cat="t7">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q3.html">为语音 agent 设计打断(barge-in)处理。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/elevenlabs.html">ElevenLabs</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>打断处理 = 检测 + 停止 + 理解 + 续接：VAD 检测用户开口后立即停止 TTS 播放并取消未完成的合成，把已播放的部分转写进上下文，让 LLM 知道被打断的位置，再基于新输入重新规划。要避免误打断（咳嗽、背景音）和“抢话”失败。</p><ul><li>状态机：listening → thinking → speaking → interrupted → listening。</li><li>取消要贯穿整条链路：LLM 生成、TTS 合成、音频播放缓冲。</li><li>回声消除（AEC）必须做好，否则 agent 会听到自己的声音。</li><li>打断后的上下文要标注“用户在第 N 句打断”，否则模型会重复已说内容。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/design-a-real-time-voice-ai-agent" target="_blank" rel="noopener">设计一个实时语音 AI Agent</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="级联式 ASR+LLM+TTS 与原生语音到语音:请为双方辩护。" data-cat="t7">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q4.html">级联式 ASR+LLM+TTS 与原生语音到语音：请为双方辩护。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/elevenlabs.html">ElevenLabs</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>级联式（ASR→LLM→TTS）可控、可观测、可替换组件，文本中间态便于审核与记忆，但延迟叠加、会丢掉语气与副语言信息；原生语音到语音（SpeechLLM）保留韵律、情感、重叠说话，延迟更低，但训练数据稀缺、可控性差、难以插入工具与安全过滤。</p><ul><li>级联式适合企业场景：需要转写、合规审计、工具调用、文本检索。</li><li>原生 S2S 适合陪伴、情感交互、低延迟对话，但错误难定位。</li><li>混合：原生模型出语义 token，再走文本侧的工具与安全层。</li><li>成本：原生音频 token 通常比文本 token 贵得多。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/design-a-real-time-voice-ai-agent" target="_blank" rel="noopener">设计一个实时语音 AI Agent</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="在没有唯一正确答案的情况下,如何评估 ASR 质量(超越 WER)和 TTS 质量?" data-cat="t7">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q5.html">在没有唯一正确答案的情况下，如何评估 ASR 质量(超越 WER)和 TTS 质量？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/elevenlabs.html">ElevenLabs</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>ASR 除了 WER 还要看：实体/数字/专有名词准确率、标点与分段、时间戳对齐、延迟、以及下游任务成功率；TTS 要看自然度（MOS/CMOS）、可懂度（反向 ASR 的 WER）、韵律与情感、说话人相似度、以及流式首包延迟。没有唯一答案时用成对比较 + 人工评分校准自动指标。</p><ul><li>WER 会被正常化规则操纵（去标点、数字转写），报告时要说明预处理。</li><li>领域词表：医疗/法律术语错误代价远高于普通词，要单独统计。</li><li>TTS 自动指标（UTMOS、SECS）与人工 MOS 相关性有限，关键决策要人工。</li><li>端到端：用“语音进、语音出”的任务成功率评估，而不是分段指标。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="在生产 ASR 系统中如何处理语码转换(code-switching)和口音?" data-cat="t7">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q6.html">在生产 ASR 系统中如何处理语码转换(code-switching)和口音？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/abridge.html">Abridge</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>语码转换和口音的主要问题是训练数据覆盖不足与发音词典缺失。做法：混合语言语料 + 语言边界标注、用多语言模型共享子词、为口音做数据增强与微调、在解码时允许双语词表，并针对口音做分层评估而不是只看平均 WER。</p><ul><li>语码转换常发生在实体、数字、专业词上，要保证这些词不被强行翻译或切碎。</li><li>口音：重采样、速度扰动、以及真实口音数据（合成数据无法替代）。</li><li>评估按口音/语言对分桶，避免平均值掩盖某群体严重退化。</li><li>产品侧兜底：允许用户确认/编辑转写结果。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释流式 TTS 的分块与抖动缓冲(jitter buffer)大小设置。" data-cat="t7">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q7.html">解释流式 TTS 的分块与抖动缓冲(jitter buffer)大小设置。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/elevenlabs.html">ElevenLabs</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>流式 TTS 按句或按语义单元切块合成，块太小会导致韵律断裂、块太大增加首包延迟；抖动缓冲要覆盖网络抖动与解码抖动，通常 100–300 ms，可自适应调整。目标是最小化首包延迟的同时不产生断音。</p><ul><li>切块边界优先放在标点/句末，避免在词中间切。</li><li>缓冲策略：固定缓冲简单但延迟高；自适应缓冲按到达时间方差调整。</li><li>首包优先：先合成短开场白，后续句子并行合成。</li><li>监控：underrun（缓冲耗尽）次数与首包延迟的分布。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个说话人分离(diarisation)系统,并解释如何归属角色,而不只是聚类。" data-cat="t7">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q8.html">设计一个说话人分离(diarisation)系统，并解释如何归属角色，而不只是聚类。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/abridge.html">Abridge</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>说话人分离是“谁在什么时候说话”：先做 VAD 分段，再提取说话人嵌入聚类，得到 diarization 结果；角色归属则要把聚类 id 映射到具体角色（医生/患者），靠自我介绍、声纹库、对话结构（谁提问）和业务元数据，而不是只靠聚类。</p><ul><li>经典流水线：VAD → 分段 → 嵌入（ECAPA/x-vector）→ 聚类（谱聚类/AGR）→ 重分段。</li><li>端到端模型（pyannote、EEND）在重叠语音上更好。</li><li>角色归属可用规则 + LLM：谁先说、谁提问、称呼、以及会议参与者列表。</li><li>评估用 DER（diarization error rate），角色归属要单独算准确率。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="如何在一个索引中对图像、视频和文本构建多模态检索?" data-cat="t7">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t7q9.html">如何在一个索引中对图像、视频和文本构建多模态检索？</a></h3>
+<div class="q-tags"><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>多模态检索有两种路线：共享嵌入空间（CLIP 类）把图/视频帧/文本映射到同一向量空间，支持跨模态查询；或者为每种模态建独立索引 + 统一的结果融合层。视频要抽帧/切片并保留时间戳，检索结果回到具体片段。</p><ul><li>文本查图用 CLIP；图查图用视觉嵌入；视频用帧级 + 片段级两层索引。</li><li>混合检索：BM25（OCR 文本、字幕）+ 向量 + 元数据过滤。</li><li>结果要能定位：视频时间码、图像区域（bbox）、PDF 页码。</li><li>评估用跨模态 recall@k，并单独看罕见实体。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-do-image-embeddings-work" target="_blank" rel="noopener">图像嵌入是如何工作的？</a></p></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

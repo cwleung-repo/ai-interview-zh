@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 工程面试题库 · 41 家公司 · 782 道题</title>
+<meta name="description" content="按公司分类的 AI 工程面试题库中文版：41 家公司、782 道题、10 大主题，附原文答案链接与中文答题要点。">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="index.html" aria-current="page">目录</a>
+<a href="companies.html">公司</a>
+<a href="search.html">搜索</a>
+<a href="labs.html">可视化</a>
+<a href="about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<section class="iv-hero">
+<div>
+<p class="iv-kicker">AI Engineering Interviews · 中文速查</p>
+<h1>AI 工程面试题库</h1>
+<p class="iv-lede">41 家公司、782 道真实出现过的 AI 工程面试题，按公司与主题双重索引。330 道附原文答案链接，其余保留原题与出处；119 道通用题另有本站整理的中文答题要点。</p>
+</div>
+<dl class="iv-stats">
+<div><dt>公司</dt><dd>41</dd></div>
+<div><dt>题目</dt><dd>782</dd></div>
+<div><dt>主题</dt><dd>10</dd></div>
+<div><dt>附原文答案</dt><dd>330</dd></div>
+</dl>
+</section>
+
+<div class="iv-controls">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">搜索公司 / 岗位 / 主题</label><input id="filterInput" type="search" placeholder="输入关键词（按 / 聚焦）" aria-label="搜索公司、岗位或主题"></div>
+<div class="iv-search-row">
+<fieldset class="iv-filter"><legend>筛选</legend>
+<label class="iv-chip"><input type="radio" name="cat" value="all" checked><span>全部</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="topic"><span>主题</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="前沿 AI 实验室"><span>前沿实验室</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="大型科技公司的 AI 组织"><span>大厂</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="中国互联网公司"><span>中国互联网</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="AI 基础设施与平台公司"><span>基础设施</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="AI 原生应用公司"><span>AI 原生</span></label>
+<label class="iv-chip"><input type="radio" name="cat" value="前向部署与企业级 AI"><span>前向部署</span></label>
+</fieldset>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">51 / 51 项</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的公司或主题，换个关键词试试。</p>
+</div>
+
+<section class="iv-group" data-group-block style="--group:var(--blueprint)">
+<header class="iv-group-head"><h2>10 大主题速查</h2><p>跨公司反复出现的题目只在这里列一次，并标注会问它的公司。先把这 119 道吃透，再看目标公司。</p></header>
+<ul class="iv-grid"><li class="iv-card iv-topic-card" style="--topic:var(--t0)" data-filter-item data-search="LLM 内部机制与架构 注意力、KV 缓存、位置编码、MoE、缩放定律——所有后续问题的地基。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">16 道题</span><span>15 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t0.html">LLM 内部机制与架构</a></h3>
+<p class="iv-card-sum">注意力、KV 缓存、位置编码、MoE、缩放定律——所有后续问题的地基。</p>
+<ul class="iv-samples"><li>解释缩放点积注意力(scaled dot-product attention)，以及 1/sqrt(d_k) 缩放因子的作用。</li><li>什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t1)" data-filter-item data-search="推理服务与 GPU 性能 prefill/decode、连续批处理、PagedAttention、量化与并行策略。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">15 道题</span><span>12 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t1.html">推理服务与 GPU 性能</a></h3>
+<p class="iv-card-sum">prefill/decode、连续批处理、PagedAttention、量化与并行策略。</p>
+<ul class="iv-samples"><li>解释 prefill 和 decode 两个阶段。为什么 prefill 受算力限制，而 decode 受显存带宽限制？</li><li>什么是连续批处理(在途批处理)？它为什么取代了静态批处理？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t2)" data-filter-item data-search="RAG 与检索 分块、混合检索、重排序、索引新鲜度与权限感知检索。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>7 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t2.html">RAG 与检索</a></h3>
+<p class="iv-card-sum">分块、混合检索、重排序、索引新鲜度与权限感知检索。</p>
+<ul class="iv-samples"><li>对大型技术文档语料，你会采用什么分块策略？为什么？</li><li>如何在稀疏检索器(BM25)和稠密检索器之间做选择？什么时候两者都需要？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t3)" data-filter-item data-search="Agent 与工具调用 ReAct、工具设计、MCP、记忆、终止条件与人在环路。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>9 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t3.html">Agent 与工具调用</a></h3>
+<p class="iv-card-sum">ReAct、工具设计、MCP、记忆、终止条件与人在环路。</p>
+<ul class="iv-samples"><li>解释 ReAct 模式，以及相比单纯的思维链(chain-of-thought)它解决了什么。</li><li>在 agent 循环中，你如何处理工具调用错误、超时和重试？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t4)" data-filter-item data-search="微调后训练与对齐 RLHF、DPO、GRPO、LoRA/QLoRA、灾难性遗忘与蒸馏。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>11 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t4.html">微调后训练与对齐</a></h3>
+<p class="iv-card-sum">RLHF、DPO、GRPO、LoRA/QLoRA、灾难性遗忘与蒸馏。</p>
+<ul class="iv-samples"><li>完整讲一遍 RLHF：奖励模型、策略优化、KL 惩罚。</li><li>什么是 DPO？为什么它在许多实验室取代了基于 PPO 的 RLHF？什么时候在线 RL 仍然更好？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t5)" data-filter-item data-search="评估与可观测性 LLM-as-judge、回归门禁、幻觉度量、基准污染与在线实验。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>4 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t5.html">评估与可观测性</a></h3>
+<p class="iv-card-sum">LLM-as-judge、回归门禁、幻觉度量、基准污染与在线实验。</p>
+<ul class="iv-samples"><li>设计一个 LLM-as-judge 评估。它有哪些已知偏差？如何校正？</li><li>当没有标注真值、专家又很贵时，如何构建评估集？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t6)" data-filter-item data-search="安全安保与负责任 AI 提示注入、越狱、护栏、Constitutional AI 与红队。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>5 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t6.html">安全安保与负责任 AI</a></h3>
+<p class="iv-card-sum">提示注入、越狱、护栏、Constitutional AI 与红队。</p>
+<ul class="iv-samples"><li>什么是提示注入(直接与间接)？你的分层防御是什么？</li><li>讲讲 LLM 应用的 OWASP Top 10，以及哪些在实践中真的会造成危害。</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t7)" data-filter-item data-search="多模态语音与音频 AI 视觉 token、实时语音延迟预算、打断、说话人分离。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>5 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t7.html">多模态语音与音频 AI</a></h3>
+<p class="iv-card-sum">视觉 token、实时语音延迟预算、打断、说话人分离。</p>
+<ul class="iv-samples"><li>视觉语言模型如何把图像送进 LLM：投影器、交叉注意力，还是原生 token？</li><li>从图像到视频，会有什么变化？</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t8)" data-filter-item data-search="AI 系统设计 企业 RAG、代码助手、客服 agent、Text-to-SQL、LLM 网关。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>4 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t8.html">AI 系统设计</a></h3>
+<p class="iv-card-sum">企业 RAG、代码助手、客服 agent、Text-to-SQL、LLM 网关。</p>
+<ul class="iv-samples"><li>设计一个面向 1000 万文档、带每用户权限的企业级 RAG 助手。</li><li>设计一个代码助手：仓库索引、上下文组装、编辑应用、评估。</li></ul>
+</li><li class="iv-card iv-topic-card" style="--topic:var(--t9)" data-filter-item data-search="编码与数据结构 手写注意力、KV 缓存、采样、LRU、限流器、SSE 解析。" data-cat="topic">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>9 附答案</span></div>
+<h3 class="iv-card-name"><a href="topics/t9.html">编码与数据结构</a></h3>
+<p class="iv-card-sum">手写注意力、KV 缓存、采样、LRU、限流器、SSE 解析。</p>
+<ul class="iv-samples"><li>用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。</li><li>实现多头注意力，然后把它改造成分组查询注意力。</li></ul>
+</li></ul>
+</section>
+
+<section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>前沿 AI 实验室</h2><p>模型能力的定义者，面试最看重对底层机制的第一性理解与手写实现。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="Anthropic Member of Technical Staff(MTS)、软件工程师(产品 / 基础设施 / API 服务)、研究工程师、研究科学家、应用 AI 工程师、前向部署工程师(Applied AI)、性能工程师(推理与算子)、产品工程师(Claude Code / Claude.ai)。 编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">37 道题</span><span>10 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/anthropic.html">Anthropic</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:12" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:2" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:2" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:5" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:4" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="行为与文化"></span></div><span>10</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="OpenAI Member of Technical Staff、软件工程师、机器学习工程师、研究工程师、研究科学家、应用 AI 工程师、前向部署工程师、解决方案架构师、数据科学家。 编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">31 道题</span><span>9 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/openai.html">OpenAI</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:7" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:5" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:2" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:2" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:5" title="行为与文化"></span></div><span>9</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Google DeepMind and Google AI 研究工程师、研究科学家、机器学习工程师、软件工程师(ML)、前向部署工程师、应用 AI 工程师(Google Cloud / Vertex AI)、数据科学家。 编码与数据结构、机器学习与深度学习基础、微调后训练与对齐" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">22 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/google-deepmind.html">Google DeepMind</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:4" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:8" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:5" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:2" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Meta (Superintelligence Labs, FAIR, Llama) 机器学习工程师(E4–E7)、研究工程师、研究科学家、AI 基础设施工程师、软件工程师(ML)、应用研究科学家。 编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">26 道题</span><span>11 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/meta.html">Meta</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:8" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:1" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:6" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="行为与文化"></span></div><span>11</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="xAI Member of Technical Staff、AI 工程师、基础设施工程师、研究工程师、产品工程师(Grok)、数据 / RL 环境工程师。 编码与数据结构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/xai.html">xAI</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:2" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:3" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Mistral AI 研究工程师、机器学习工程师、应用 AI 工程师、解决方案架构师 / 前向部署工程师、推理工程师、平台工程师。 编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">8 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/mistral.html">Mistral AI</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:2" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:1" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Cohere Member of Technical Staff、机器学习工程师、应用 AI 工程师、解决方案架构师 / 前向部署工程师、平台与推理工程师。 编码与数据结构、LLM 内部机制与架构、RAG 与检索" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/cohere.html">Cohere</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:4" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="DeepSeek 研究工程师、基础设施 / 系统工程师、推理工程师、数据工程师、算法工程师。 LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>4 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/deepseek.html">DeepSeek</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:4" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>4</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Moonshot AI (Kimi) 研究工程师、基础设施工程师、推理 / 服务工程师、Agent 工程师。 LLM 内部机制与架构、推理服务与 GPU 性能、RAG 与检索" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/moonshot.html">Moonshot AI (Kimi)</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:2" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Zhipu AI (GLM) 研究工程师、Agent 工程师、RL 基础设施工程师、应用 AI 工程师。 LLM 内部机制与架构、Agent 与工具调用、微调后训练与对齐" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/zhipu.html">Zhipu AI (GLM)</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、Agent 与工具调用、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:5" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:3" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Alibaba (Qwen) 算法工程师(LLM)、研究工程师、推理工程师、多模态工程师、应用 AI 工程师(阿里云 / 百炼)。 编码与数据结构、LLM 内部机制与架构、微调后训练与对齐" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/alibaba-qwen.html">Alibaba (Qwen)</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Sarvam AI 研究工程师(LLM / 语音)、机器学习工程师、应用 AI / 前向部署工程师、语音工程师、边缘 / 推理工程师。 编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能" data-cat="前沿 AI 实验室">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>9 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/sarvam.html">Sarvam AI</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:3" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="应用与前向部署场景"></span></div><span>9</span></div></div>
+</li></ul></section><section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>大型科技公司的 AI 组织</h2><p>平台与产品规模大，系统设计、可靠性与跨团队协作占比高。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="Microsoft AI 工程师、应用科学家、机器学习工程师、软件工程师(AI Platform / Copilot)、Azure AI 解决方案架构师、首席应用 AI 工程师。 编码与数据结构、推理服务与 GPU 性能、AI 系统设计" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/microsoft.html">Microsoft</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:2" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:2" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:2" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Amazon (AWS) 应用科学家(I/II/III)、机器学习工程师、数据科学家、软件开发工程师(AI/ML)、GenAI 专家解决方案架构师、应用 AI 工程师(Bedrock、Q、SageMaker)。 编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">23 道题</span><span>8 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/amazon.html">Amazon (AWS)</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、LLM 内部机制与架构…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:2" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:12" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="行为与文化"></span></div><span>8</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Apple 机器学习工程师、AI/ML 研究工程师、端侧 ML 工程师、软件工程师(Apple Intelligence / Siri)、应用科学家。 推理服务与 GPU 性能、Agent 与工具调用、微调后训练与对齐" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/apple.html">Apple</a></h3>
+<p class="iv-card-sum">推理服务与 GPU 性能、Agent 与工具调用、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="1" style="flex-grow:4" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="NVIDIA 深度学习软件工程师(推理 / LLM 性能)、CUDA 算子工程师、机器学习工程师、解决方案架构师、应用科学家、TensorRT-LLM / Dynamo 工程师。 编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">13 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/nvidia.html">NVIDIA</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:3" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="应用与前向部署场景"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Tesla AI / ML 工程师(Autopilot、Optimus)、深度学习工程师、计算机视觉工程师、数据工程师(Autopilot)、推理 / 芯片软件工程师。 编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/tesla.html">Tesla</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:2" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="消费级 ML 公司 (Uber, Netflix, LinkedIn, Airbnb, Pinterest, Spotify) 机器学习工程师、资深/Staff MLE、应用科学家、ML 平台工程师、GenAI 工程师。 编码与数据结构、机器学习与深度学习基础、AI 系统设计" data-cat="大型科技公司的 AI 组织">
+<div class="iv-card-top"><span class="iv-card-count">14 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/consumer-ml.html">消费级 ML 公司</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:8" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>5</span></div></div>
+</li></ul></section><section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>中国互联网公司</h2><p>业务场景密集，工程落地、推理成本与中文/多模态数据是高频考点。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="字节跳动 大模型算法工程师(Seed / 豆包)、AI Agent 应用研发、推理优化与 Infra、搜索推荐大模型、国际化 TikTok AI 工程师、AI Coding(Trae)相关工程。 LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">38 道题</span><span>8 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/bytedance.html">字节跳动</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:5" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:5" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:6" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:5" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:6" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:4" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:4" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="行为与文化"></span></div><span>8</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="腾讯 混元大模型算法工程师、AI Agent 应用开发(腾讯云 / 广告 / 会议)、多模态算法工程师、LLM Infra 与推理工程、AIGC 应用工程。 LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">37 道题</span><span>9 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/tencent.html">腾讯</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:5" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:5" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:4" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:5" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:6" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:3" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:4" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>9</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="阿里巴巴(淘天、阿里云) 淘天 / 淘宝闪购 Agent 算法、阿里云 AI 平台与瓴羊 Runtime 工程、夸克与千问的应用开发、阿里国际(Accio)搜索与云沙箱、钉钉 AI 工程。 LLM 内部机制与架构、微调后训练与对齐、RAG 与检索" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">27 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、微调后训练与对齐、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:6" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:3" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:5" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:4" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="滴滴 网约车平台 AI 工程师、智能客服与司机服务大模型算法、大模型应用工程、数据与平台工程。 LLM 内部机制与架构、RAG 与检索、Agent 与工具调用" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">21 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/didi.html">滴滴</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、RAG 与检索、Agent 与工具调用…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:4" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:5" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:4" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:3" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="京东 大模型算法工程师(零售 / 物流 / 科技)、AI Agent 应用开发、Agent Runtime 与平台工程、商品理解与多模态。 微调后训练与对齐、推理服务与 GPU 性能、RAG 与检索" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">27 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/jd.html">京东</a></h3>
+<p class="iv-card-sum">微调后训练与对齐、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="4" style="flex-grow:5" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:3" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:5" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:5" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:4" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="美团 大模型算法(北斗 / 到店 / 到家)、Agent 应用开发、多模态与文档大模型、搜索推荐大模型。 LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="中国互联网公司">
+<div class="iv-card-top"><span class="iv-card-count">34 道题</span><span>8 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/meituan.html">美团</a></h3>
+<p class="iv-card-sum">LLM 内部机制与架构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:5" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:4" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:6" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:4" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:6" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:4" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>8</span></div></div>
+</li></ul></section><section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>AI 基础设施与平台公司</h2><p>卖算力与工具，问题集中在推理性能、分布式与开发者体验。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="Databricks 软件工程师(ML Platform / Mosaic AI)、机器学习工程师、GenAI 解决方案架构师、前向部署 / 交付解决方案架构师、应用 AI 工程师。 编码与数据结构、微调后训练与对齐、评估与可观测性" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">9 道题</span><span>4 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/databricks.html">Databricks</a></h3>
+<p class="iv-card-sum">编码与数据结构、微调后训练与对齐、评估与可观测性…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:5" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:1" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span></div><span>4</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Groq 编译器工程师、运行时 / 系统工程师、推理工程师、芯片软件工程师、解决方案架构师。 编码与数据结构、推理服务与 GPU 性能、AI 系统设计" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/groq.html">Groq</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:4" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:5" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="应用与前向部署场景"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Together AI 推理工程师、算子工程师、ML 系统工程师、解决方案 / 前向部署工程师、平台工程师。 编码与数据结构、推理服务与 GPU 性能、微调后训练与对齐" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">7 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/together.html">Together AI</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:3" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:1" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="应用与前向部署场景"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Hugging Face 机器学习工程师(开源维护者)、研究工程师、基础设施工程师、开发者布道工程师、推理工程师。 编码与数据结构、LLM 内部机制与架构、微调后训练与对齐" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/huggingface.html">Hugging Face</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、微调后训练与对齐…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:3" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Scale AI 软件工程师、机器学习工程师、研究工程师(SEAL 评估)、前向部署工程师、产品工程师(数据引擎、RL 环境)。 编码与数据结构、微调后训练与对齐、AI 系统设计" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/scale.html">Scale AI</a></h3>
+<p class="iv-card-sum">编码与数据结构、微调后训练与对齐、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:2" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:2" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:3" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Perplexity 软件工程师(搜索 / 基础设施)、AI 工程师、研究科学家、机器学习工程师(排序与检索)、产品工程师(Comet)。 编码与数据结构、推理服务与 GPU 性能、RAG 与检索" data-cat="AI 基础设施与平台公司">
+<div class="iv-card-top"><span class="iv-card-count">15 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/perplexity.html">Perplexity</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:4" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:2" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:5" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="行为与文化"></span></div><span>7</span></div></div>
+</li></ul></section><section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>AI 原生应用公司</h2><p>产品迭代快，考察端到端系统设计、评估闭环与成本控制。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="Cursor (Anysphere) 软件工程师(产品、基础设施、模型服务)、机器学习工程师、研究工程师、基础设施工程师。 编码与数据结构、推理服务与 GPU 性能、RAG 与检索" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">17 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/cursor.html">Cursor</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:5" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:2" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:5" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Cognition (Devin, Windsurf) Member of Technical Staff、Agent 工程师、基础设施工程师、外派工程师、研究工程师(agent RL)。 Agent 与工具调用、微调后训练与对齐、AI 系统设计" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">9 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/cognition.html">Cognition</a></h3>
+<p class="iv-card-sum">Agent 与工具调用、微调后训练与对齐、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="3" style="flex-grow:3" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="4" style="flex-grow:1" title="微调后训练与对齐"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="应用与前向部署场景"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Sierra Agent 工程师、软件工程师、前向部署工程师、机器学习工程师、产品工程师。 编码与数据结构、RAG 与检索、Agent 与工具调用" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/sierra.html">Sierra</a></h3>
+<p class="iv-card-sum">编码与数据结构、RAG 与检索、Agent 与工具调用…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:3" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:3" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Harvey 软件工程师、ML / 应用 AI 工程师、前向部署工程师、研究工程师(法律领域)。 编码与数据结构、RAG 与检索、Agent 与工具调用" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/harvey.html">Harvey</a></h3>
+<p class="iv-card-sum">编码与数据结构、RAG 与检索、Agent 与工具调用…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:2" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:3" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span></div><span>7</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Glean 软件工程师(搜索 / 排序)、机器学习工程师、AI 工程师(agent)、前向部署工程师、基础设施工程师。 编码与数据结构、推理服务与 GPU 性能、RAG 与检索" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">10 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/glean.html">Glean</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:2" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:2" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:3" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Character.AI 机器学习工程师(推理)、研究工程师、软件工程师(产品 / 安全)、基础设施工程师。 编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/character-ai.html">Character.AI</a></h3>
+<p class="iv-card-sum">编码与数据结构、LLM 内部机制与架构、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="LLM 内部机制与架构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:4" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:2" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:3" title="安全安保与负责任 AI"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="ElevenLabs 研究工程师(语音)、机器学习工程师、软件工程师(实时音频)、前向部署工程师、基础设施工程师。 编码与数据结构、推理服务与 GPU 性能、安全安保与负责任 AI" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">8 道题</span><span>5 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/elevenlabs.html">ElevenLabs</a></h3>
+<p class="iv-card-sum">编码与数据结构、推理服务与 GPU 性能、安全安保与负责任 AI…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:3" title="多模态语音与音频 AI"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="应用与前向部署场景"></span></div><span>5</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Abridge 机器学习工程师(ASR / NLP)、研究科学家、软件工程师(临床产品)、前向部署 / 实施工程师。 机器学习与深度学习基础、推理服务与 GPU 性能、RAG 与检索" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">11 道题</span><span>8 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/abridge.html">Abridge</a></h3>
+<p class="iv-card-sum">机器学习与深度学习基础、推理服务与 GPU 性能、RAG 与检索…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:1" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:1" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:2" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:3" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span></div><span>8</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Figure AI 机器人 AI 工程师、研究工程师(VLA / 操控)、控制工程师、数据工程师(遥操作)、部署工程师。 机器学习与深度学习基础、推理服务与 GPU 性能、AI 系统设计" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/figure.html">Figure AI</a></h3>
+<p class="iv-card-sum">机器学习与深度学习基础、推理服务与 GPU 性能、AI 系统设计…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:2" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:2" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="6" style="flex-grow:1" title="安全安保与负责任 AI"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:3" title="多模态语音与音频 AI"></span></div><span>6</span></div></div>
+</li><li class="iv-card" data-filter-item data-search="Waymo 软件工程师(感知、预测、规划)、研究科学家、ML 基础设施工程师、仿真工程师、安全工程师。 编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能" data-cat="AI 原生应用公司">
+<div class="iv-card-top"><span class="iv-card-count">12 道题</span><span>6 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/waymo.html">Waymo</a></h3>
+<p class="iv-card-sum">编码与数据结构、机器学习与深度学习基础、推理服务与 GPU 性能…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:1" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:3" title="机器学习与深度学习基础"></span><span class="iv-mix-seg" data-topic="1" style="flex-grow:1" title="推理服务与 GPU 性能"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:3" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:3" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="7" style="flex-grow:1" title="多模态语音与音频 AI"></span></div><span>6</span></div></div>
+</li></ul></section><section class="iv-group" data-group-block style="--group:var(--ink)">
+<header class="iv-group-head"><h2>前向部署与企业级 AI</h2><p>直接面对客户，方案设计、权限合规与交付能力比模型细节更重要。</p></header>
+<ul class="iv-grid"><li class="iv-card" data-filter-item data-search="Palantir 前向部署工程师、前向部署软件工程师、软件工程师、数据工程师、部署策略师、AIP 工程师。 编码与数据结构、RAG 与检索、Agent 与工具调用" data-cat="前向部署与企业级 AI">
+<div class="iv-card-top"><span class="iv-card-count">20 道题</span><span>7 个板块</span></div>
+<h3 class="iv-card-name"><a href="companies/palantir.html">Palantir</a></h3>
+<p class="iv-card-sum">编码与数据结构、RAG 与检索、Agent 与工具调用…</p>
+<div class="iv-card-foot"><div class="iv-plan"><div class="iv-mix-bar"><span class="iv-mix-seg" data-topic="9" style="flex-grow:7" title="编码与数据结构"></span><span class="iv-mix-seg" data-topic="2" style="flex-grow:1" title="RAG 与检索"></span><span class="iv-mix-seg" data-topic="3" style="flex-grow:2" title="Agent 与工具调用"></span><span class="iv-mix-seg" data-topic="8" style="flex-grow:1" title="AI 系统设计"></span><span class="iv-mix-seg" data-topic="5" style="flex-grow:1" title="评估与可观测性"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:6" title="应用与前向部署场景"></span><span class="iv-mix-seg" data-topic="0" style="flex-grow:2" title="行为与文化"></span></div><span>7</span></div></div>
+</li></ul></section>
+
+<section class="iv-group">
+<header class="iv-group-head"><h2>怎么用</h2><p>把它当成地图，而不是脚本。面试流程会随团队、级别和地区变化。</p></header>
+<div class="notes">
+<div class="note"><h3>1 · 先过通用题</h3><p>10 大主题里的 119 道题覆盖了大多数公司的共同考点。先自己口述答案，再展开对照要点。</p></div>
+<div class="note"><h3>2 · 再看目标公司</h3><p>公司页给出公开报道的岗位与流程、按主题分组的专属题，以及这家公司会问的通用题清单。</p></div>
+<div class="note"><h3>3 · 用搜索补漏</h3><p>记住某个概念但想不起完整题目时，用题目与要点搜索按关键词定位，再回到主题页系统复习。</p></div>
+</div></section>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="index.html">目录</a>
+<a href="companies.html">公司</a>
+<a href="search.html">搜索</a>
+<a href="about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article lab">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../labs.html">可视化</a></li><li aria-current="page">KV 缓存计算器</li></ol></nav>
+<header class="iv-q-head"><p class="iv-kicker">Lab 01 · 推理显存</p><h1>KV 缓存计算器</h1>
+<p class="iv-meta"><span class="iv-kind">交互</span><span class="iv-min">bytes = 2·L·H<sub>kv</sub>·d·S·B·精度</span></p></header>
+<p class="iv-lede">KV 缓存随上下文和并发线性增长；在高并发或超长上下文下，它往往比权重更早撞墙。拖动滑块，看它什么时候超过一张 24 GB 卡。</p>
+
+<section class="lab-panel" aria-label="KV 缓存计算">
+<div class="lab-controls">
+<label class="lab-field"><span>模型预设</span>
+<select id="kvModel">
+<option value="8,32,8,128" selected>Llama 3 8B（32 层 / 8 KV 头）</option>
+<option value="13,40,40,128">13B MHA（40 层 / 40 KV 头）</option>
+<option value="70,80,8,128">Llama 3 70B（80 层 / 8 KV 头）</option>
+<option value="405,126,8,128">405B（126 层 / 8 KV 头）</option>
+</select></label>
+<label class="lab-field"><span>层数 <output id="kvLOut">80</output></span><input id="kvL" type="range" min="1" max="128" value="80"></label>
+<label class="lab-field"><span>KV 头数 <output id="kvHOut">8</output></span><input id="kvH" type="range" min="1" max="64" value="8"></label>
+<label class="lab-field"><span>上下文 <output id="kvSOut">32k</output></span><input id="kvS" type="range" min="1" max="128" value="32"></label>
+<label class="lab-field"><span>并发 <output id="kvBOut">8</output></span><input id="kvB" type="range" min="1" max="128" value="8"></label>
+<fieldset class="lab-field" style="border:0"><legend>精度</legend>
+<div class="lab-choices">
+<label><input type="radio" name="kvdtype" value="2" checked><span>FP16/BF16</span></label>
+<label><input type="radio" name="kvdtype" value="1"><span>FP8</span></label>
+<label><input type="radio" name="kvdtype" value="0.5"><span>INT4</span></label>
+</div></fieldset>
+</div>
+
+<dl class="lab-stats">
+<div><dt>每 token</dt><dd id="kvPerToken">—</dd></div>
+<div><dt>KV 合计</dt><dd id="kvTotal">—</dd></div>
+<div><dt>权重</dt><dd id="kvWeights">—</dd></div>
+<div><dt>合计（含 10% 余量）</dt><dd id="kvAll">—</dd></div>
+</dl>
+
+<div class="lab-chart" id="kvChart" aria-live="polite"></div>
+<p class="lab-legend"><span><i class="k-a"></i>权重</span><span><i class="k-b"></i>KV 缓存</span><span><i class="k-d"></i>固定 + 8% 余量</span><span>竖线 = 显卡容量</span></p>
+<p class="lab-note">余量 = 1 GB 固定开销 + 8%；不含激活值与显存碎片。</p>
+</section>
+
+<section class="lab-how"><h2>怎么读</h2><ul>
+<li>先把并发拉到 1，只看单条上下文的 KV；再把上下文拉到 128k，看斜率。</li>
+<li>把精度从 FP16 调到 INT4：KV 与权重同时减半/四分之一，但激活不变。</li>
+<li>GQA 的价值在“KV 头数”：把它从 40 调到 8，缓存立刻降到 1/5。</li>
+</ul></section>
+<section class="iv-related"><h2>相关题目</h2><ul>
+<li><a href="../q/t0q1.html">什么是 KV 缓存？它对显存有什么影响？</a></li>
+<li><a href="../q/t1q7.html">估算服务 70B 模型所需的显存</a></li>
+<li><a href="../q/t0q2.html">MQA 与 GQA 各自牺牲了什么？</a></li>
+</ul></section>
+</article></main>
+<script src="../assets/lab-kv.js" defer></script>

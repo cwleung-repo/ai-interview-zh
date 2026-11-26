@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为长时间运行的 agent 设计记忆：存什么、存在哪里… · Agent 与工具调用 · AI 工程面试题库</title>
+<meta name="description" content="为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "Agent 与工具调用", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？", "acceptedAnswer": {"@type": "Answer", "text": "记忆分三层：工作记忆（当前上下文窗口）、情节记忆（历史会话摘要与事件）、语义记忆（抽取的事实/偏好，存向量库或 KV）。存“对未来决策有用且稳定”的内容，写入时去重与置信度打分，检索时按相关性 + 时间衰减召回，并允许用户查看/删除。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t3)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t3.html">Agent 与工具调用</a></li>
+<li aria-current="page">第 7 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Agent 与工具调用 · Question 07</p>
+<h1 class="q-title">为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">3 家公司出现</span>
+<span class="iv-min">1 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t3.html">Agent 与工具调用</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t3.html">Agent 与工具调用</a></dd></div>
+<div><dt>出现于</dt><dd>3 家公司</dd></div>
+<div><dt>原文答案</dt><dd>1 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>记忆分三层：工作记忆（当前上下文窗口）、情节记忆（历史会话摘要与事件）、语义记忆（抽取的事实/偏好，存向量库或 KV）。存“对未来决策有用且稳定”的内容，写入时去重与置信度打分，检索时按相关性 + 时间衰减召回，并允许用户查看/删除。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>不要存原始全文：存摘要 + 指针（会话 id、消息 id），需要时再回读。</li><li>写入策略：事件触发（任务完成、用户纠正）比每轮都写更干净。</li><li>冲突处理：新事实覆盖旧事实要带时间戳与来源，否则记忆会自相矛盾。</li><li>隐私：记忆必须可审计、可删除，跨用户绝不共享。</li></ul></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/ai-agent-memory" target="_blank" rel="noopener">AI Agent 记忆</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t3q3.html">什么是 MCP(Model Context Protocol)…</a></li><li><a href="../q/t3q4.html">工具多到什么程度算太多？如何设计 LLM 真的能正确使用的工具 sc…</a></li><li><a href="../q/t3q5.html">多 agent 编排是如何工作的？它在什么时候会崩溃？</a></li><li><a href="../q/t3q7.html">agent 如何决定是调用工具还是用自己的知识回答？</a></li><li><a href="../q/t3q8.html">什么能让 agent 循环正确终止？如何限制成本和步数？</a></li><li><a href="../q/t3q9.html">在生产系统中，如何让 agent 的动作可逆，或至少可审计？</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t3q5.html" rel="prev"><span>上一题</span>多 agent 编排是如何工作的？它在什么时候会崩溃？</a>
+<a class="iv-pager-up" href="../topics/t3.html"><span>主题</span>Agent 与工具调用</a>
+<a href="../q/t3q7.html" rel="next"><span>下一题</span>agent 如何决定是调用工具还是用自己的知识回答？</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

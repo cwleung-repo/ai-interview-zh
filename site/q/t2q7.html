@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的… · RAG 与检索 · AI 工程面试题库</title>
+<meta name="description" content="设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的内容。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的内容。", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "RAG 与检索", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的内容。", "acceptedAnswer": {"@type": "Answer", "text": "权限必须在检索层强制，而不是在 prompt 里叮嘱模型：文档入库时写入 ACL 元数据，查询时把用户身份转成过滤条件（租户、组、密级），在向量库做 pre-filter 或后置校验，生成前再逐条核对权限，并记录审计日志。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t2)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t2.html">RAG 与检索</a></li>
+<li aria-current="page">第 8 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">RAG 与检索 · Question 08</p>
+<h1 class="q-title">设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的内容。</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">5 家公司出现</span>
+<span class="iv-min">0 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t2.html">RAG 与检索</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t2.html">RAG 与检索</a></dd></div>
+<div><dt>出现于</dt><dd>5 家公司</dd></div>
+<div><dt>原文答案</dt><dd>0 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>权限必须在检索层强制，而不是在 prompt 里叮嘱模型：文档入库时写入 ACL 元数据，查询时把用户身份转成过滤条件（租户、组、密级），在向量库做 pre-filter 或后置校验，生成前再逐条核对权限，并记录审计日志。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>ACL 同步：从源系统（Drive/Confluence/工单）拉取权限，增量更新；删除与撤权要及时传播到索引。</li><li>检索：先用 metadata filter 缩小候选（pre-filter），再做向量搜索；后置过滤会漏召回，但可作为第二道防线。</li><li>缓存与日志同样要隔离：前缀缓存、会话历史、trace 都不能跨租户。</li><li>测试要包含“越权查询”用例，验证返回为空而不是靠模型自觉。</li></ul></div></details>
+</section>
+
+<section class="iv-section"><h2 class="iv-label">常见错误说法</h2>
+<div class="iv-answer" style="background:var(--bg)"><div class="iv-answer-body"><ul class="iv-wrong"><li><p class="iv-wrong-a">把用户权限写进 system prompt 让模型自己过滤——提示注入可以绕过，且模型无法验证文档 ACL。</p></li></ul></div></div></section>
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/glean.html">Glean</a><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<p class="iv-empty">这道题在源仓库中没有附答案链接，可先用上面的要点自查，再顺着主题页补齐相关知识点。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t2q4.html">什么是 HyDE(假设文档嵌入)？它在什么时候优于标准的稠密检索？</a></li><li><a href="../q/t2q5.html">Agentic RAG 与标准 RAG 有何不同？什么时候值得引入这…</a></li><li><a href="../q/t2q6.html">嵌入检索中的语义漂移(semantic drift)…</a></li><li><a href="../q/t2q8.html">比较 HNSW、IVF-PQ 与扁平(flat)索引。…</a></li><li><a href="../q/t2q9.html">如何在检索流水线中处理表格、图和多栏 PDF？</a></li><li><a href="../q/t2q10.html">当底层语料持续变化时，如何保持索引新鲜？</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t2q6.html" rel="prev"><span>上一题</span>嵌入检索中的语义漂移(semantic drift)…</a>
+<a class="iv-pager-up" href="../topics/t2.html"><span>主题</span>RAG 与检索</a>
+<a href="../q/t2q8.html" rel="next"><span>下一题</span>比较 HNSW、IVF-PQ 与扁平(flat)索引。…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

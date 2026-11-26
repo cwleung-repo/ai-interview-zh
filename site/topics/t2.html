@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG 与检索 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="RAG 与检索：分块、混合检索、重排序、索引新鲜度与权限感知检索。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t2)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">RAG 与检索</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T2</p>
+<h1>RAG 与检索</h1>
+<p class="iv-meta"><span class="iv-kind">12 道题</span><span class="iv-min">7 道附原文答案</span><span class="iv-min">12 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">分块、混合检索、重排序、索引新鲜度与权限感知检索。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">12 / 12 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="对大型技术文档语料,你会采用什么分块策略?为什么?" data-cat="t2">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q0.html">对大型技术文档语料，你会采用什么分块策略？为什么？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/glean.html">Glean</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>技术文档首选结构感知分块：按标题层级、代码块、表格切，单块 300–800 token，相邻块留 10–15% 重叠，并把标题路径写进块内容。原因是检索命中依赖语义完整，而固定窗口会把步骤、参数表和上下文切断。</p><ul><li>先解析文档树（h1/h2/h3、列表、代码块），再在叶子节点上切；超长叶子按句子边界二次切。</li><li>每个块前置 breadcrumb（产品 &gt; 章节 &gt; 小节），既提升嵌入质量，也让答案能引用来源。</li><li>代码块、命令行、表格尽量整块保留，不要跨块切断；必要时单独建索引。</li><li>重叠只是补救，不是策略；重叠过多会让 top-k 全是重复内容，浪费上下文。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/chunking-strategies-for-rag" target="_blank" rel="noopener">RAG 的分块策略</a></p></div></details>
+<details class="iv-answer iv-answer-small"><summary>常见错误说法</summary><div class="iv-answer-body"><ul class="iv-wrong"><li><p class="iv-wrong-a">无脑按 512 字符滑窗切——会把参数表切成两半，检索到的片段无法回答“默认值是多少”。</p></li></ul></div></details>
+</div></li><li class="q-item" data-filter-item data-search="如何在稀疏检索器(BM25)和稠密检索器之间做选择?什么时候两者都需要?" data-cat="t2">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q1.html">如何在稀疏检索器(BM25)和稠密检索器之间做选择？什么时候两者都需要？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><a class="iv-tag" href="../companies/glean.html">Glean</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/didi.html">滴滴</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>BM25 擅长精确词、型号、错误码、人名，稠密检索擅长同义改写和自然语言问法。技术文档、代码、客服工单这类“专有名词多 + 问法多样”的语料两者都要，用 hybrid（RRF 或加权融合）再加重排序。</p><ul><li>纯稠密在罕见词上会失败（模型没见过内部代号）；纯稀疏在“怎么重置密码”和“密码忘了怎么办”之间匹配不上。</li><li>融合：RRF（按名次倒数求和）无需调权重，鲁棒；加权分数融合需要归一化，容易过拟合。</li><li>中文要配好分词（jieba/字符级 BM25），否则稀疏侧退化。</li><li>评估时分开看 recall@k：如果稀疏召回补上了稠密漏掉的 10–20%，就值得双路。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-hybrid-search-work" target="_blank" rel="noopener">混合检索(Hybrid Search)是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是重排序器(reranker)?何时该用它?交叉编码器(cross-encoder)的代价是什么?" data-cat="t2">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q2.html">什么是重排序器(reranker)？何时该用它？交叉编码器(cross-encoder)的代价是什么？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/cohere.html">Cohere</a><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>重排序器对“query + 候选文档”做交叉编码，直接输出相关性分数，比双塔的点积更准；代价是每个候选都要过一次模型，延迟随候选数线性增长，所以只对 top 50–100 做。</p><ul><li>典型流水线：召回 100–500 → 重排取 top 5–10 → 送进 LLM；重排通常是性价比最高的一步。</li><li>代价：cross-encoder 不能预计算，GPU 上 100 条的延迟约几十毫秒；用小的 reranker（如 0.6B）或 ONNX/量化。</li><li>也可以让 LLM 做 listwise 重排，但成本和延迟更高，适合离线或低 QPS。</li><li>重排会放大召回的偏差：召回没进来的文档永远排不上，别指望它救召回。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-a-reranker-work" target="_blank" rel="noopener">Reranker 是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="你会如何评估 RAG 流水线的质量:分别评估检索和生成?" data-cat="t2">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q3.html">你会如何评估 RAG 流水线的质量：分别评估检索和生成？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/cohere.html">Cohere</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>检索和生成必须分开评：检索看 recall@k、nDCG、MRR（有没有把正确片段找回来），生成看忠实度（答案是否被检索内容支持）、相关性、完整性和引用正确率。端到端分数只能告诉你“坏了”，分开评才知道该修哪一段。</p><ul><li>先构造带标注的 (query，相关文档 id) 集合，哪怕只有 100–300 条，也能量化检索改动。</li><li>生成侧用 LLM-as-judge 打分 + 人工抽检校准；忠实度要逐句对照证据，而不是整体印象。</li><li>端到端指标（答案正确率、人工通过率）用于验收，不用于定位。</li><li>线上补：无答案率、引用点击率、用户追问率，能反映离线集覆盖不到的问题。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/llm-evaluation" target="_blank" rel="noopener">LLM 评估</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是 HyDE(假设文档嵌入)?它在什么时候优于标准的稠密检索?" data-cat="t2">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q4.html">什么是 HyDE(假设文档嵌入)？它在什么时候优于标准的稠密检索？</a></h3>
+<div class="q-tags"><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>HyDE 让 LLM 先根据问题“编”一个假想答案，再用这个答案的嵌入去检索。它把短问题映射到文档式的语义空间，在问题很短、术语不匹配、或跨语言检索时优于直接查问题；但会引入幻觉，领域偏移时反而变差。</p><ul><li>适用：问题只有几个词、文档是长段落、query 与文档措辞差异大。</li><li>不适用：事实型精确查询（型号、错误码），假想答案可能把检索带偏。</li><li>成本：每次查询多一次 LLM 调用，延迟增加；可以缓存或只对短 query 启用。</li><li>改进：生成多个假想文档取平均、或用领域内的小模型生成，减少幻觉。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-hyde-work" target="_blank" rel="noopener">HyDE 在 RAG 中是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="Agentic RAG 与标准 RAG 有何不同?什么时候值得引入这份额外复杂度?" data-cat="t2">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q5.html">Agentic RAG 与标准 RAG 有何不同？什么时候值得引入这份额外复杂度？</a></h3>
+<div class="q-tags"><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>标准 RAG 是“一次检索 → 一次生成”；Agentic RAG 让模型自己决定何时检索、检索什么、是否要再查、是否调用其他工具，可以多轮迭代。它在多跳问题、需要跨源核对、或问题本身需要澄清时值得引入；代价是延迟、成本和不可控性大幅上升。</p><ul><li>典型形态：query 改写 → 检索 → 判断证据是否足够 → 不足则再检索/换工具 → 生成并引用。</li><li>适合：研究型问答、合规审查、跨文档对比、需要调用数据库/API 的场景。</li><li>不适合：高频低延迟的 FAQ、答案在单篇文档里的简单查询——直接 RAG 更便宜更稳。</li><li>工程上要设步数上限、证据充分性判据和降级路径，否则会陷入无限检索。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/agentic-rag" target="_blank" rel="noopener">Agentic RAG</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="嵌入检索中的语义漂移(semantic drift)由什么引起?如何检测?" data-cat="t2">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q6.html">嵌入检索中的语义漂移(semantic drift)由什么引起？如何检测？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/cohere.html">Cohere</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>语义漂移指嵌入空间里“看起来近但语义无关”的匹配，常见成因是领域语料与嵌入模型训练分布不匹配、长文档被截断、多语言混用、以及模型版本升级。检测靠人工标注的困难负样本、分桶召回率监控和嵌入分布漂移指标。</p><ul><li>典型表现：查询“退款政策”召回“退货物流”，向量很近但答非所问。</li><li>检测：构造 hard negatives 评估集；线上按 query 类型分桶看 recall 与点击率；监控嵌入均值/协方差的漂移。</li><li>缓解：领域微调嵌入模型、加关键词混合检索、用 reranker 纠偏、按语言/领域分索引。</li><li>版本升级要重新跑评估集，嵌入模型换代常是“静默故障”的来源。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个权限感知的检索:用户绝不能看到其在源系统中无权访问的内容。" data-cat="t2">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q7.html">设计一个权限感知的检索：用户绝不能看到其在源系统中无权访问的内容。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/glean.html">Glean</a><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>权限必须在检索层强制，而不是在 prompt 里叮嘱模型：文档入库时写入 ACL 元数据，查询时把用户身份转成过滤条件（租户、组、密级），在向量库做 pre-filter 或后置校验，生成前再逐条核对权限，并记录审计日志。</p><ul><li>ACL 同步：从源系统（Drive/Confluence/工单）拉取权限，增量更新；删除与撤权要及时传播到索引。</li><li>检索：先用 metadata filter 缩小候选（pre-filter），再做向量搜索；后置过滤会漏召回，但可作为第二道防线。</li><li>缓存与日志同样要隔离：前缀缓存、会话历史、trace 都不能跨租户。</li><li>测试要包含“越权查询”用例，验证返回为空而不是靠模型自觉。</li></ul></div></details>
+<details class="iv-answer iv-answer-small"><summary>常见错误说法</summary><div class="iv-answer-body"><ul class="iv-wrong"><li><p class="iv-wrong-a">把用户权限写进 system prompt 让模型自己过滤——提示注入可以绕过，且模型无法验证文档 ACL。</p></li></ul></div></details>
+</div></li><li class="q-item" data-filter-item data-search="比较 HNSW、IVF-PQ 与扁平(flat)索引。如何选择?recall@k 会带来多少延迟代价?" data-cat="t2">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q8.html">比较 HNSW、IVF-PQ 与扁平(flat)索引。如何选择？recall@k 会带来多少延迟代价？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/jd.html">京东</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>Flat 是精确暴力检索，recall 最高、延迟随 N 线性；HNSW 是图索引，高 recall、低延迟、内存占用大；IVF-PQ 先聚类再量化，内存最省、适合十亿级，但 recall 最低、需要调 nprobe。选型看数据规模、内存预算和 recall 要求。</p><ul><li>经验：&lt;100 万向量用 HNSW；千万级看内存；十亿级用 IVF-PQ 或 DiskANN。</li><li>recall@10 从 0.95 提到 0.99 往往要翻倍延迟；多数 RAG 场景 0.9–0.95 足够，因为后面还有 reranker。</li><li>HNSW 的 M、efConstruction、efSearch 是三个主要旋钮；efSearch 直接换 recall 与延迟。</li><li>量化（PQ/SQ）会损失精度，配合重排或原始向量重打分可以补回来。</li></ul><pre><code>HNSW 查询 ≈ O(log N) 跳数 × efSearch 次距离计算
+IVF-PQ: nlist 个簇，查 nprobe 个簇</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-approximate-nearest-neighbor-ann-search-work" target="_blank" rel="noopener">近似最近邻(ANN)搜索是如何工作的？</a> · <a href="https://outcomeschool.com/blog/how-does-a-vector-database-work" target="_blank" rel="noopener">向量数据库是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="如何在检索流水线中处理表格、图和多栏 PDF?" data-cat="t2">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q9.html">如何在检索流水线中处理表格、图和多栏 PDF？</a></h3>
+<div class="q-tags"></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>表格、图和多栏 PDF 不能当纯文本切：先做版面分析（检测栏、表、图、标题），按阅读顺序重排；表格转成 Markdown/HTML 并保留表头，图用多模态模型生成描述或直接走视觉检索；多栏要按栏切分再拼接，避免左右栏串行。</p><ul><li>工具：PyMuPDF/pdfplumber 取文字与坐标，LayoutLM/版面模型判区域，Camelot 抽表格，OCR 兜底扫描件。</li><li>表格检索：保留表头 + 行上下文，或把每行转成一句自然语言；聚合类问题需要 Text-to-SQL 而非 RAG。</li><li>图：生成 caption + 周围文字一起索引，查询时同时检索文本与图像嵌入。</li><li>面试加分：说明“分块边界要跟版面边界对齐”，否则再好的嵌入也救不回来。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="当底层语料持续变化时,如何保持索引新鲜?" data-cat="t2">
+<span class="q-num">11</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q10.html">当底层语料持续变化时，如何保持索引新鲜？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><a class="iv-tag" href="../companies/cursor.html">Cursor</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>索引新鲜度靠变更数据捕获 + 增量索引：源系统 webhook/CDC 触发文档级 upsert，删除要软删并定期压实；对无事件的源做定期全量 diff；嵌入按内容哈希去重，只重算变化的块。再加版本号与时间戳，让检索能按新鲜度加权。</p><ul><li>文档级：内容哈希不变就跳过；变了只重嵌受影响的块（按块哈希）。</li><li>删除与权限回收是最容易漏的，必须有 tombstone 和定期对账。</li><li>向量库的更新是“插入新版本 + 删旧版本”，要处理近实时可见性与 compaction。</li><li>监控：索引滞后时间、未处理事件数、孤儿块数量。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="如何把生成答案中的每一项主张都归因到具体的检索片段?" data-cat="t2">
+<span class="q-num">12</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t2q11.html">如何把生成答案中的每一项主张都归因到具体的检索片段？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><a class="iv-tag" href="../companies/harvey.html">Harvey</a><a class="iv-tag" href="../companies/abridge.html">Abridge</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>把检索片段编号后放进 prompt，要求模型在每个主张后标注 [n]；生成后做引用校验——把每个句子与它引用的片段做蕴含判断，不支持的句子标红或删掉。结构化输出（JSON: claim + citation）比自由文本更可靠。</p><ul><li>提示层：明确“只能使用给定片段，无法支持就说不知道”，并给引用格式。</li><li>校验层：用小模型或 NLI 模型逐句验蕴含；引用不存在的编号直接判失败。</li><li>展示层：点击引用跳到原文位置（页码/段落锚点），让用户能核对。</li><li>评估：引用准确率（引用的片段确实支持该句）与覆盖率（有主张没引用）分开统计。</li></ul></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

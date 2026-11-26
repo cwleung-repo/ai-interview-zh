@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在生产系统中，如何让 agent 的动作可逆，或至少可审计？ · Agent 与工具调用 · AI 工程面试题库</title>
+<meta name="description" content="在生产系统中，如何让 agent 的动作可逆，或至少可审计？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "在生产系统中，如何让 agent 的动作可逆，或至少可审计？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "Agent 与工具调用", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "在生产系统中，如何让 agent 的动作可逆，或至少可审计？", "acceptedAnswer": {"@type": "Answer", "text": "把动作分成可逆与不可逆：查询、草稿、预演可自由执行；写入、支付、删除必须先落“意图记录”（谁、要做什么、参数、依据），执行后写“结果记录”，并支持撤销（软删、补偿事务、版本回滚）。审计日志要不可篡改、可追溯到具体模型版本与提示。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t3)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t3.html">Agent 与工具调用</a></li>
+<li aria-current="page">第 10 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Agent 与工具调用 · Question 10</p>
+<h1 class="q-title">在生产系统中，如何让 agent 的动作可逆，或至少可审计？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">3 家公司出现</span>
+<span class="iv-min">0 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t3.html">Agent 与工具调用</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t3.html">Agent 与工具调用</a></dd></div>
+<div><dt>出现于</dt><dd>3 家公司</dd></div>
+<div><dt>原文答案</dt><dd>0 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>把动作分成可逆与不可逆：查询、草稿、预演可自由执行；写入、支付、删除必须先落“意图记录”（谁、要做什么、参数、依据），执行后写“结果记录”，并支持撤销（软删、补偿事务、版本回滚）。审计日志要不可篡改、可追溯到具体模型版本与提示。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>两阶段：prepare（生成计划与影响面）→ commit（人工或策略批准后执行）。</li><li>幂等键 + 补偿操作（取消订单、回滚部署）让重试安全。</li><li>审计字段：trace_id、actor、model、prompt_version、tool、params、diff、结果。</li><li>高风险工具默认关闭，按租户/角色白名单开启。</li></ul></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<p class="iv-empty">这道题在源仓库中没有附答案链接，可先用上面的要点自查，再顺着主题页补齐相关知识点。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t3q6.html">为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？</a></li><li><a href="../q/t3q7.html">agent 如何决定是调用工具还是用自己的知识回答？</a></li><li><a href="../q/t3q8.html">什么能让 agent 循环正确终止？如何限制成本和步数？</a></li><li><a href="../q/t3q10.html">为一个会执行有后果动作的 agent 设计人在环路…</a></li><li><a href="../q/t3q11.html">你的 agent 跑久了之后跑偏了，还很自信地在做错的事。请诊断。</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t3q8.html" rel="prev"><span>上一题</span>什么能让 agent 循环正确终止？如何限制成本和步数？</a>
+<a class="iv-pager-up" href="../topics/t3.html"><span>主题</span>Agent 与工具调用</a>
+<a href="../q/t3q10.html" rel="next"><span>下一题</span>为一个会执行有后果动作的 agent 设计人在环路…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

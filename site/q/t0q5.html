@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>字节对编码(Byte Pair Encoding)… · LLM 内部机制与架构 · AI 工程面试题库</title>
+<meta name="description" content="字节对编码(Byte Pair Encoding)是如何工作的？它有哪些失效场景(数字、代码、非拉丁文字)？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "字节对编码(Byte Pair Encoding)是如何工作的？它有哪些失效场景(数字、代码、非拉丁文字)？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "LLM 内部机制与架构", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "字节对编码(Byte Pair Encoding)是如何工作的？它有哪些失效场景(数字、代码、非拉丁文字)？", "acceptedAnswer": {"@type": "Answer", "text": "BPE 从字符（或字节）出发，反复合并语料中最高频的相邻符号对，直到词表达到目标大小；编码时按学到的合并顺序贪心应用。失效点在数字切分不一致、代码缩进与标识符、以及非拉丁文字（每字符消耗多个 token）。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t0)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t0.html">LLM 内部机制与架构</a></li>
+<li aria-current="page">第 6 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">LLM 内部机制与架构 · Question 06</p>
+<h1 class="q-title q-long">字节对编码(Byte Pair Encoding)是如何工作的？它有哪些失效场景(数字、代码、非拉丁文字)？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">3 家公司出现</span>
+<span class="iv-min">2 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t0.html">LLM 内部机制与架构</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t0.html">LLM 内部机制与架构</a></dd></div>
+<div><dt>出现于</dt><dd>3 家公司</dd></div>
+<div><dt>原文答案</dt><dd>2 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>BPE 从字符（或字节）出发，反复合并语料中最高频的相邻符号对，直到词表达到目标大小；编码时按学到的合并顺序贪心应用。失效点在数字切分不一致、代码缩进与标识符、以及非拉丁文字（每字符消耗多个 token）。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>训练：统计相邻 pair 频次 → 合并最高频 pair → 更新语料 → 重复 V 次；合并表就是词表，顺序不能乱。</li><li>数字：&#x27;1234&#x27; 与 &#x27;1235&#x27; 可能切成不同片段，模型学不到位值关系，算术容易错；缓解是数字逐位切分或加分隔符。</li><li>代码：缩进空格、下划线命名、长标识符被切碎；中文/泰文等每字常占 1–3 个 token，等于变相缩短上下文、抬高成本。</li><li>字节级 BPE（GPT-2 起）保证任何输入都可编码、无 UNK，但 UTF-8 多字节字符仍会被切成多个 token。</li></ul></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/huggingface.html">Hugging Face</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/bpe-in-llms" target="_blank" rel="noopener">字节对编码</a><span class="iv-src">Outcome School</span></li><li><a href="https://www.youtube.com/watch?v=sK2s9I84EVI" target="_blank" rel="noopener">大语言模型(LLM)中的分词</a><span class="iv-src">YouTube</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t0q2.html">什么是多查询注意力(MQA)和分组查询注意力(GQA)…</a></li><li><a href="../q/t0q3.html">什么是多头潜在注意力(MLA)？DeepSeek 为什么要引入它？</a></li><li><a href="../q/t0q4.html">解释 FlashAttention。它并没有减少 FLOPs，为什么…</a></li><li><a href="../q/t0q6.html">Transformer 中的位置编码是什么？它是如何演进的…</a></li><li><a href="../q/t0q7.html">解释 RoPE，以及位置插值 / YaRN 如何把上下文扩展到训练长…</a></li><li><a href="../q/t0q8.html">Chinchilla 缩放定律讲了什么？它与早期关于缩放的直觉有何不…</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t0q4.html" rel="prev"><span>上一题</span>解释 FlashAttention。它并没有减少 FLOPs，为什么…</a>
+<a class="iv-pager-up" href="../topics/t0.html"><span>主题</span>LLM 内部机制与架构</a>
+<a href="../q/t0q6.html" rel="next"><span>下一题</span>Transformer 中的位置编码是什么？它是如何演进的…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

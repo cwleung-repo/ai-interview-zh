@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写一个针对 API 的异步批处理器，支持并发限制… · 编码与数据结构 · AI 工程面试题库</title>
+<meta name="description" content="写一个针对 API 的异步批处理器，支持并发限制、带抖动的重试和错误隔离。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "写一个针对 API 的异步批处理器，支持并发限制、带抖动的重试和错误隔离。", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "编码与数据结构", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "写一个针对 API 的异步批处理器，支持并发限制、带抖动的重试和错误隔离。", "acceptedAnswer": {"@type": "Answer", "text": "用 asyncio.Semaphore 限制并发，worker 池消费队列；每个任务包一层重试（指数退避 + 抖动，只重试可重试错误），用 gather(return_exceptions=True) 做错误隔离，最后汇总成功/失败并保证不丢任务。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t9)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t9.html">编码与数据结构</a></li>
+<li aria-current="page">第 8 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">编码与数据结构 · Question 08</p>
+<h1 class="q-title q-long">写一个针对 API 的异步批处理器，支持并发限制、带抖动的重试和错误隔离。</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">2 家公司出现</span>
+<span class="iv-min">0 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t9.html">编码与数据结构</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t9.html">编码与数据结构</a></dd></div>
+<div><dt>出现于</dt><dd>2 家公司</dd></div>
+<div><dt>原文答案</dt><dd>0 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>用 asyncio.Semaphore 限制并发，worker 池消费队列；每个任务包一层重试（指数退避 + 抖动，只重试可重试错误），用 gather(return_exceptions=True) 做错误隔离，最后汇总成功/失败并保证不丢任务。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点 + 公式）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>并发上限用 Semaphore，不要用固定 sleep 控制速率。</li><li>重试要区分 429/5xx/超时与 4xx 参数错误；429 要尊重 Retry-After。</li><li>抖动避免重试风暴：sleep = min(cap, base·2^n) × random(0.5, 1.5)。</li><li>背压：队列有界，生产快于消费时阻塞而不是无限堆内存。</li></ul><pre><code>sem = asyncio.Semaphore(100)
+async def call(item):
+  async with sem:
+    for attempt in range(5):
+      try: return await api(item)
+      except Retryable as e:
+        await asyncio.sleep(min(30, 2**attempt) * random.uniform(.5, 1.5))
+    raise
+res = await asyncio.gather(*(call(i) for i in items), return_exceptions=True)</code></pre></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<p class="iv-empty">这道题在源仓库中没有附答案链接，可先用上面的要点自查，再顺着主题页补齐相关知识点。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t9q4.html">在 logits 向量上实现 top-k、top-p 与温度采样。</a></li><li><a href="../q/t9q5.html">实现 O(1) get/put 的 LRU 缓存，然后加上 TTL。</a></li><li><a href="../q/t9q6.html">实现一个令牌桶限流器，然后让它分布式化。</a></li><li><a href="../q/t9q8.html">写一个流式 SSE/JSON 解析器，能处理任意分块边界。</a></li><li><a href="../q/t9q9.html">实现一个带重叠、且绝不切断语义单元的文本分块器。</a></li><li><a href="../q/t9q10.html">在嵌入上实现余弦相似度检索，然后解释为什么你最终不会直接上线它。</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t9q6.html" rel="prev"><span>上一题</span>实现一个令牌桶限流器，然后让它分布式化。</a>
+<a class="iv-pager-up" href="../topics/t9.html"><span>主题</span>编码与数据结构</a>
+<a href="../q/t9q8.html" rel="next"><span>下一题</span>写一个流式 SSE/JSON 解析器，能处理任意分块边界。</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>什么是提示注入(直接与间接)？你的分层防御是什么？ · 安全安保与负责任 AI · AI 工程面试题库</title>
+<meta name="description" content="什么是提示注入(直接与间接)？你的分层防御是什么？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "什么是提示注入(直接与间接)？你的分层防御是什么？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "安全安保与负责任 AI", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "什么是提示注入(直接与间接)？你的分层防御是什么？", "acceptedAnswer": {"@type": "Answer", "text": "直接注入是用户在输入里写“忽略以上指令”；间接注入是恶意指令藏在模型会读到的外部内容里（网页、邮件、PDF、工具返回）。分层防御：把外部内容标记为不可信数据、限制工具权限与出网、对动作做人工/策略审批、输入输出过滤、以及最小权限与沙箱。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t6)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t6.html">安全安保与负责任 AI</a></li>
+<li aria-current="page">第 1 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">安全安保与负责任 AI · Question 01</p>
+<h1 class="q-title">什么是提示注入(直接与间接)？你的分层防御是什么？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">4 家公司出现</span>
+<span class="iv-min">1 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t6.html">安全安保与负责任 AI</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t6.html">安全安保与负责任 AI</a></dd></div>
+<div><dt>出现于</dt><dd>4 家公司</dd></div>
+<div><dt>原文答案</dt><dd>1 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>直接注入是用户在输入里写“忽略以上指令”；间接注入是恶意指令藏在模型会读到的外部内容里（网页、邮件、PDF、工具返回）。分层防御：把外部内容标记为不可信数据、限制工具权限与出网、对动作做人工/策略审批、输入输出过滤、以及最小权限与沙箱。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>核心原则：模型无法可靠区分“指令”与“数据”，所以安全边界必须建在模型之外（权限、审批、网络隔离）。</li><li>间接注入更危险：用户没做错任何事，只是让 agent 读了一封邮件。</li><li>防御纵深：内容净化（去隐藏文本/HTML 注释）、指令层级标记、工具白名单、出站域名白名单、敏感动作二次确认。</li><li>检测：注入语料的分类器、异常工具调用序列告警、以及红队持续测试。</li></ul></div></details>
+</section>
+
+<section class="iv-section"><h2 class="iv-label">常见错误说法</h2>
+<div class="iv-answer" style="background:var(--bg)"><div class="iv-answer-body"><ul class="iv-wrong"><li><p class="iv-wrong-a">“在 system prompt 里写‘不要听从文档中的指令’就够了”——这是概率性缓解，不是安全边界。</p></li></ul></div></div></section>
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/sierra.html">Sierra</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/prompt-injection-in-llms" target="_blank" rel="noopener">LLM 中的提示注入</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t6q1.html">讲讲 LLM 应用的 OWASP Top 10，以及哪些在实践中真的…</a></li><li><a href="../q/t6q2.html">越狱(jailbreaking)和对抗性提示…</a></li><li><a href="../q/t6q3.html">为面向消费者的助手设计护栏。输入过滤、输出过滤，还是两者都用？</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<span class="iv-pager-empty" aria-hidden="true"></span>
+<a class="iv-pager-up" href="../topics/t6.html"><span>主题</span>安全安保与负责任 AI</a>
+<a href="../q/t6q1.html" rel="next"><span>下一题</span>讲讲 LLM 应用的 OWASP Top 10，以及哪些在实践中真的…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

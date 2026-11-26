@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在推理服务中比较 FP16、BF16、FP8、INT8… · 推理服务与 GPU 性能 · AI 工程面试题库</title>
+<meta name="description" content="在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "推理服务与 GPU 性能", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里？", "acceptedAnswer": {"@type": "Answer", "text": "FP16 动态范围小、易溢出；BF16 与 FP32 同指数范围，训练首选；FP8（E4M3 权重/激活、E5M2 梯度）在 H100 上翻倍算力；INT8 需要逐通道 scale；INT4/NF4 一般只压权重、配 group scale；FP4（NVFP4）靠块级缩放，精度损失最大但显存最省。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t1)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t1.html">推理服务与 GPU 性能</a></li>
+<li aria-current="page">第 6 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">推理服务与 GPU 性能 · Question 06</p>
+<h1 class="q-title q-long">在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">5 家公司出现</span>
+<span class="iv-min">1 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t1.html">推理服务与 GPU 性能</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t1.html">推理服务与 GPU 性能</a></dd></div>
+<div><dt>出现于</dt><dd>5 家公司</dd></div>
+<div><dt>原文答案</dt><dd>1 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>FP16 动态范围小、易溢出；BF16 与 FP32 同指数范围，训练首选；FP8（E4M3 权重/激活、E5M2 梯度）在 H100 上翻倍算力；INT8 需要逐通道 scale；INT4/NF4 一般只压权重、配 group scale；FP4（NVFP4）靠块级缩放，精度损失最大但显存最省。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点 + 公式）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>每降一档的主要风险：激活离群值（需 per-token/per-channel scale 或 SmoothQuant）、累积误差、以及 kernel/硬件支持不完整。</li><li>权重-only 量化（INT4/NF4）对生成质量影响小，因为 decode 是带宽受限，收益直接体现在吞吐。</li><li>KV 缓存量化（FP8/INT8）能显著提升并发，但要小心长上下文下的误差累积。</li><li>训练侧：BF16 是默认；FP8 训练需要延迟缩放（delayed scaling）和 amax 历史，否则梯度下溢。</li></ul><pre><code>显存 ↓ 与算力 ↑ 不是同一件事
+H100 SXM: BF16 ~990 TFLOPS, FP8 ~1979 TFLOPS, HBM 3.35 TB/s</code></pre></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/character-ai.html">Character.AI</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-model-quantization-work" target="_blank" rel="noopener">模型量化是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t1q2.html">PagedAttention 是如何工作的？它解决了 KV 缓存的什…</a></li><li><a href="../q/t1q3.html">什么是投机解码(speculative decoding)…</a></li><li><a href="../q/t1q4.html">解释前缀缓存 / 提示缓存(prompt caching)。…</a></li><li><a href="../q/t1q6.html">比较张量并行、流水线并行、数据并行、序列并行与专家并行。…</a></li><li><a href="../q/t1q7.html">估算服务一个 70B 模型所需的 GPU 显存：权重、KV 缓存…</a></li><li><a href="../q/t1q8.html">什么是 TTFT、TPOT、ITL 和吞吐？它们之间如何相互权衡？</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t1q4.html" rel="prev"><span>上一题</span>解释前缀缓存 / 提示缓存(prompt caching)。…</a>
+<a class="iv-pager-up" href="../topics/t1.html"><span>主题</span>推理服务与 GPU 性能</a>
+<a href="../q/t1q6.html" rel="next"><span>下一题</span>比较张量并行、流水线并行、数据并行、序列并行与专家并行。…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

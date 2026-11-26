@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon (AWS) 面试题 · AI 工程面试题库</title>
+<meta name="description" content="Amazon (AWS) 的 AI 工程面试题：23 道，覆盖 8 个板块。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--ink)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../companies.html">公司</a></li><li aria-current="page">Amazon (AWS)</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">大型科技公司的 AI 组织</p>
+<h1>Amazon (AWS)</h1>
+<p class="iv-meta"><span class="iv-kind">23 道专属题</span><span class="iv-min">8 个板块</span><span class="iv-min">6 道通用题</span></p>
+</header>
+<div class="notes">
+<div class="note"><h2>覆盖岗位</h2><p>应用科学家(I/II/III)、机器学习工程师、数据科学家、软件开发工程师(AI/ML)、GenAI 专家解决方案架构师、应用 AI 工程师(Bedrock、Q、SageMaker)。</p></div>
+<div class="note"><h2>公开报道的面试流程</h2><p>在线测评或电话面 → 4–6 轮的 onsite “loop”，每一轮都锚定领导力准则：两轮编码、一轮 ML 广度、一轮 ML 深度 / 研究深挖或 ML 系统设计、一轮 bar-raiser。应用科学家流程还会加一场研究报告。</p></div>
+<div class="note"><h2>另外还要准备</h2><p><a href="../index.html">跨公司通用面试题</a>中标注 Amazon 的题目，分布在 <a href="../topics/t0.html">LLM 内部机制与架构</a>、<a href="../topics/t1.html">推理服务与 GPU 性能</a>、<a href="../topics/t8.html">AI 系统设计</a>、<a href="../topics/t9.html">编码与数据结构</a>。</p></div>
+</div>
+<section class="iv-section"><h2 class="iv-label">这家公司会问的通用题（6）</h2>
+<div class="iv-related"><ul><li><a href="../q/t0q1.html">什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</a></li><li><a href="../q/t1q6.html">比较张量并行、流水线并行、数据并行、序列并行与专家并行。什么时候要把它们组合使用？</a></li><li><a href="../q/t1q11.html">你如何把 LLM 服务成本降低 10 倍？请列举所有可用的手段并排序。</a></li><li><a href="../q/t1q12.html">一次没有改模型的发布之后，p99 延迟翻倍了。请讲讲你的排查思路。</a></li><li><a href="../q/t8q0.html">设计一个面向 1000 万文档、带每用户权限的企业级 RAG 助手。</a></li><li><a href="../q/t9q0.html">用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。</a></li></ul></div></section>
+<section class="iv-section" style="margin-top:30px"><h2 class="iv-label">公司专属题</h2>
+<p class="iv-try" style="border-top:0">按主题分组。没有答案链接的题目，可以先到「10 大主题」里找对应的通用解法。</p></section>
+<section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">编码与数据结构</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q1"><span class="q-num">01</span>
+<div class="q-body"><h3>在内存有界的前提下，找出一个高吞吐事件流中出现频率最高的 top-K 元素。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q2"><span class="q-num">02</span>
+<div class="q-body"><h3>不用乘法、除法和取模实现两个整数相除。求图中连通分量的数量。检查括号是否匹配。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">机器学习与深度学习基础</h2><p>12 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q3"><span class="q-num">03</span>
+<div class="q-body"><h3>线性回归的闭式解是什么？什么时候你改用梯度下降？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-gradient-descent" target="_blank" rel="noopener">梯度下降背后的数学</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q4"><span class="q-num">04</span>
+<div class="q-body"><h3>逻辑回归中 L1 与 L2 正则化有什么区别？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/regularization-in-machine-learning" target="_blank" rel="noopener">机器学习中的正则化：L1 vs L2</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q5"><span class="q-num">05</span>
+<div class="q-body"><h3>写出逻辑回归的损失函数，并证明它有全局最小值。</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-cross-entropy-loss" target="_blank" rel="noopener">交叉熵损失背后的数学</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/linear-regression-vs-logistic-regression" target="_blank" rel="noopener">线性回归 vs 逻辑回归</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q6"><span class="q-num">06</span>
+<div class="q-body"><h3>KL 散度损失与交叉熵损失有何不同？与对比损失呢？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-cross-entropy-loss" target="_blank" rel="noopener">交叉熵损失背后的数学</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/contrastive-learning" target="_blank" rel="noopener">什么是对比学习？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q7"><span class="q-num">07</span>
+<div class="q-body"><h3>bagging 和 boosting 有何不同？XGBoost 与随机森林在计算上的差异是什么？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q8"><span class="q-num">08</span>
+<div class="q-body"><h3>解释偏差-方差权衡、交叉验证和维度灾难。</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q9"><span class="q-num">09</span>
+<div class="q-body"><h3>GRU 单元是如何工作的？它们如何应对梯度消失？BiLSTM 是如何工作的？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/recurrent-neural-network" target="_blank" rel="noopener">循环神经网络(RNN)</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q10"><span class="q-num">10</span>
+<div class="q-body"><h3>机器学习模型中的注意力是什么？如果把神经网络里所有隐藏层都去掉会发生什么？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-attention-qkv" target="_blank" rel="noopener">注意力背后的数学：Q、K、V</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q11"><span class="q-num">11</span>
+<div class="q-body"><h3>讨论精确率、召回率与 F1：什么时候你会优先其中一个？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/precision-vs-recall" target="_blank" rel="noopener">精确率 vs 召回率</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q12"><span class="q-num">12</span>
+<div class="q-body"><h3>你如何处理数据不均衡、共线性、特征选择与正则化？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/feature-engineering" target="_blank" rel="noopener">机器学习中的特征工程</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/regularization-in-machine-learning" target="_blank" rel="noopener">机器学习中的正则化：L1 vs L2</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q13"><span class="q-num">13</span>
+<div class="q-body"><h3>解释你会如何设计并评估一次 A/B 测试。什么是 p 值，在这里你如何解读它？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q14"><span class="q-num">14</span>
+<div class="q-body"><h3>什么是极大似然估计？它与贝叶斯推断有何不同？</h3><div class="q-tags"><span class="iv-tag">机器学习与深度学习基础</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">LLM 内部机制与架构</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q15"><span class="q-num">15</span>
+<div class="q-body"><h3>为什么 Transformer 在语言建模上取代了 RNN?KV 缓存在推理时到底换来了什么？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-do-rnns-and-transformers-differ" target="_blank" rel="noopener">RNN 与 Transformer 有何不同？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/kv-cache-in-llms" target="_blank" rel="noopener">什么是 LLM 中的 KV Cache？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">推理服务与 GPU 性能</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q16"><span class="q-num">16</span>
+<div class="q-body"><h3>某客户在 Bedrock 上的工作负载太贵了。在质量损失可接受的前提下大幅削减推理成本。</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://www.youtube.com/watch?v=jV2sCj4lHYk" target="_blank" rel="noopener">LLM 推理优化</a><span class="iv-src">YouTube</span></li><li><a href="https://outcomeschool.com/blog/llm-inference-optimization" target="_blank" rel="noopener">LLM 推理优化</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">Agent 与工具调用</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q17"><span class="q-num">17</span>
+<div class="q-body"><h3>设计一个操作网页浏览器完成多步任务的 agent。你如何让它可靠到可以上线？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-do-computer-use-agents-work" target="_blank" rel="noopener">Computer-Use Agent 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">AI 系统设计</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q18"><span class="q-num">18</span>
+<div class="q-body"><h3>设计一个多租户推理平台，为数千客户 提供多种基础模型服务(Bedrock 那样的形态)。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q19"><span class="q-num">19</span>
+<div class="q-body"><h3>你会如何设计一个给用户推荐书的推荐系统？你会如何建模一个仓库库存问题？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">评估与可观测性</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q20"><span class="q-num">20</span>
+<div class="q-body"><h3>你会如何判断一个 LLM 驱动的助手已经可以发布给数百万客户？</h3><div class="q-tags"><span class="iv-tag">评估与可观测性</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">行为与文化</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q21"><span class="q-num">21</span>
+<div class="q-body"><h3>讲一次你不认同团队技术方向的经历。你做了什么？(Have Backbone;Disagree and Commit)</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q22"><span class="q-num">22</span>
+<div class="q-body"><h3>讲讲你最重大的一次失败。发生了什么，之后你改了什么？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q23"><span class="q-num">23</span>
+<div class="q-body"><h3>讲一次你看到机会、做了超出初始范围的事情的经历。(Think Big)</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section>
+</article>
+<nav class="iv-pager" aria-label="公司翻页"><a href="../companies.html"><span>全部</span>公司索引</a><span></span><span></span></nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

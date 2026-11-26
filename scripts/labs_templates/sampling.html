@@ -1,0 +1,36 @@
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article lab">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../labs.html">可视化</a></li><li aria-current="page">采样实验室</li></ol></nav>
+<header class="iv-q-head"><p class="iv-kicker">Lab 03 · 解码</p><h1>采样实验室</h1>
+<p class="iv-meta"><span class="iv-kind">交互</span><span class="iv-min">温度 → top-k → top-p → 重归一化</span></p></header>
+<p class="iv-lede">同一组 logits，温度改变分布陡峭度，top-k 按数量截断，top-p 按累积概率截断。拖动滑块看谁被留下、概率如何重新分配。</p>
+
+<section class="lab-panel" aria-label="采样参数">
+<div class="lab-controls">
+<label class="lab-field"><span>温度 T <output id="smTOut">0.90</output></span><input id="smT" type="range" min="0.05" max="2" step="0.05" value="0.9"></label>
+<label class="lab-field"><span>top-k <output id="smKOut">12</output></span><input id="smK" type="range" min="1" max="12" value="12"></label>
+<label class="lab-field"><span>top-p <output id="smPOut">1.00</output></span><input id="smP" type="range" min="0.1" max="1" step="0.05" value="1"></label>
+<label class="lab-field" style="align-self:end"><span>采样</span><button class="btn btn-solid" id="smDraw" type="button">抽 30 个 token</button></label>
+</div>
+<dl class="lab-stats">
+<div><dt>有效候选</dt><dd id="smN">—</dd></div>
+<div><dt>最大概率</dt><dd id="smMax">—</dd></div>
+<div><dt>熵</dt><dd id="smEnt">—</dd></div>
+</dl>
+<div class="lab-chart" id="smChart" aria-live="polite"></div>
+<p class="lab-legend"><span><i class="k-a"></i>保留</span><span><i class="k-c"></i>被截断</span></p>
+<div class="lab-samples" id="smSamples" aria-live="polite"></div>
+<p class="lab-note">固定 12 个候选 logits；真实模型词表是 10 万级，截断的效果只会更极端。</p>
+</section>
+
+<section class="lab-how"><h2>怎么读</h2><ul>
+<li>T → 0 时退化为 greedy；T = 1 保持原分布；T &gt; 1 把尾部拉起来。</li>
+<li>先把 top-p 拉到 0.9：长尾被切掉，但头部相对比例不变。</li>
+<li>高温 + 低 top-p 等于“先放大噪声再硬截断”，往往比单用其一更不稳定。</li>
+</ul></section>
+<section class="iv-related"><h2>相关题目</h2><ul>
+<li><a href="../q/t0q11.html">比较贪婪、束搜索、top-k、top-p 与温度</a></li>
+<li><a href="../q/t9q4.html">实现 top-k / top-p / 温度采样</a></li>
+</ul></section>
+</article></main>
+<script src="../assets/lab-sampling.js" defer></script>

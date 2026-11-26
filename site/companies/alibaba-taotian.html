@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿里巴巴(淘天、阿里云) 面试题 · AI 工程面试题库</title>
+<meta name="description" content="阿里巴巴(淘天、阿里云) 的 AI 工程面试题：27 道，覆盖 7 个板块。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--ink)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../companies.html">公司</a></li><li aria-current="page">阿里巴巴(淘天、阿里云)</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">中国互联网公司</p>
+<h1>阿里巴巴(淘天、阿里云)</h1>
+<p class="iv-meta"><span class="iv-kind">27 道专属题</span><span class="iv-min">7 个板块</span><span class="iv-min">15 道通用题</span></p>
+</header>
+<div class="notes">
+<div class="note"><h2>覆盖岗位</h2><p>淘天 / 淘宝闪购 Agent 算法、阿里云 AI 平台与瓴羊 Runtime 工程、夸克与千问的应用开发、阿里国际(Accio)搜索与云沙箱、钉钉 AI 工程。</p></div>
+<div class="note"><h2>公开报道的面试流程</h2><p>两到三轮技术面 + 资深主管交叉面 + HR。阿里云偏 Runtime、权限与可观测，淘天偏业务链路、AI Coding、并发与线上指标，夸克 / 千问是模型与应用双栈，阿里国际更强调搜索、云沙箱、长任务与成本。现场用 AI Coding 完成功能后人工 Review 已经出现在阿里云的样本里。</p></div>
+<div class="note"><h2>另外还要准备</h2><p><a href="../index.html">跨公司通用面试题</a>中标注阿里巴巴的题目，分布在 <a href="../topics/t0.html">LLM 内部机制与架构</a>、<a href="../topics/t1.html">推理服务与 GPU 性能</a>、<a href="../topics/t2.html">RAG 与检索</a>、<a href="../topics/t3.html">Agent 与工具调用</a>、<a href="../topics/t4.html">微调后训练与对齐</a>、<a href="../topics/t5.html">评估与可观测性</a>、<a href="../topics/t8.html">AI 系统设计</a>、<a href="../topics/t9.html">编码与数据结构</a>。</p></div>
+</div>
+<section class="iv-section"><h2 class="iv-label">这家公司会问的通用题（15）</h2>
+<div class="iv-related"><ul><li><a href="../q/t0q1.html">什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</a></li><li><a href="../q/t0q9.html">什么是混合专家(mixture-of-experts)架构？它如何在不增加 FLOPs …</a></li><li><a href="../q/t1q0.html">解释 prefill 和 decode 两个阶段。为什么 prefill 受算力限制，而…</a></li><li><a href="../q/t2q2.html">什么是重排序器(reranker)？何时该用它？交叉编码器(cross-encoder)…</a></li><li><a href="../q/t3q2.html">结构化输出与函数调用(function calling)有什么区别？</a></li><li><a href="../q/t3q3.html">什么是 MCP(Model Context Protocol)…</a></li><li><a href="../q/t3q5.html">多 agent 编排是如何工作的？它在什么时候会崩溃？</a></li><li><a href="../q/t3q9.html">在生产系统中，如何让 agent 的动作可逆，或至少可审计？</a></li><li><a href="../q/t3q10.html">为一个会执行有后果动作的 agent 设计人在环路(human-in-the-loop)…</a></li><li><a href="../q/t4q1.html">什么是 DPO？为什么它在许多实验室取代了基于 PPO 的 RLHF？什么时候在线 RL…</a></li><li><a href="../q/t4q2.html">解释 GRPO，以及为什么在大规模下去掉价值网络很重要。</a></li><li><a href="../q/t4q7.html">提示、RAG 还是微调：请给出你的决策框架，并附上成本与延迟。</a></li><li><a href="../q/t5q9.html">如何评估一个 agent(相对于单次模型回答)？</a></li><li><a href="../q/t8q0.html">设计一个面向 1000 万文档、带每用户权限的企业级 RAG 助手。</a></li><li><a href="../q/t8q1.html">设计一个代码助手：仓库索引、上下文组装、编辑应用、评估。</a></li></ul></div></section>
+<section class="iv-section" style="margin-top:30px"><h2 class="iv-label">公司专属题</h2>
+<p class="iv-try" style="border-top:0">按主题分组。没有答案链接的题目，可以先到「10 大主题」里找对应的通用解法。</p></section>
+<section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">LLM 内部机制与架构</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q1"><span class="q-num">01</span>
+<div class="q-body"><h3>MoE 的原理是什么？负载均衡怎么做？MoE 是 batch 维度、token 维度还是别的维度的激活？用 Python 手撕一个 MoE。</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/mixture-of-experts" target="_blank" rel="noopener">混合专家(Mixture of Experts)详解</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q2"><span class="q-num">02</span>
+<div class="q-body"><h3>千卡训练里常见的 NCCL timeout 一般怎么定位和解决？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q3"><span class="q-num">03</span>
+<div class="q-body"><h3>算子融合(fusion)怎么做？为什么做了 fusion 反而性能下降？Hopper 架构的 warp specialization 是什么？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/decoding-flash-attention" target="_blank" rel="noopener">解读 LLM 中的 Flash Attention</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q4"><span class="q-num">04</span>
+<div class="q-body"><h3>KV Cache 在 prefill 与 decode 阶段的读写差异是什么？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/kv-cache-in-llms" target="_blank" rel="noopener">什么是 LLM 中的 KV Cache？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/prefill-vs-decode-llm-inference-optimization" target="_blank" rel="noopener">Prefill 与 Decode:LLM 推理优化</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">微调后训练与对齐</h2><p>6 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q5"><span class="q-num">05</span>
+<div class="q-body"><h3>SFT 之后还有哪些 post-training，各自目的是什么？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-fine-tuning-work" target="_blank" rel="noopener">微调是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q6"><span class="q-num">06</span>
+<div class="q-body"><h3>GRPO 的 loss 怎么讲？为什么选 GRPO 而不是继续用 SFT？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/group-relative-policy-optimization-grpo" target="_blank" rel="noopener">组相对策略优化(GRPO)</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q7"><span class="q-num">07</span>
+<div class="q-body"><h3>Advantage 是怎么算的？为什么不能直接用 reward？重要性采样为什么需要？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q8"><span class="q-num">08</span>
+<div class="q-body"><h3>信用分配：GRPO 里序列级奖励怎么分配到每个 token？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q9"><span class="q-num">09</span>
+<div class="q-body"><h3>DPO 相对 PPO 的核心改进与优势？训练时有哪些注意事项？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/direct-preference-optimization-dpo" target="_blank" rel="noopener">直接偏好优化(DPO)</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q10"><span class="q-num">10</span>
+<div class="q-body"><h3>什么时候该调 Prompt、什么时候该直接微调？面对客户需求怎么判断用 RAG 还是微调？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">RAG 与检索</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q11"><span class="q-num">11</span>
+<div class="q-body"><h3>文档切块、BM25 + 向量混合检索、多跳检索、Query Rewrite 怎么串成一条链路？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-hybrid-search-work" target="_blank" rel="noopener">混合检索(Hybrid Search)是如何工作的？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/how-does-a-reranker-work" target="_blank" rel="noopener">Reranker 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q12"><span class="q-num">12</span>
+<div class="q-body"><h3>带 ACL 和 PII 的企业知识库怎么设计？权限过滤放在哪一层？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q13"><span class="q-num">13</span>
+<div class="q-body"><h3>长对话摘要与 Harness 的数据流怎么配合？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-context-compaction-work" target="_blank" rel="noopener">上下文压缩是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">Agent 与工具调用</h2><p>5 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q14"><span class="q-num">14</span>
+<div class="q-body"><h3>Agent Loop 与 Harness 的边界在哪？长任务怎么做 Early Stop？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/ai-agent-loop" target="_blank" rel="noopener">AI Agent 循环</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/harness-engineering-in-ai" target="_blank" rel="noopener">AI 中的 Harness 工程</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q15"><span class="q-num">15</span>
+<div class="q-body"><h3>MCP 与 A2A 是什么关系？多 Agent 之间的通信协议应该怎么设计？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/what-is-mcp-model-context-protocol" target="_blank" rel="noopener">什么是 MCP(Model Context Protocol)？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q16"><span class="q-num">16</span>
+<div class="q-body"><h3>模型返回的 Function Call 参数格式不对怎么办？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-function-calling-work-in-llms" target="_blank" rel="noopener">LLM 中的函数调用是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q17"><span class="q-num">17</span>
+<div class="q-body"><h3>多 Agent 协作相比单 Agent 的优势是什么？主 Agent 怎么动态识别并选择子 Agent？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/multi-agent-systems" target="_blank" rel="noopener">多 Agent 系统</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q18"><span class="q-num">18</span>
+<div class="q-body"><h3>Agent 评估体系包括哪些维度？planning 能力与 hallucination rate 分别怎么衡量？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/ai-agent-evaluation" target="_blank" rel="noopener">AI Agent 评估</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">AI 系统设计</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q19"><span class="q-num">19</span>
+<div class="q-body"><h3>设计一个代码评审 Agent：怎么保证它只提意见、不直接改代码？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q20"><span class="q-num">20</span>
+<div class="q-body"><h3>设计一个带 HITL、风险分级、熔断、沙箱与审计的电商 Agent 系统(淘宝闪购这类场景)。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q21"><span class="q-num">21</span>
+<div class="q-body"><h3>设计一个电商客服 Agent：怎么理解表达能力参差的用户的模糊需求？商品召不回时怎么回复？核心成功指标怎么定？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q22"><span class="q-num">22</span>
+<div class="q-body"><h3>设计一条从文档上传到可被检索的完整流水线，并说明增量更新的耗时花在哪些环节。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">编码与数据结构</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q23"><span class="q-num">23</span>
+<div class="q-body"><h3>现场用 AI Coding 完成一个功能，然后人工 Review：你怎么保证它改得对、没有破坏历史功能？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q24"><span class="q-num">24</span>
+<div class="q-body"><h3>Python 里 list 和 dict 常见操作的时间复杂度？为什么头部 insert 是 O(n)？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q25"><span class="q-num">25</span>
+<div class="q-body"><h3>MySQL 的联合索引为什么会失效？什么是最左前缀匹配？explain 关注哪些指标？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">行为与文化</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q26"><span class="q-num">26</span>
+<div class="q-body"><h3>阿里一边开源 Qwen、一边做商业云业务，你怎么看这个策略？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q27"><span class="q-num">27</span>
+<div class="q-body"><h3>讲一个你从模糊需求一路做到交付的项目，中间的判断依据是什么？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section>
+</article>
+<nav class="iv-pager" aria-label="公司翻页"><a href="../companies.html"><span>全部</span>公司索引</a><span></span><span></span></nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>
