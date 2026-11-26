@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthropic 面试题 · AI 工程面试题库</title>
+<meta name="description" content="Anthropic 的 AI 工程面试题：37 道，覆盖 10 个板块。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--ink)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../companies.html">公司</a></li><li aria-current="page">Anthropic</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">前沿 AI 实验室</p>
+<h1>Anthropic</h1>
+<p class="iv-meta"><span class="iv-kind">37 道专属题</span><span class="iv-min">10 个板块</span><span class="iv-min">13 道通用题</span></p>
+</header>
+<div class="notes">
+<div class="note"><h2>覆盖岗位</h2><p>Member of Technical Staff(MTS)、软件工程师(产品 / 基础设施 / API 服务)、研究工程师、研究科学家、应用 AI 工程师、前向部署工程师(Applied AI)、性能工程师(推理与算子)、产品工程师(Claude Code / Claude.ai)。</p></div>
+<div class="note"><h2>公开报道的面试流程</h2><p>招聘官初筛(约 30 分钟，有实质内容、会刷人)→ CodeSignal 式或现场编码测评(约 70–90 分钟，一道实操题分约 4 个递进层级)→ 约五轮的线上现场面试（virtual onsite）：项目深挖、一到两轮编码、系统设计，以及专门的价值观/文化轮。端到端时长：3 周到约 2 个月。部分 MLE 流程现在还包含一轮“AI 协作”轮：现场提供 Claude，考察你如何指挥与验证它。</p></div>
+<div class="note"><h2>另外还要准备</h2><p><a href="../index.html">跨公司通用面试题</a>中标注 Anthropic 的题目，分布在 <a href="../topics/t0.html">LLM 内部机制与架构</a>、<a href="../topics/t1.html">推理服务与 GPU 性能</a>、<a href="../topics/t3.html">Agent 与工具调用</a>、<a href="../topics/t5.html">评估与可观测性</a>、<a href="../topics/t6.html">安全安保与负责任 AI</a>、<a href="../topics/t8.html">AI 系统设计</a>、<a href="../topics/t9.html">编码与数据结构</a>。</p></div>
+</div>
+<section class="iv-section"><h2 class="iv-label">这家公司会问的通用题（13）</h2>
+<div class="iv-related"><ul><li><a href="../q/t0q8.html">Chinchilla 缩放定律讲了什么？它与早期关于缩放的直觉有何不同？</a></li><li><a href="../q/t0q15.html">请逐张量地讲一遍仅解码器(decoder-only)Transformer 的一次前向传…</a></li><li><a href="../q/t1q1.html">什么是连续批处理(在途批处理)？它为什么取代了静态批处理？</a></li><li><a href="../q/t3q4.html">工具多到什么程度算太多？如何设计 LLM 真的能正确使用的工具 schema？</a></li><li><a href="../q/t3q6.html">为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？</a></li><li><a href="../q/t5q2.html">在生产 RAG 系统中，如何检测和度量幻觉？</a></li><li><a href="../q/t5q3.html">设计一个回归门禁，用来决定 prompt 或模型改动能否上线。</a></li><li><a href="../q/t6q0.html">什么是提示注入(直接与间接)？你的分层防御是什么？</a></li><li><a href="../q/t6q4.html">什么是 Constitutional AI？它与 RLHF 有何不同？什么是 RLAIF…</a></li><li><a href="../q/t8q9.html">为面向数亿用户的消费级聊天助手设计服务栈。</a></li><li><a href="../q/t9q0.html">用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。</a></li><li><a href="../q/t9q6.html">实现一个令牌桶限流器，然后让它分布式化。</a></li><li><a href="../q/t9q7.html">写一个针对 API 的异步批处理器，支持并发限制、带抖动的重试和错误隔离。</a></li></ul></div></section>
+<section class="iv-section" style="margin-top:30px"><h2 class="iv-label">公司专属题</h2>
+<p class="iv-try" style="border-top:0">按主题分组。没有答案链接的题目，可以先到「10 大主题」里找对应的通用解法。</p></section>
+<section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">编码与数据结构</h2><p>12 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q1"><span class="q-num">01</span>
+<div class="q-body"><h3>为一个玩具版银行应用构建核心业务逻辑：一份会分四个递进层级不断加需求的 spec，对着一个黑盒评测器写。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q2"><span class="q-num">02</span>
+<div class="q-body"><h3>构建一个内存数据库：先做 SET/GET/DELETE，再做带过滤的扫描，再做带时间戳的 TTL，最后做文件压缩。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q3"><span class="q-num">03</span>
+<div class="q-body"><h3>实现一个任务调度器。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q4"><span class="q-num">04</span>
+<div class="q-body"><h3>用面向对象的方式实现一个管理课程、成绩与学生的系统。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q5"><span class="q-num">05</span>
+<div class="q-body"><h3>给定一个会抓取某个 URL 的辅助方法，写一个针对某个域名的爬虫：先同步，再改成异步。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q6"><span class="q-num">06</span>
+<div class="q-body"><h3>把嵌套的调用栈轨迹转换成离散的开始事件与结束事件。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q7"><span class="q-num">07</span>
+<div class="q-body"><h3>实现一个限流器。之后我每十分钟加一个需求：按租户限流、突发配额，然后是滑动窗口。你怎么保证代码不会塌掉？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q8"><span class="q-num">08</span>
+<div class="q-body"><h3>你需要对 50,000 篇文档各跑一次 LLM 调用。API 允许约 100 并发，偶尔会返回 429 和超时。请写出这段 Python。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q9"><span class="q-num">09</span>
+<div class="q-body"><h3>你会如何把这个任务并行化？(并发与数据修改在多个轮次里反复出现。)</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q10"><span class="q-num">10</span>
+<div class="q-body"><h3>SQL：写一条查询，找出最常被一起购买的前五组商品对。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q11"><span class="q-num">11</span>
+<div class="q-body"><h3>SQL：判断是否存在某个用户的订阅日期区间出现重叠。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q12"><span class="q-num">12</span>
+<div class="q-body"><h3>SQL：某次 ETL 错误每年都插入一条新的薪资记录，请返回每个员工的当前薪资。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">LLM 内部机制与架构</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q13"><span class="q-num">13</span>
+<div class="q-body"><h3>Transformer 模型的关键组件有哪些？各自为什么重要？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/decoding-transformer-architecture" target="_blank" rel="noopener">解读 Transformer 架构</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q14"><span class="q-num">14</span>
+<div class="q-body"><h3>讲讲无注意力(attention-free)的 Transformer 架构及其权衡。</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q15"><span class="q-num">15</span>
+<div class="q-body"><h3>走一遍与 LLM 架构相关的矩阵运算。</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-attention-qkv" target="_blank" rel="noopener">注意力背后的数学：Q、K、V</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">推理服务与 GPU 性能</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q16"><span class="q-num">16</span>
+<div class="q-body"><h3>设计一个批处理推理系统，让 100 个请求和 1 个请求花的时间一样。</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/continuous-batching-in-llms" target="_blank" rel="noopener">LLM 中的连续批处理</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q17"><span class="q-num">17</span>
+<div class="q-body"><h3>为 Claude 规模的 LLM API 设计服务栈。在不破坏 p99 延迟的前提下最大化 GPU 利用率。</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/llm-inference-optimization" target="_blank" rel="noopener">LLM 推理优化</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">Agent 与工具调用</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q18"><span class="q-num">18</span>
+<div class="q-body"><h3>对 Claude Code 这样的 agentic 编码工具来说，模型和 harness 哪个更重要？请设计这个循环。</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-claude-code-work" target="_blank" rel="noopener">Claude Code 是如何工作的？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/harness-engineering-in-ai" target="_blank" rel="noopener">AI 中的 Harness 工程</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q19"><span class="q-num">19</span>
+<div class="q-body"><h3>为一个编码 agent 设计工具面：有哪些工具、它们的 schema 长什么样、结果如何返回。</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-claude-code-work" target="_blank" rel="noopener">Claude Code 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">微调后训练与对齐</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q20"><span class="q-num">20</span>
+<div class="q-body"><h3>解释 Constitutional AI。相比原生 RLHF 它换来了什么，又没解决什么？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q21"><span class="q-num">21</span>
+<div class="q-body"><h3>缩放定律如何影响大模型的安全评估？</h3><div class="q-tags"><span class="iv-tag">微调后训练与对齐</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">AI 系统设计</h2><p>5 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q22"><span class="q-num">22</span>
+<div class="q-body"><h3>设计 Claude 的聊天服务。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q23"><span class="q-num">23</span>
+<div class="q-body"><h3>设计一个能让大语言模型在单个会话线程中处理多个问题的系统。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q24"><span class="q-num">24</span>
+<div class="q-body"><h3>设计一个面向 10 亿文档、100 万 QPS 的分布式搜索系统。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q25"><span class="q-num">25</span>
+<div class="q-body"><h3>为开发者设计安全、高效地访问 Anthropic 模型的 API。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q26"><span class="q-num">26</span>
+<div class="q-body"><h3>设计一个文件共享 / 分发系统。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">评估与可观测性</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q27"><span class="q-num">27</span>
+<div class="q-body"><h3>你会如何设计实验，来检验大语言模型中某个特定的涌现能力或偏见？</h3><div class="q-tags"><span class="iv-tag">评估与可观测性</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">安全安保与负责任 AI</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q28"><span class="q-num">28</span>
+<div class="q-body"><h3>你的 agent 会读取收到的邮件，并且能发送回复、搜索内部文档。请讲一遍提示注入的攻击面以及你的防御。</h3><div class="q-tags"><span class="iv-tag">安全安保与负责任 AI</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/prompt-injection-in-llms" target="_blank" rel="noopener">LLM 中的提示注入</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q29"><span class="q-num">29</span>
+<div class="q-body"><h3>你认为 AI 对齐领域最紧迫的未解难题是什么？</h3><div class="q-tags"><span class="iv-tag">安全安保与负责任 AI</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q30"><span class="q-num">30</span>
+<div class="q-body"><h3>你如何在性能优化与模型可解释性之间做取舍？</h3><div class="q-tags"><span class="iv-tag">安全安保与负责任 AI</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q31"><span class="q-num">31</span>
+<div class="q-body"><h3>你会如何设计一个确保 AI 模型安全部署到生产的系统？</h3><div class="q-tags"><span class="iv-tag">安全安保与负责任 AI</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">应用与前向部署场景</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q32"><span class="q-num">32</span>
+<div class="q-body"><h3>一家企业客户说他们的 RAG 知识助手里“Claude 幻觉太多”。你是负责该客户的应用工程师。前 48 小时会发生什么？</h3><div class="q-tags"><span class="iv-tag">应用与前向部署场景</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q33"><span class="q-num">33</span>
+<div class="q-body"><h3>你会如何让复杂的 AI 研究成果被非技术受众理解？</h3><div class="q-tags"><span class="iv-tag">应用与前向部署场景</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">行为与文化</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q34"><span class="q-num">34</span>
+<div class="q-body"><h3>讲一个你端到端负责过的项目。其中关键的技术决策是什么？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q35"><span class="q-num">35</span>
+<div class="q-body"><h3>为什么偏偏是 Anthropic？你在哪些地方不认同 Anthropic？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q36"><span class="q-num">36</span>
+<div class="q-body"><h3>讲一次因为技术判断失误而导致项目延期的经历。</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q37"><span class="q-num">37</span>
+<div class="q-body"><h3>你怎么看 AI 安全以及先进 AI 系统的风险？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section>
+</article>
+<nav class="iv-pager" aria-label="公司翻页"><a href="../companies.html"><span>全部</span>公司索引</a><span></span><span></span></nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

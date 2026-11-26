@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>滴滴 面试题 · AI 工程面试题库</title>
+<meta name="description" content="滴滴 的 AI 工程面试题：21 道，覆盖 6 个板块。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--ink)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../companies.html">公司</a></li><li aria-current="page">滴滴</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">中国互联网公司</p>
+<h1>滴滴</h1>
+<p class="iv-meta"><span class="iv-kind">21 道专属题</span><span class="iv-min">6 个板块</span><span class="iv-min">8 道通用题</span></p>
+</header>
+<div class="notes">
+<div class="note"><h2>覆盖岗位</h2><p>网约车平台 AI 工程师、智能客服与司机服务大模型算法、大模型应用工程、数据与平台工程。</p></div>
+<div class="note"><h2>公开报道的面试流程</h2><p>两到三轮技术面 + HR，一面常在 40 分钟左右，项目拷打占大头，再配一道业务场景设计题。后端基本功(MySQL 索引与慢查询、ES、Redis)与 AI 题经常混在同一轮里考，智能客服 / 司机助手是最常见的场景题载体。</p></div>
+<div class="note"><h2>另外还要准备</h2><p><a href="../index.html">跨公司通用面试题</a>中标注滴滴的题目，分布在 <a href="../topics/t0.html">LLM 内部机制与架构</a>、<a href="../topics/t2.html">RAG 与检索</a>、<a href="../topics/t3.html">Agent 与工具调用</a>、<a href="../topics/t8.html">AI 系统设计</a>、<a href="../topics/t9.html">编码与数据结构</a>。</p></div>
+</div>
+<section class="iv-section"><h2 class="iv-label">这家公司会问的通用题（8）</h2>
+<div class="iv-related"><ul><li><a href="../q/t0q2.html">什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？</a></li><li><a href="../q/t2q1.html">如何在稀疏检索器(BM25)和稠密检索器之间做选择？什么时候两者都需要？</a></li><li><a href="../q/t4q7.html">提示、RAG 还是微调：请给出你的决策框架，并附上成本与延迟。</a></li><li><a href="../q/t5q0.html">设计一个 LLM-as-judge 评估。它有哪些已知偏差？如何校正？</a></li><li><a href="../q/t5q2.html">在生产 RAG 系统中，如何检测和度量幻觉？</a></li><li><a href="../q/t8q2.html">设计一个能执行真实动作、并可升级到人工的客服 agent。</a></li><li><a href="../q/t9q0.html">用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。</a></li><li><a href="../q/t9q8.html">写一个流式 SSE/JSON 解析器，能处理任意分块边界。</a></li></ul></div></section>
+<section class="iv-section" style="margin-top:30px"><h2 class="iv-label">公司专属题</h2>
+<p class="iv-try" style="border-top:0">按主题分组。没有答案链接的题目，可以先到「10 大主题」里找对应的通用解法。</p></section>
+<section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">LLM 内部机制与架构</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q1"><span class="q-num">01</span>
+<div class="q-body"><h3>Transformer 的 FFN 层是干嘛的？为什么先升维再降维？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/feed-forward-networks-in-llms" target="_blank" rel="noopener">LLM 中的前馈网络</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q2"><span class="q-num">02</span>
+<div class="q-body"><h3>MHA、MQA、GQA、MLA 各自的优缺点是什么？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/grouped-query-attention" target="_blank" rel="noopener">分组查询注意力(Grouped Query Attention)</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/kv-cache-compression" target="_blank" rel="noopener">KV Cache 压缩</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q3"><span class="q-num">03</span>
+<div class="q-body"><h3>PPO、DPO、GRPO 各自的优缺点？SFT 的损失和公式是什么？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/reinforcement-learning-from-human-feedback-rlhf" target="_blank" rel="noopener">基于人类反馈的强化学习(RLHF)</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/group-relative-policy-optimization-grpo" target="_blank" rel="noopener">组相对策略优化(GRPO)</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q4"><span class="q-num">04</span>
+<div class="q-body"><h3>多轮 message 训练时，loss mask 应该怎么做？</h3><div class="q-tags"><span class="iv-tag">LLM 内部机制与架构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">RAG 与检索</h2><p>5 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q5"><span class="q-num">05</span>
+<div class="q-body"><h3>为什么要引入 RAG?RAG 主要解决了大模型的哪些问题？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q6"><span class="q-num">06</span>
+<div class="q-body"><h3>你的数据是怎么来的、怎么构造的？分块过程、检索方式和评测分别怎么做？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/chunking-strategies-for-rag" target="_blank" rel="noopener">RAG 的分块策略</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q7"><span class="q-num">07</span>
+<div class="q-body"><h3>司机的历史数据与偏好数据，你会做成知识库(RAG)还是微调？为什么？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q8"><span class="q-num">08</span>
+<div class="q-body"><h3>ES 里怎么平衡索引力度与查询效率？要不要做冷热分离？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q9"><span class="q-num">09</span>
+<div class="q-body"><h3>用 ES 做向量库时，怎么做向量 + 关键词的混合检索？</h3><div class="q-tags"><span class="iv-tag">RAG 与检索</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-hybrid-search-work" target="_blank" rel="noopener">混合检索(Hybrid Search)是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">Agent 与工具调用</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q10"><span class="q-num">10</span>
+<div class="q-body"><h3>设计一个司机智能接单助手：输入订单信息，输出建议接 / 不接及原因。整体架构怎么设计？影响接单决策的因素有哪些？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q11"><span class="q-num">11</span>
+<div class="q-body"><h3>从堆栈分析到代码定位的链路里，与大模型是单轮还是多轮交互？为什么这么选？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q12"><span class="q-num">12</span>
+<div class="q-body"><h3>Agent 产生幻觉(定位到错误代码)怎么办？文件超过上下文窗口限制时怎么解决？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-context-compaction-work" target="_blank" rel="noopener">上下文压缩是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q13"><span class="q-num">13</span>
+<div class="q-body"><h3>诊断 Agent 的准确率怎么评估？这个验证流程能不能自动化？</h3><div class="q-tags"><span class="iv-tag">Agent 与工具调用</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/ai-agent-evaluation" target="_blank" rel="noopener">AI Agent 评估</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">AI 系统设计</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q14"><span class="q-num">14</span>
+<div class="q-body"><h3>设计一个客服 Agent：能查订单、发券、处理投诉。规划、工具调用、记忆、执行验证四个模块分别怎么落地？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q15"><span class="q-num">15</span>
+<div class="q-body"><h3>怎么检测大模型回答的质量与准确率？如果检测用的 Agent 自己也会幻觉，怎么保证它可靠？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/llm-evaluation" target="_blank" rel="noopener">LLM 评估</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/llm-as-a-judge" target="_blank" rel="noopener">LLM 作为裁判(LLM as a Judge)</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q16"><span class="q-num">16</span>
+<div class="q-body"><h3>大模型服务里怎么降幻觉、控成本、保 P95？你会先动哪一环？</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">编码与数据结构</h2><p>3 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q17"><span class="q-num">17</span>
+<div class="q-body"><h3>手撕多头自注意力机制。</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/multi-head-attention-in-transformers" target="_blank" rel="noopener">Transformer 中的多头注意力</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q18"><span class="q-num">18</span>
+<div class="q-body"><h3>MySQL 慢查询怎么排查？explain 关注哪些指标？联合索引在什么场景下会失效？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q19"><span class="q-num">19</span>
+<div class="q-body"><h3>SSE 是怎么工作的？用它做流式返回要注意什么？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-token-streaming-work" target="_blank" rel="noopener">Token 流式输出是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">行为与文化</h2><p>2 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q20"><span class="q-num">20</span>
+<div class="q-body"><h3>你平时通过哪些渠道了解 AI 方向的新技术、新产品和新动态？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q21"><span class="q-num">21</span>
+<div class="q-body"><h3>讲一次你把某个 AI 功能从 0 做到上线的经历，中间踩过什么坑？</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section>
+</article>
+<nav class="iv-pager" aria-label="公司翻页"><a href="../companies.html"><span>全部</span>公司索引</a><span></span><span></span></nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

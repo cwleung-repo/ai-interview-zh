@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 系统设计 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="AI 系统设计：企业 RAG、代码助手、客服 agent、Text-to-SQL、LLM 网关。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t8)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">AI 系统设计</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T8</p>
+<h1>AI 系统设计</h1>
+<p class="iv-meta"><span class="iv-kind">10 道题</span><span class="iv-min">4 道附原文答案</span><span class="iv-min">10 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">企业 RAG、代码助手、客服 agent、Text-to-SQL、LLM 网关。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">10 / 10 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="设计一个面向 1000 万文档、带每用户权限的企业级 RAG 助手。" data-cat="t8">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q0.html">设计一个面向 1000 万文档、带每用户权限的企业级 RAG 助手。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/scale.html">Scale AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>分层：文档接入（解析/分块/ACL 同步）→ 索引（向量 + 关键词 + 元数据）→ 检索（pre-filter + hybrid + rerank）→ 生成（引用 + 拒答）→ 服务（缓存、限流、trace）。每用户权限在检索前用 metadata filter 强制，10M 文档按租户/密级分片，索引增量更新。</p><ul><li>接入：连接器拉取文档与权限，解析成块，写入 ACL 字段（tenant_id、group_ids、classification），变更走 CDC。</li><li>索引：向量库按 tenant 分区；ACL 用可过滤的字段；为高频过滤字段建倒排。</li><li>检索：query 改写 → hybrid 召回 → ACL filter → rerank → 取 top 8，附带来源与更新时间。</li><li>生成：要求逐句引用，证据不足时明确说“未找到”，并给出可点击的来源。</li><li>非功能：p95 延迟、每租户 QPS、缓存（答案 + 前缀）、审计日志、删除传播。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个代码助手:仓库索引、上下文组装、编辑应用、评估。" data-cat="t8">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q1.html">设计一个代码助手：仓库索引、上下文组装、编辑应用、评估。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/cursor.html">Cursor</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>代码助手分四块：仓库索引（AST/符号 + 嵌入 + 依赖图）、上下文组装（当前文件 + 相关符号 + 检索片段 + 编辑历史）、编辑应用（结构化 diff/patch，校验语法与测试）、评估（单测通过率 + 人工接受率）。关键是“给出可应用的编辑”，而不是只聊天。</p><ul><li>索引：按函数/类切块，保留签名与 docstring；用 tree-sitter 做语法感知分块。</li><li>上下文：优先光标附近与 import 图上的邻居，再补语义检索；控制 token 预算。</li><li>编辑：让模型输出统一 diff 或 search/replace 块，服务端校验冲突后再落盘。</li><li>评估：仓库级任务（修 bug、加测试）用单测通过率；交互指标看建议接受率与撤销率。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-cursor-work" target="_blank" rel="noopener">Cursor 是如何工作的？</a> · <a href="https://outcomeschool.com/blog/how-does-claude-code-work" target="_blank" rel="noopener">Claude Code 是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个能执行真实动作、并可升级到人工的客服 agent。" data-cat="t8">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q2.html">设计一个能执行真实动作、并可升级到人工的客服 agent。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/consumer-ml.html">消费级 ML 公司</a><a class="iv-tag" href="../companies/sierra.html">Sierra</a><a class="iv-tag" href="../companies/didi.html">滴滴</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/meituan.html">美团</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>客服 agent = 意图识别 + 知识检索 + 工具调用（查单/退款/改地址）+ 策略引擎（能不能做、要不要审批）+ 人工升级。所有写操作幂等并可撤销，高风险动作强制人工确认，失败时带着完整上下文转人工，而不是让用户重述。</p><ul><li>对话状态机：识别 → 澄清 → 执行 → 确认 → 关闭；每步记录结构化槽位。</li><li>工具：查询类直接调，写入类走 prepare/commit 两阶段 + 幂等键。</li><li>升级：置信度低、涉及金额超阈值、用户要求人工、或连续两次失败。</li><li>质量：解决率、一次解决率、转人工率、CSAT、以及错误动作率。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为大型商品目录设计语义搜索。" data-cat="t8">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q3.html">为大型商品目录设计语义搜索。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/character-ai.html">Character.AI</a><a class="iv-tag" href="../companies/jd.html">京东</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>商品语义搜索 = 查询理解（品类/属性/意图）+ 多路召回（BM25、向量、类目导航、行为协同）+ 排序（相关性 + 业务目标）+ 多样化。关键是属性结构化与 query-product 对齐，纯向量搜不出“红色 32G 防水”这种组合约束。</p><ul><li>商品标题/属性/图片分别建索引；属性做规范化（颜色、尺码、容量）。</li><li>查询解析出硬约束（品类、价格区间）做 filter，软意图（风格、场景）走向量。</li><li>排序特征：文本相关性、类目匹配、销量、转化率、退货率、多样性惩罚。</li><li>评估：离线 nDCG/recall，线上 CTR/CVR/零结果率。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-semantic-search-work" target="_blank" rel="noopener">语义搜索是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个结合分类器与 LLM 的内容审核系统。" data-cat="t8">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q4.html">设计一个结合分类器与 LLM 的内容审核系统。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>两级：便宜的分类器/规则处理高流量与明确违规（色情、暴力、垃圾广告），LLM 处理语义复杂、需要解释的案例（仇恨、隐晦诱导、上下文相关）；LLM 输出结构化判定 + 理由 + 置信度，低置信度转人工，并保留申诉通道。</p><ul><li>分类器：蒸馏的小模型，延迟毫秒级，负责召回大部分；LLM 负责难例与二审。</li><li>策略：按风险分级（删除/限流/打标/放行），不同级别不同审核强度。</li><li>一致性：给 LLM 明确 policy rubric 与 few-shot，定期用人工标注校准。</li><li> adversarial：用户会改写规避，需要持续更新样本与对抗训练。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个文档智能流水线:输入扫描版 PDF,输出结构化字段,规模 1000 万文档。" data-cat="t8">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q5.html">设计一个文档智能流水线：输入扫描版 PDF，输出结构化字段，规模 1000 万文档。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/palantir.html">Palantir</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>流水线：PDF 解析（版面分析 + OCR）→ 区域分类（表/图/正文/印章）→ 字段抽取（结构化 schema + LLM/规则）→ 校验（跨字段一致性、金额合计）→ 人工复核队列 → 落库。10M 规模靠批处理、去重、增量与失败重试。</p><ul><li>先做文档分类与路由，不同模板走不同抽取器，别用一个 prompt 打天下。</li><li>表格用专用模型/库抽取，保留单元格坐标；扫描件质量差时先做图像增强。</li><li>置信度低的字段进入人工复核，复核结果回流做训练数据。</li><li>吞吐：按页计费与限流，任务队列 + 幂等 + 断点续跑。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为拥有数千张表的数仓设计一个 Text-to-SQL 系统。" data-cat="t8">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q6.html">为拥有数千张表的数仓设计一个 Text-to-SQL 系统。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/palantir.html">Palantir</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>Text-to-SQL 的难点不在生成 SQL，而在 schema 选择与语义歧义。流程：检索相关表/列（数千张表先裁剪到几十张）→ 生成候选 SQL → 语法/权限校验 → 沙箱执行 → 结果自检（为空/异常时改写）→ 返回带解释的结果。</p><ul><li>schema 检索用表描述 + 列名 + 历史 query 的嵌入；带上主外键与示例值。</li><li>few-shot 用相似问题的 (question, SQL) 对；方言（Spark/BigQuery）要固定。</li><li>安全：只读账号、行级权限、查询超时与扫描量上限。</li><li>评估：执行准确率（EX）、结果集匹配、以及人工可用率。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个会议助手:录音、说话人分离、摘要、待办事项、集成。" data-cat="t8">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q7.html">设计一个会议助手：录音、说话人分离、摘要、待办事项、集成。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>会议助手 = 采集（多轨音频）→ ASR + 说话人分离 → 对齐与角色归属 → 分段摘要 + 待办抽取 → 与日历/文档/IM 集成。核心挑战是长音频、重叠说话、专有名词，以及“谁承诺了什么”的归属准确性。</p><ul><li>多轨（每人一路）比单轨混音好处理；单轨靠 diarization。</li><li>摘要分层：先分段摘要，再滚动汇总，避免超长上下文丢失细节。</li><li>待办要带 owner + deadline + 原文引用，方便核对。</li><li>隐私：录音加密、保留策略、参会人同意、以及区域化存储。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="设计一个 LLM 网关:跨供应商路由、故障转移、缓存、预算与限流。" data-cat="t8">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q8.html">设计一个 LLM 网关：跨供应商路由、故障转移、缓存、预算与限流。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/jd.html">京东</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>LLM 网关负责：统一 API、鉴权与配额、路由（按成本/能力/延迟）、故障转移与重试、语义缓存、限流、成本核算、以及可观测。它是控制面，不承担推理；关键设计是“降级链”和“预算硬上限”。</p><ul><li>路由：按任务难度/租户等级选模型；小模型先试，失败再升级。</li><li>缓存：精确 hash + 语义缓存，注意租户隔离与失效。</li><li>限流：令牌桶按租户/模型/全局三层；超限返回 429 并带 retry-after。</li><li>可观测：每请求记录模型、token、成本、延迟、缓存命中、错误码。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/llm-routing" target="_blank" rel="noopener">LLM 路由</a> · <a href="https://outcomeschool.com/blog/how-does-semantic-caching-work" target="_blank" rel="noopener">语义缓存是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为面向数亿用户的消费级聊天助手设计服务栈。" data-cat="t8">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t8q9.html">为面向数亿用户的消费级聊天助手设计服务栈。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/google-deepmind.html">Google DeepMind</a><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/xai.html">xAI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>消费级聊天栈分五层：接入（CDN/网关/WebSocket- SSE）→ 会话与鉴权 → 编排（路由、记忆、安全、工具）→ 推理（多模型池、连续批处理、KV/前缀缓存、P/D 分离）→ 数据（会话存储、向量记忆、分析）。目标是 p99 首 token 与稳定流式。</p><ul><li>无状态网关 + 有状态会话存储，便于水平扩展与故障迁移。</li><li>推理池按模型分集群，独立扩缩容；热门模型做前缀缓存与预热。</li><li>降级：模型过载时切小模型/排队/限制长度，而不是直接 500。</li><li>成本：按会话与功能拆分，设置每用户配额与滥用检测。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.substack.com/p/inside-chatgpt-what-happens-after" target="_blank" rel="noopener">深入 ChatGPT：按下回车之后会发生什么</a> · <a href="https://outcomeschool.com/blog/llm-inference-optimization" target="_blank" rel="noopener">LLM 推理优化</a></p></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用 NumPy 或 PyTorch 从零实现带因果掩码的缩放… · 编码与数据结构 · AI 工程面试题库</title>
+<meta name="description" content="用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "编码与数据结构", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。", "acceptedAnswer": {"@type": "Answer", "text": "核心是四步：QKᵀ / √d → 加因果 mask（上三角 -inf）→ 按最后一维 softmax → 乘 V。用 PyTorch 的 masked_fill + softmax 即可，注意 dtype 与 mask 的广播形状。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t9)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t9.html">编码与数据结构</a></li>
+<li aria-current="page">第 1 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">编码与数据结构 · Question 01</p>
+<h1 class="q-title q-long">用 NumPy 或 PyTorch 从零实现带因果掩码的缩放点积注意力。</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">6 家公司出现</span>
+<span class="iv-min">2 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t9.html">编码与数据结构</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t9.html">编码与数据结构</a></dd></div>
+<div><dt>出现于</dt><dd>6 家公司</dd></div>
+<div><dt>原文答案</dt><dd>2 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>核心是四步：QKᵀ / √d → 加因果 mask（上三角 -inf）→ 按最后一维 softmax → 乘 V。用 PyTorch 的 masked_fill + softmax 即可，注意 dtype 与 mask 的广播形状。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点 + 公式）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>mask 要在 softmax 之前加，且用 -inf 或极小值（-1e9），不能用 0。</li><li>缩放放在 QKᵀ 之后或预先缩放 Q 都可以，数值上等价。</li><li>批量维度：[B, H, T, d]；mask 形状 [T, T] 可广播。</li><li>生产环境用 F.scaled_dot_product_attention（FlashAttention 后端），手写只用于理解。</li></ul><pre><code>def attention(q, k, v, causal=True):
+    d = q.size(-1)
+    s = q @ k.transpose(-2, -1) / math.sqrt(d)   # [B,H,T,T]
+    if causal:
+        T = q.size(-2)
+        mask = torch.triu(torch.ones(T, T, dtype=torch.bool, device=q.device), 1)
+        s = s.masked_fill(mask, float(&#x27;-inf&#x27;))
+    p = s.softmax(dim=-1)
+    return p @ v</code></pre></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/google-deepmind.html">Google DeepMind</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/didi.html">滴滴</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/math-behind-attention-qkv" target="_blank" rel="noopener">注意力背后的数学：Q、K、V</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/causal-masking-in-attention" target="_blank" rel="noopener">注意力中的因果掩码</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+<section class="iv-related"><h2>相关可视化</h2><ul><li><a href="../labs/attention.html">注意力热力图</a></li></ul></section>
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t9q1.html">实现多头注意力，然后把它改造成分组查询注意力。</a></li><li><a href="../q/t9q2.html">实现一个 KV 缓存和单步解码。</a></li><li><a href="../q/t9q3.html">从零实现 BPE 的训练与编码。</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<span class="iv-pager-empty" aria-hidden="true"></span>
+<a class="iv-pager-up" href="../topics/t9.html"><span>主题</span>编码与数据结构</a>
+<a href="../q/t9q1.html" rel="next"><span>下一题</span>实现多头注意力，然后把它改造成分组查询注意力。</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

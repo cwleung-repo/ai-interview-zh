@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>解释 GRPO，以及为什么在大规模下去掉价值网络很重要。 · 微调后训练与对齐 · AI 工程面试题库</title>
+<meta name="description" content="解释 GRPO，以及为什么在大规模下去掉价值网络很重要。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "解释 GRPO，以及为什么在大规模下去掉价值网络很重要。", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "微调后训练与对齐", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "解释 GRPO，以及为什么在大规模下去掉价值网络很重要。", "acceptedAnswer": {"@type": "Answer", "text": "GRPO 对同一个 prompt 采样一组（G 个）回答，用组内奖励的均值/标准差做归一化得到优势，从而去掉价值网络。省掉一个与策略同规模的模型，显存和训练稳定性都大幅改善，适合可验证奖励（对错、通过率）的大规模 RL。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t4)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t4.html">微调后训练与对齐</a></li>
+<li aria-current="page">第 3 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">微调后训练与对齐 · Question 03</p>
+<h1 class="q-title">解释 GRPO，以及为什么在大规模下去掉价值网络很重要。</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">5 家公司出现</span>
+<span class="iv-min">1 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t4.html">微调后训练与对齐</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t4.html">微调后训练与对齐</a></dd></div>
+<div><dt>出现于</dt><dd>5 家公司</dd></div>
+<div><dt>原文答案</dt><dd>1 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>GRPO 对同一个 prompt 采样一组（G 个）回答，用组内奖励的均值/标准差做归一化得到优势，从而去掉价值网络。省掉一个与策略同规模的模型，显存和训练稳定性都大幅改善，适合可验证奖励（对错、通过率）的大规模 RL。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点 + 公式）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>优势 Â_i = (r_i - mean(r)) / std(r)，组内比较，天然适配“同一题多个解”的设定。</li><li>没有 critic 就不用训练价值函数，也不用 GAE；代价是每组必须采样多次，rollout 成本上升。</li><li>DeepSeek-R1 用它做 RLVR：奖励是答案是否正确 + 格式，训练出长链推理。</li><li>变体：Dr.GRPO（去长度偏置）、DAPO（解耦裁剪、动态采样）等，解决长度与难度偏置。</li></ul><pre><code>Â_i = (r_i - mean(r_1..r_G)) / std(r_1..r_G)
+L = -E[min(ρÂ, clip(ρ,1-ε,1+ε)Â)]</code></pre></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/deepseek.html">DeepSeek</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/group-relative-policy-optimization-grpo" target="_blank" rel="noopener">组相对策略优化(GRPO)</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t4q0.html">完整讲一遍 RLHF：奖励模型、策略优化、KL 惩罚。</a></li><li><a href="../q/t4q1.html">什么是 DPO？为什么它在许多实验室取代了基于 PPO 的 RLHF…</a></li><li><a href="../q/t4q3.html">从数学上解释 LoRA 的分解。它为什么有效？如何选择秩 r？</a></li><li><a href="../q/t4q4.html">QLoRA 是如何实现显存降低的？它的量化权衡是什么？</a></li><li><a href="../q/t4q5.html">比较 LoRA、prefix tuning…</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t4q1.html" rel="prev"><span>上一题</span>什么是 DPO？为什么它在许多实验室取代了基于 PPO 的 RLHF…</a>
+<a class="iv-pager-up" href="../topics/t4.html"><span>主题</span>微调后训练与对齐</a>
+<a href="../q/t4q3.html" rel="next"><span>下一题</span>从数学上解释 LoRA 的分解。它为什么有效？如何选择秩 r？</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

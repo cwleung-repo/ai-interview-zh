@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent 与工具调用 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="Agent 与工具调用：ReAct、工具设计、MCP、记忆、终止条件与人在环路。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t3)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">Agent 与工具调用</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T3</p>
+<h1>Agent 与工具调用</h1>
+<p class="iv-meta"><span class="iv-kind">12 道题</span><span class="iv-min">9 道附原文答案</span><span class="iv-min">12 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">ReAct、工具设计、MCP、记忆、终止条件与人在环路。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">12 / 12 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="解释 ReAct 模式,以及相比单纯的思维链(chain-of-thought)它解决了什么。" data-cat="t3">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q0.html">解释 ReAct 模式，以及相比单纯的思维链(chain-of-thought)它解决了什么。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>ReAct 把“思考”和“行动”交替起来：模型输出 Thought → Action（调工具）→ Observation，再继续推理。相比纯 CoT，它能获取外部事实、校验中间结果，把只靠参数记忆的推理变成有证据的推理。</p><ul><li>CoT 的问题是“想得越多越可能编”，没有与外界交互的纠错机会。</li><li>ReAct 的关键是 observation 进入上下文后触发重新规划，形成闭环。</li><li>现代实现多用原生 function calling 而不是文本解析，但循环结构不变。</li><li>失败模式：工具描述不清、observation 太长污染上下文、循环不收敛。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/react-agent" target="_blank" rel="noopener">ReAct Agent</a> · <a href="https://outcomeschool.com/blog/how-does-chain-of-thought-prompting-work" target="_blank" rel="noopener">思维链(CoT)提示是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="在 agent 循环中,你如何处理工具调用错误、超时和重试?" data-cat="t3">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q1.html">在 agent 循环中，你如何处理工具调用错误、超时和重试？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/cognition.html">Cognition</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>把工具调用当成不可靠的远程依赖：每个工具定义超时、重试（指数退避 + 抖动）、幂等键；错误分类处理——可重试（429/5xx/超时）、不可重试（400/参数错）、需要人工（权限/业务拒绝）；把结构化错误返回给模型，让它决定改写参数还是换工具，并设总步数与预算上限。</p><ul><li>幂等：写操作必须带 idempotency key，重试不会重复下单/发邮件。</li><li>熔断与降级：连续失败就短路该工具，返回“暂不可用”，避免拖垮整个循环。</li><li>错误信息要给模型可操作的内容（字段名、合法值），不要只回“error”。</li><li>可观测：每次调用记录工具名、参数摘要、耗时、状态码、重试次数。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/ai-agent-loop" target="_blank" rel="noopener">AI Agent 循环</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="结构化输出与函数调用(function calling)有什么区别?" data-cat="t3">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q2.html">结构化输出与函数调用(function calling)有什么区别？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>结构化输出约束的是“模型回复的格式”（JSON Schema），函数调用是模型主动发起的一次带名字和参数的工具请求，由宿主执行并把结果送回。前者是输出格式问题，后者是控制流问题；实现上函数调用常借用结构化输出能力，但语义不同。</p><ul><li>结构化输出：response_format=json_schema，保证可解析，不涉及副作用。</li><li>函数调用：tool_calls 数组 + tool_call_id，宿主执行后以 tool 角色回传，模型继续。</li><li>可靠性：结构化输出可以 grammmar/CFG 约束解码，函数调用还需要校验参数语义（类型对不代表值合理）。</li><li>安全：函数调用必须在宿主侧做权限和白名单校验，不能信模型给的参数。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-function-calling-work-in-llms" target="_blank" rel="noopener">LLM 中的函数调用是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是 MCP(Model Context Protocol)?它与传统函数调用有何不同?" data-cat="t3">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q3.html">什么是 MCP(Model Context Protocol)？它与传统函数调用有何不同？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>MCP 是一个标准化的客户端-服务器协议：把工具、资源、提示以统一 schema 暴露给任意支持 MCP 的宿主，解决“每个模型/框架各写一套工具适配”的碎片化。传统函数调用是模型与宿主之间的调用约定，MCP 是宿主与外部能力之间的接口层，两者互补。</p><ul><li>分层：模型 →（function calling）→ 宿主 →（MCP）→ server（数据库、SaaS、文件系统）。</li><li>MCP 提供 tools/list、tools/call、resources、prompts，以及传输层（stdio/HTTP+SSE）。</li><li>好处：工具一次实现、多宿主复用；权限与审计可以集中在宿主。</li><li>风险面变大：第三方 server 等于给 agent 开了新入口，要做来源审核与最小权限。</li></ul><p class="q-src">原文答案：<a href="https://www.youtube.com/watch?v=lnfWvX66FUk" target="_blank" rel="noopener">AI 工程详解：LLM、RAG、MCP、Agent、微调、量化</a> · <a href="https://outcomeschool.com/blog/what-is-mcp-model-context-protocol" target="_blank" rel="noopener">什么是 MCP(Model Context Protocol)？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="工具多到什么程度算太多?如何设计 LLM 真的能正确使用的工具 schema?" data-cat="t3">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q4.html">工具多到什么程度算太多？如何设计 LLM 真的能正确使用的工具 schema？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/cognition.html">Cognition</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>当工具多到模型选错、或 schema 撑爆上下文时就算太多——经验上单次可见工具超过 20–30 个，选择准确率明显下降。设计上要：名字动词开头、描述写清何时用/不用、参数少而扁平、返回结果精简且结构化、按任务动态裁剪工具集。</p><ul><li>一个工具只做一件事；把“查询+修改”合成一个工具会让模型误用。</li><li>描述里给正例和反例（“仅在用户要取消订单时使用，不要用于查询状态”）。</li><li>参数用 enum/范围约束，避免自由文本；必填项越少越好。</li><li>工具多时用分层/检索：先让模型选工具组，再暴露组内工具；或按角色配置工具白名单。</li></ul><p class="q-src">原文答案：<a href="https://www.youtube.com/watch?v=lnfWvX66FUk" target="_blank" rel="noopener">AI 工程详解：LLM、RAG、MCP、Agent、微调、量化</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="多 agent 编排是如何工作的?它在什么时候会崩溃?" data-cat="t3">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q5.html">多 agent 编排是如何工作的？它在什么时候会崩溃？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/cognition.html">Cognition</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>多 agent 通常是一个 orchestrator 拆任务、若干 worker 并行/串行执行、再汇总。它在任务可清晰分解、子任务相互独立、且单 agent 上下文装不下时有效；在需要紧密共享状态、强一致性、或子任务高度耦合时会崩——通信开销和错误传播会吃掉收益。</p><ul><li>常见拓扑：supervisor（中心调度）、handoff（转交）、debate（多视角）、pipeline（流水线）。</li><li>崩溃点：上下文不同步、重复劳动、互相等待、错误被层层放大、成本随 agent 数线性上升。</li><li>判断标准：子任务能否用明确契约（输入/输出 schema）隔离；不能就别拆。</li><li>工程：共享黑板/文件系统、明确的终止条件、每个 agent 的预算与超时。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/multi-agent-systems" target="_blank" rel="noopener">多 Agent 系统</a> · <a href="https://outcomeschool.com/blog/ai-orchestration" target="_blank" rel="noopener">AI 编排</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为长时间运行的 agent 设计记忆:存什么、存在哪里、如何检索?" data-cat="t3">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q6.html">为长时间运行的 agent 设计记忆：存什么、存在哪里、如何检索？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>记忆分三层：工作记忆（当前上下文窗口）、情节记忆（历史会话摘要与事件）、语义记忆（抽取的事实/偏好，存向量库或 KV）。存“对未来决策有用且稳定”的内容，写入时去重与置信度打分，检索时按相关性 + 时间衰减召回，并允许用户查看/删除。</p><ul><li>不要存原始全文：存摘要 + 指针（会话 id、消息 id），需要时再回读。</li><li>写入策略：事件触发（任务完成、用户纠正）比每轮都写更干净。</li><li>冲突处理：新事实覆盖旧事实要带时间戳与来源，否则记忆会自相矛盾。</li><li>隐私：记忆必须可审计、可删除，跨用户绝不共享。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/ai-agent-memory" target="_blank" rel="noopener">AI Agent 记忆</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="agent 如何决定是调用工具还是用自己的知识回答?" data-cat="t3">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q7.html">agent 如何决定是调用工具还是用自己的知识回答？</a></h3>
+<div class="q-tags"><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>靠提示与训练共同决定：系统提示里写清“涉及实时/私有/精确数据必须查工具，常识和写作可直接回答”；工具描述写清适用条件；再用少量示例和评估集调优。模型本质上是在权衡“参数记忆的置信度”与“调用成本”，所以要让不调用的代价可见（例如要求引用）。</p><ul><li>强制场景：时间、价格、库存、用户数据、内部文档——提示里列成硬规则。</li><li>提示里加“先判断是否需要外部信息”这一步，比直接让模型选工具更稳。</li><li>工具返回空/失败时要有降级话术，不能编造。</li><li>评估：构造“该调/不该调”的二分类测试集，量化过度调用与漏调用。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-function-calling-work-in-llms" target="_blank" rel="noopener">LLM 中的函数调用是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么能让 agent 循环正确终止?如何限制成本和步数?" data-cat="t3">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q8.html">什么能让 agent 循环正确终止？如何限制成本和步数？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>终止条件要显式：任务完成信号（模型输出 final answer）、达到最大步数、预算耗尽、连续无进展、或触发人工升级。成本控制靠步数上限 + token 预算 + 工具调用配额 + 超时，并在每一步检查是否还值得继续。</p><ul><li>没有显式 final 状态的循环一定会出现“自问自答到死”。</li><li>无进展检测：比较连续几步的 observation 哈希/计划文本，重复即停。</li><li>预算按会话分配，而不是按请求——否则重试会绕过上限。</li><li>记录终止原因，用于分析是模型能力问题还是工具/提示问题。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/ai-agent-loop" target="_blank" rel="noopener">AI Agent 循环</a> · <a href="https://www.linkedin.com/posts/pallavi-shekhar_ai-aiagents-machinelearning-share-7440257380707364864-5Ycc" target="_blank" rel="noopener">修复 AI agent 中的死循环</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="在生产系统中,如何让 agent 的动作可逆,或至少可审计?" data-cat="t3">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q9.html">在生产系统中，如何让 agent 的动作可逆，或至少可审计？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>把动作分成可逆与不可逆：查询、草稿、预演可自由执行；写入、支付、删除必须先落“意图记录”（谁、要做什么、参数、依据），执行后写“结果记录”，并支持撤销（软删、补偿事务、版本回滚）。审计日志要不可篡改、可追溯到具体模型版本与提示。</p><ul><li>两阶段：prepare（生成计划与影响面）→ commit（人工或策略批准后执行）。</li><li>幂等键 + 补偿操作（取消订单、回滚部署）让重试安全。</li><li>审计字段：trace_id、actor、model、prompt_version、tool、params、diff、结果。</li><li>高风险工具默认关闭，按租户/角色白名单开启。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为一个会执行有后果动作的 agent 设计人在环路(human-in-the-loop)审批。" data-cat="t3">
+<span class="q-num">11</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q10.html">为一个会执行有后果动作的 agent 设计人在环路(human-in-the-loop)审批。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/palantir.html">Palantir</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>人工审批要设计成“有足够上下文的一次决策”：展示待执行动作、影响范围、依据与风险，给出批准/拒绝/修改三个选项，超时默认拒绝；审批结果回写为结构化事件，agent 继续或终止。高风险动作强制审批，低风险可抽样审批。</p><ul><li>审批界面要能一键看到 diff 和受影响对象，不能让审批人读一屏 JSON。</li><li>批量操作要按批次审批，但每批要有明确上限。</li><li>审批人疲劳是最大风险：阈值分级 + 抽样 + 事后审计，而不是所有动作都弹窗。</li><li>合规：记录审批人、时间、理由，支持事后追责。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="你的 agent 跑久了之后跑偏了,还很自信地在做错的事。请诊断。" data-cat="t3">
+<span class="q-num">12</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t3q11.html">你的 agent 跑久了之后跑偏了，还很自信地在做错的事。请诊断。</a></h3>
+<div class="q-tags"></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>“跑偏还自信”通常是上下文污染 + 目标漂移：早期错误 observation 被当作事实反复引用、记忆写入错误、工具返回被误读、或子目标完成后没有回到主目标。诊断要看 trace：从哪一步开始偏离、当时的 observation 与计划是什么、是否有未验证的假设被固化。</p><ul><li>常见机制：错误摘要进入长期记忆 → 后续每轮都基于错误前提；或上下文被长工具输出挤占，原始目标被挤出窗口。</li><li>修复：每 N 步重述目标与已完成事项（scratchpad 重写）、对关键事实要求引用来源、错误时回滚到最后可信状态。</li><li>加“自我检查”步骤：让模型列出当前假设与证据，缺证据的假设标为待验证。</li><li>工程：限制单步 observation 长度、定期压缩并保留原始目标、关键决策写外部状态而非依赖上下文。</li></ul></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

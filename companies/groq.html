@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groq 面试题 · AI 工程面试题库</title>
+<meta name="description" content="Groq 的 AI 工程面试题：12 道，覆盖 5 个板块。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--ink)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../companies.html">公司</a></li><li aria-current="page">Groq</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">AI 基础设施与平台公司</p>
+<h1>Groq</h1>
+<p class="iv-meta"><span class="iv-kind">12 道专属题</span><span class="iv-min">5 个板块</span><span class="iv-min">1 道通用题</span></p>
+</header>
+<div class="notes">
+<div class="note"><h2>覆盖岗位</h2><p>编译器工程师、运行时 / 系统工程师、推理工程师、芯片软件工程师、解决方案架构师。</p></div>
+<div class="note"><h2>公开报道的面试流程</h2><p>深度的系统与编译器轮：针对一台只有 SRAM 的机器做 roofline 与存储层次推理、编译器 IR 设计、host 运行时设计、一轮调试，以及一轮客户/单位经济学。</p></div>
+<div class="note"><h2>另外还要准备</h2><p><a href="../index.html">跨公司通用面试题</a>中标注 Groq 的题目，见 <a href="../topics/t1.html">推理服务与 GPU 性能</a>。</p></div>
+</div>
+<section class="iv-section"><h2 class="iv-label">这家公司会问的通用题（1）</h2>
+<div class="iv-related"><ul><li><a href="../q/t1q14.html">解释预填充/解码分离(prefill/decode disaggregation)…</a></li></ul></div></section>
+<section class="iv-section" style="margin-top:30px"><h2 class="iv-label">公司专属题</h2>
+<p class="iv-try" style="border-top:0">按主题分组。没有答案链接的题目，可以先到「10 大主题」里找对应的通用解法。</p></section>
+<section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">编码与数据结构</h2><p>4 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q1"><span class="q-num">01</span>
+<div class="q-body"><h3>我们的编译器静态调度每一条指令和每一次芯片间传输。相比 NVCC 风格的编译器，它需要知道什么？当它判断错了会出什么问题？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q2"><span class="q-num">02</span>
+<div class="q-body"><h3>为一个面向空间数据流加速器的编译器设计 IR 与 pass 流水线。常驻内存的决策放在哪一层，为什么？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q3"><span class="q-num">03</span>
+<div class="q-body"><h3>写一个 host 侧运行时，为跨多芯片的确定性加速器喂数据。其中真正难的是什么？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li><li class="q-item" id="q4"><span class="q-num">04</span>
+<div class="q-body"><h3>一个模型在单芯片上对功能仿真器做到逐比特一致，但在机架规模上输出错误。你怎么定位？</h3><div class="q-tags"><span class="iv-tag">编码与数据结构</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">推理服务与 GPU 性能</h2><p>5 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q5"><span class="q-num">05</span>
+<div class="q-body"><h3>一个 LPU 完全没有 HBM，只有片上 SRAM。请为这台机器重做一遍 decode 的 roofline 论证，并说明有什么变化。</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-an-lpu-work" target="_blank" rel="noopener">LPU 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q6"><span class="q-num">06</span>
+<div class="q-body"><h3>一个 8 bit 权重的 70B 稠密模型，每张芯片约 230 MB SRAM。讲讲部署方案和单位经济学。</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-an-lpu-work" target="_blank" rel="noopener">LPU 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q7"><span class="q-num">07</span>
+<div class="q-body"><h3>在 GPU 上你靠批处理来摊薄权重读取。在一台只有 SRAM 的机器上，批处理的算法是什么？这应该如何改变我们的定价？</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-an-lpu-work" target="_blank" rel="noopener">LPU 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q8"><span class="q-num">08</span>
+<div class="q-body"><h3>确定性是主打卖点。它在 p99 上到底换来了什么？为什么对 agentic 工作负载尤其重要？</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><details class="q-answer"><summary>1 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-an-lpu-work" target="_blank" rel="noopener">LPU 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li><li class="q-item" id="q9"><span class="q-num">09</span>
+<div class="q-body"><h3>当专家选择依赖于数据时，你如何在一个静态调度的网络上服务一个大型 MoE 模型？</h3><div class="q-tags"><span class="iv-tag">推理服务与 GPU 性能</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">AI 系统设计</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q10"><span class="q-num">10</span>
+<div class="q-body"><h3>我们把 LPX 的 decode 加速器与做 prefill 和注意力的 NVIDIA GPU 配对使用。请设计跨这两类机器的服务路径。</h3><div class="q-tags"><span class="iv-tag">AI 系统设计</span></div><details class="q-answer"><summary>2 条原文答案</summary><div class="q-answer-body"><ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/prefill-decode-disaggregation" target="_blank" rel="noopener">LLM 推理中的 Prefill-Decode 分离</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/how-does-an-lpu-work" target="_blank" rel="noopener">LPU 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul></div></details></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">应用与前向部署场景</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q11"><span class="q-num">11</span>
+<div class="q-body"><h3>一个潜在客户的负载跑在 H100 上。讲讲什么情况下你会劝他们别迁移。</h3><div class="q-tags"><span class="iv-tag">应用与前向部署场景</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section><section class="iv-group" style="--group:var(--ink)">
+<header class="iv-group-head" style="grid-template-columns:minmax(0,1fr)"><h2 style="font-size:1.5rem">行为与文化</h2><p>1 道题</p></header>
+<ol class="q-list"><li class="q-item" id="q12"><span class="q-num">12</span>
+<div class="q-body"><h3>讲一个你交付过的性能优化。给我数字，并告诉我为什么我应该相信它们。</h3><div class="q-tags"><span class="iv-tag">行为与文化</span></div><p class="q-tags" style="margin-top:4px">源仓库未附答案链接</p></div></li></ol></section>
+</article>
+<nav class="iv-pager" aria-label="公司翻页"><a href="../companies.html"><span>全部</span>公司索引</a><span></span><span></span></nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

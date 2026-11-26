@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>什么是多查询注意力(MQA)和分组查询注意力(GQA)？… · LLM 内部机制与架构 · AI 工程面试题库</title>
+<meta name="description" content="什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "LLM 内部机制与架构", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？", "acceptedAnswer": {"@type": "Answer", "text": "MQA 让所有 query 头共享一组 K/V，GQA 让每 G 个 query 头共享一组。两者都按比例压缩 KV 缓存和 decode 时的显存带宽，牺牲的是表达能力和训练稳定性：MQA 最激进，GQA 是质量与成本的折中。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t0)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t0.html">LLM 内部机制与架构</a></li>
+<li aria-current="page">第 3 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">LLM 内部机制与架构 · Question 03</p>
+<h1 class="q-title q-long">什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">5 家公司出现</span>
+<span class="iv-min">1 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t0.html">LLM 内部机制与架构</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t0.html">LLM 内部机制与架构</a></dd></div>
+<div><dt>出现于</dt><dd>5 家公司</dd></div>
+<div><dt>原文答案</dt><dd>1 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>MQA 让所有 query 头共享一组 K/V，GQA 让每 G 个 query 头共享一组。两者都按比例压缩 KV 缓存和 decode 时的显存带宽，牺牲的是表达能力和训练稳定性：MQA 最激进，GQA 是质量与成本的折中。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>MHA：H 个 query 头对应 H 组 KV，KV 缓存最大；MQA：1 组 KV，缓存降到 1/H，但质量下降、训练易不稳。</li><li>GQA：H/G 组 KV（Llama 3 70B 用 8 组、64 个 query 头），缓存降到 G/H，质量接近 MHA，是当前主流。</li><li>收益主要来自 decode：decode 是显存带宽受限，KV 越小每步读得越少，batch 才能开大。</li><li>实现上就是把 K、V 投影成 H_kv 组，前向时 repeat_kv 到 H 组；不能简单在 head 维求平均。</li></ul></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/didi.html">滴滴</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/grouped-query-attention" target="_blank" rel="noopener">分组查询注意力(Grouped Query Attention)</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+<section class="iv-related"><h2>相关可视化</h2><ul><li><a href="../labs/kv.html">KV 缓存计算器</a></li></ul></section>
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t0q0.html">解释缩放点积注意力…</a></li><li><a href="../q/t0q1.html">什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</a></li><li><a href="../q/t0q3.html">什么是多头潜在注意力(MLA)？DeepSeek 为什么要引入它？</a></li><li><a href="../q/t0q4.html">解释 FlashAttention。它并没有减少 FLOPs，为什么…</a></li><li><a href="../q/t0q5.html">字节对编码(Byte Pair Encoding)…</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t0q1.html" rel="prev"><span>上一题</span>什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</a>
+<a class="iv-pager-up" href="../topics/t0.html"><span>主题</span>LLM 内部机制与架构</a>
+<a href="../q/t0q3.html" rel="next"><span>下一题</span>什么是多头潜在注意力(MLA)？DeepSeek 为什么要引入它？</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

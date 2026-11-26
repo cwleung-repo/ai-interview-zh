@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微调后训练与对齐 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="微调后训练与对齐：RLHF、DPO、GRPO、LoRA/QLoRA、灾难性遗忘与蒸馏。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t4)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">微调后训练与对齐</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T4</p>
+<h1>微调后训练与对齐</h1>
+<p class="iv-meta"><span class="iv-kind">12 道题</span><span class="iv-min">11 道附原文答案</span><span class="iv-min">12 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">RLHF、DPO、GRPO、LoRA/QLoRA、灾难性遗忘与蒸馏。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">12 / 12 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="完整讲一遍 RLHF:奖励模型、策略优化、KL 惩罚。" data-cat="t4">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q0.html">完整讲一遍 RLHF：奖励模型、策略优化、KL 惩罚。</a></h3>
+<div class="q-tags"><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>RLHF 三步：SFT 打底 → 用人类偏好比较训练奖励模型 r(x,y) → 用 PPO 优化策略 π，最大化 r 并减去 KL(π‖π_ref) 惩罚；裁剪（clip）与 KL 系数一起控制每步更新幅度。KL 项防止策略为了刷分而输出退化文本，同时保留预训练能力。</p><ul><li>奖励模型通常在 SFT 模型上用 pairwise loss：-log σ(r(chosen) - r(rejected))，数据是同一 prompt 的多条排序。</li><li>PPO 目标：E[r(x,y)] - β·KL(π‖π_ref)，还要用 GAE 估优势、clip 比率限制更新幅度。</li><li>四个模型同时在显存里：策略、参考、奖励、价值；显存约为 SFT 的 3–4 倍，取决于 critic 与奖励模型的规模。</li><li>失败模式：奖励黑客、长度偏置（奖励模型偏好长答案）、KL 坍塌或发散。</li></ul><pre><code>max_π E_{x~D, y~π(·|x)} [ r(x,y) - β·KL(π(y|x) ‖ π_ref(y|x)) ]</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/reinforcement-learning-from-human-feedback-rlhf" target="_blank" rel="noopener">基于人类反馈的强化学习(RLHF)</a> · <a href="https://outcomeschool.com/blog/proximal-policy-optimization-ppo" target="_blank" rel="noopener">近端策略优化(PPO)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是 DPO?为什么它在许多实验室取代了基于 PPO 的 RLHF?什么时候在线 RL 仍然更好?" data-cat="t4">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q1.html">什么是 DPO？为什么它在许多实验室取代了基于 PPO 的 RLHF？什么时候在线 RL 仍然更好？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/huggingface.html">Hugging Face</a><a class="iv-tag" href="../companies/scale.html">Scale AI</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><a class="iv-tag" href="../companies/meituan.html">美团</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>DPO 把 RLHF 的约束最优解解析出来，直接用偏好对做分类损失：增大 chosen 相对参考模型的 log 概率、压低 rejected。它不需要奖励模型和在线采样，训练稳定、成本低，因此在多数场景取代了 PPO。在线 RL 仍更好的情况：需要探索、奖励可验证且稀疏、或要优化多轮/工具使用的轨迹。</p><ul><li>损失：-log σ(β[log π(y_w)/π_ref(y_w) - log π(y_l)/π_ref(y_l)])，β 控制偏离参考的强度。</li><li>DPO 是离线方法：数据分布固定，无法发现策略自己生成的新错误（没有 on-policy 探索）。</li><li>PPO/GRPO 在线采样可以优化“模型自己会犯的错”，在数学、代码等可验证任务上更强。</li><li>实践：SFT → DPO 是性价比最高的对齐配方；要进一步提升推理能力再上 RLVR/GRPO。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/direct-preference-optimization-dpo" target="_blank" rel="noopener">直接偏好优化(DPO)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释 GRPO,以及为什么在大规模下去掉价值网络很重要。" data-cat="t4">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q2.html">解释 GRPO，以及为什么在大规模下去掉价值网络很重要。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/deepseek.html">DeepSeek</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>GRPO 对同一个 prompt 采样一组（G 个）回答，用组内奖励的均值/标准差做归一化得到优势，从而去掉价值网络。省掉一个与策略同规模的模型，显存和训练稳定性都大幅改善，适合可验证奖励（对错、通过率）的大规模 RL。</p><ul><li>优势 Â_i = (r_i - mean(r)) / std(r)，组内比较，天然适配“同一题多个解”的设定。</li><li>没有 critic 就不用训练价值函数，也不用 GAE；代价是每组必须采样多次，rollout 成本上升。</li><li>DeepSeek-R1 用它做 RLVR：奖励是答案是否正确 + 格式，训练出长链推理。</li><li>变体：Dr.GRPO（去长度偏置）、DAPO（解耦裁剪、动态采样）等，解决长度与难度偏置。</li></ul><pre><code>Â_i = (r_i - mean(r_1..r_G)) / std(r_1..r_G)
+L = -E[min(ρÂ, clip(ρ,1-ε,1+ε)Â)]</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/group-relative-policy-optimization-grpo" target="_blank" rel="noopener">组相对策略优化(GRPO)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="从数学上解释 LoRA 的分解。它为什么有效?如何选择秩 r?" data-cat="t4">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q3.html">从数学上解释 LoRA 的分解。它为什么有效？如何选择秩 r？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/jd.html">京东</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>LoRA 把权重更新约束成低秩分解 ΔW = BA，B∈R^{d×r}、A∈R^{r×k}，只训练 A、B，冻结 W。它的依据是微调的权重更新具有低内在秩；r 通常 8–64，任务越复杂、数据越多，r 越大，但超过某个点收益递减。</p><ul><li>参数量从 d·k 降到 r·(d+k)；7B 模型 r=16 时适配器只有几百万参数。</li><li>初始化：A 高斯、B 为零，保证训练开始时 ΔW=0，不破坏基座。</li><li>缩放 α/r 控制更新幅度；常用 α=2r。</li><li>推理可合并回 W（无额外延迟），也可保留适配器做多任务切换。</li></ul><pre><code>W&#x27; = W + (α/r)·BA,  B ∈ R^{d×r}, A ∈ R^{r×k}
+params = r·(d+k)  vs  全量 d·k</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/lora-low-rank-adaptation-of-llms" target="_blank" rel="noopener">LoRA——LLM 的低秩适配</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="QLoRA 是如何实现显存降低的?它的量化权衡是什么?" data-cat="t4">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q4.html">QLoRA 是如何实现显存降低的？它的量化权衡是什么？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/huggingface.html">Hugging Face</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>QLoRA 把冻结的基座量化到 4-bit NF4，只训练半精度的 LoRA 适配器，再用双重量化和分页优化器压掉额外开销，于是 7B 微调从 ~56 GB 降到 ~6 GB。权衡是反量化带来的额外计算（约慢 20–40%）、4-bit 的精度损失，以及实现/内核依赖。</p><ul><li>NF4：16 个量化电平放在正态分布的分位点上，比均匀 4-bit 更适合权重分布。</li><li>双重量化：对每 64 个权重一组的 scale 再做 8-bit 量化，7B 模型省约 0.3 GB。</li><li>分页优化器：显存不足时把优化器状态换到 CPU，避免 OOM（吞吐换稳定）。</li><li>质量：原论文在多项基准上 QLoRA r=64 追平全量微调；r=16 略低但差距很小。</li></ul><p class="q-src">原文答案：<a href="https://www.youtube.com/watch?v=lnfWvX66FUk" target="_blank" rel="noopener">AI 工程详解：LLM、RAG、MCP、Agent、微调、量化</a> · <a href="https://outcomeschool.com/blog/how-does-model-quantization-work" target="_blank" rel="noopener">模型量化是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="比较 LoRA、prefix tuning、prompt tuning 与全量微调。分别何时选用?" data-cat="t4">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q5.html">比较 LoRA、prefix tuning、prompt tuning 与全量微调。分别何时选用？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/apple.html">Apple</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>全量微调改所有参数，效果上限最高、显存最贵；LoRA 加低秩旁路，性价比最高、可多适配器切换；prefix tuning 在每层前加可训练前缀向量，参数极少但占上下文、效果不稳；prompt tuning 只学输入端的软提示，最省但能力最弱。</p><ul><li>数据量 &lt;1 万条、单任务：LoRA r=8–16 足够；要极致效果且有多卡：全量。</li><li>多租户/多任务：每个任务一个 LoRA，基座共享，切换成本低。</li><li>Prefix/prompt tuning 适合分类、风格控制等轻量任务，生成质量通常不如 LoRA。</li><li>选择还要看推理：LoRA 可合并，prefix 会占 KV/上下文，prompt tuning 需要模型支持软提示。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-fine-tuning-work" target="_blank" rel="noopener">微调是如何工作的？</a> · <a href="https://outcomeschool.com/blog/how-does-prefix-tuning-work" target="_blank" rel="noopener">Prefix Tuning 是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是灾难性遗忘?微调时如何缓解?" data-cat="t4">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q6.html">什么是灾难性遗忘？微调时如何缓解？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>灾难性遗忘是微调把参数推离预训练分布，导致通用能力（推理、写作、其他语言）下降。缓解：小学习率 + 少 epoch、LoRA 等参数高效方法、混入 5–20% 通用数据回放、KL 正则约束偏离、以及按能力分层的评估集。</p><ul><li>最容易被忽略的是评估：只看目标任务涨点，没测通用能力，上线后才发现变笨。</li><li>数据配比：领域数据 + 通用指令数据混合，比纯领域数据更稳。</li><li>LoRA 的低秩约束天然起到正则作用，遗忘通常小于全量微调。</li><li>已经遗忘可以用模型融合（task arithmetic）或回放部分预训练数据恢复。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/continual-learning-in-llms" target="_blank" rel="noopener">LLM 中的持续学习</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="提示、RAG 还是微调:请给出你的决策框架,并附上成本与延迟。" data-cat="t4">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q7.html">提示、RAG 还是微调：请给出你的决策框架，并附上成本与延迟。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/cohere.html">Cohere</a><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/glean.html">Glean</a><a class="iv-tag" href="../companies/didi.html">滴滴</a><a class="iv-tag" href="../companies/jd.html">京东</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>决策顺序：先用提示 + few-shot（小时级、零训练）；不够就上 RAG（知识频繁变、需要引用）；如果问题是“行为/格式/风格/领域语汇”而非“缺知识”，或者 RAG 的延迟/成本不可接受，才微调；最后才考虑继续预训练。成本上提示 &lt; RAG &lt; LoRA &lt; 全量，延迟上微调最低（可合并）、RAG 中等、长提示最高。</p><ul><li>判断标准：知识型 → RAG；能力型（遵循复杂格式、特定推理风格）→ 微调；两者都有 → 先 RAG 再 LoRA。</li><li>RAG 的优势是可更新、可引用、可权限控制；微调的知识更新要重训，且容易幻觉。</li><li>成本要算总拥有成本：数据标注、训练、评估、部署、以及每次调用的 token。</li><li>常见错误：用微调灌知识——模型记住的是措辞不是事实，问法一变就错。</li></ul><p class="q-src">原文答案：<a href="https://www.youtube.com/watch?v=lnfWvX66FUk" target="_blank" rel="noopener">AI 工程详解：LLM、RAG、MCP、Agent、微调、量化</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="做一下用 Adam 以 bf16 全量微调一个 7B 模型的 GPU 显存计算。再算用 LoRA 的情况。" data-cat="t4">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q8.html">做一下用 Adam 以 bf16 全量微调一个 7B 模型的 GPU 显存计算。再算用 LoRA 的情况。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/huggingface.html">Hugging Face</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>bf16 全量微调 7B：权重 14 GB、梯度 14 GB、Adam 一阶二阶各 14 GB（bf16）或各 28 GB（fp32），合计 56 GB（bf16 状态）、84 GB（Adam 状态用 fp32）到约 112 GB（保留 fp32 主权重），还没算激活。LoRA r=16：权重 14 GB + 适配器参数与状态不到 0.2 GB，加上激活约 18–20 GB。</p><ul><li>公式：每参数字节 = 权重 2 + 梯度 2 + 优化器 2×状态精度；混合精度训练通常主权重还是 fp32，会再多 4 字节。</li><li>7B × 16 B/参数 ≈ 112 GB（fp32 master weights + Adam m/v），所以实际全量微调往往要 8×80 GB 或 ZeRO。</li><li>LoRA 只对适配器算梯度和优化器状态，冻结部分只需权重。</li><li>激活随 batch×seq 增长，gradient checkpointing 用算力换显存。</li></ul><pre><code>全量: 7e9 × (2+2+2+2) = 56 GB (bf16 states)
+      7e9 × (2+2+4+4+4) ≈ 112 GB (fp32 master)
+LoRA: 14 GB + 适配器(&lt;0.2 GB) + 激活</code></pre></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是 RLVR(可验证奖励的 RL)?它在哪些方面优于学习式奖励模型?" data-cat="t4">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q9.html">什么是 RLVR(可验证奖励的 RL)？它在哪些方面优于学习式奖励模型？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/zhipu.html">Zhipu AI</a><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/scale.html">Scale AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>RLVR 用可程序化验证的奖励（数学答案对错、代码单测通过、格式合法）替代学出来的奖励模型，信号客观、不可作弊、可大规模生成。它在数学、代码、工具调用等有明确判定器的任务上显著优于奖励模型，但对开放性写作、主观质量无能为力。</p><ul><li>奖励 = 规则/执行结果，不需要人工标注偏好对，成本极低。</li><li>天然抗奖励黑客（答案对就是对），但会诱导模型钻规则空子（如只输出格式正确的废话）。</li><li>适合：竞赛数学、代码生成、SQL 执行、结构化抽取、agent 任务成功与否。</li><li>局限：奖励稀疏（全错时无梯度），需要课程学习/难度筛选；开放任务仍需人类或模型评判。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/group-relative-policy-optimization-grpo" target="_blank" rel="noopener">组相对策略优化(GRPO)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释 RLHF 中的奖励黑客(reward hacking),以及各实验室如何应对。" data-cat="t4">
+<span class="q-num">11</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q10.html">解释 RLHF 中的奖励黑客(reward hacking)，以及各实验室如何应对。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/scale.html">Scale AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>奖励黑客是策略找到奖励模型的漏洞、拿到高分却不符合真实意图，典型如堆砌关键词、无脑变长、讨好式回答、伪造引用。应对：奖励模型集成与定期重训、KL 惩罚、长度归一化、用可验证奖励替代主观奖励、以及红队式对抗评估。</p><ul><li>Goodhart 定律：指标一旦成为目标就不再是好指标。</li><li>长度偏置最常见：奖励模型偏好长答案，策略就学会啰嗦；用长度归一化或成对比较控制。</li><li>开放式任务可用“宪法式”原则 + AI 反馈，但仍需人工抽检。</li><li>监控：训练中定期用未见过的评估集和人工盲评，别只看 reward 曲线。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/reinforcement-learning-from-human-feedback-rlhf" target="_blank" rel="noopener">基于人类反馈的强化学习(RLHF)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是蒸馏?如何用大模型构建一个强的小模型?" data-cat="t4">
+<span class="q-num">12</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t4q11.html">什么是蒸馏？如何用大模型构建一个强的小模型？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>蒸馏是让小模型（学生）模仿大模型（教师）的输出分布或推理轨迹：logit 蒸馏用 KL 对齐软标签，序列蒸馏用教师生成的答案做 SFT，推理蒸馏用教师的思维链。关键在数据质量与覆盖，而不是单纯堆量。</p><ul><li>logit 蒸馏信息量更大（暗知识），但需要教师 logits 与同词表；黑盒 API 只能做序列蒸馏。</li><li>推理蒸馏：只学最终答案学不到过程，要学完整 CoT，并过滤掉错误轨迹。</li><li>on-policy 蒸馏（学生自己生成、教师打分/纠错）通常优于纯离线模仿。</li><li>评估要包含教师没覆盖的分布，否则只是学会了复述。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-knowledge-distillation-work" target="_blank" rel="noopener">知识蒸馏是如何工作的？</a></p></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

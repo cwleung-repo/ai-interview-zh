@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吞吐 roofline · 可视化 · AI 工程面试题库</title>
+<meta name="description" content="给定模型与带宽，算 batch 多大时从带宽受限转为算力受限。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html" aria-current="page">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article lab">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li><a href="../labs.html">可视化</a></li><li aria-current="page">吞吐 roofline</li></ol></nav>
+<header class="iv-q-head"><p class="iv-kicker">Lab 04 · 推理性能</p><h1>吞吐 roofline</h1>
+<p class="iv-meta"><span class="iv-kind">交互</span><span class="iv-min">tokens/s = batch / max(带宽时间, 算力时间)</span></p></header>
+<p class="iv-lede">decode 每步要把权重读一遍：小 batch 时吞吐随 batch 近似线性增长；只有模型与 batch 都足够大，才会转向算力受限。拖动 batch 与带宽，看拐点在哪。</p>
+
+<section class="lab-panel" aria-label="吞吐估算">
+<div class="lab-controls">
+<label class="lab-field"><span>模型</span>
+<select id="rfN"><option value="7">7B</option><option value="70" selected>70B</option><option value="405">405B</option></select></label>
+<fieldset class="lab-field" style="border:0"><legend>精度</legend>
+<div class="lab-choices">
+<label><input type="radio" name="rfPrec" value="2" checked><span>BF16</span></label>
+<label><input type="radio" name="rfPrec" value="1"><span>FP8</span></label>
+<label><input type="radio" name="rfPrec" value="0.5"><span>INT4</span></label>
+</div></fieldset>
+<label class="lab-field"><span>HBM 带宽 <output id="rfBWOut">3.35 TB/s</output></span><input id="rfBW" type="range" min="1" max="8" step="0.05" value="3.35"></label>
+<label class="lab-field"><span>batch <output id="rfBOut">1</output></span><input id="rfB" type="range" min="1" max="512" value="1"></label>
+<label class="lab-field"><span>上下文 <output id="rfSOut">2k</output></span><input id="rfS" type="range" min="1" max="32" value="2"></label>
+</div>
+<dl class="lab-stats">
+<div><dt>tokens/s</dt><dd id="rfTok">—</dd></div>
+<div><dt>每 token 读取</dt><dd id="rfBytes">—</dd></div>
+<div><dt>算术强度</dt><dd id="rfAI">—</dd></div>
+<div><dt>瓶颈</dt><dd id="rfBound">—</dd></div>
+</dl>
+<div class="lab-chart"><svg class="lab-svg" id="rfSvg" viewBox="0 0 640 260" role="img" aria-label="吞吐随 batch 变化曲线"></svg></div>
+<p class="lab-legend"><span><i class="k-a"></i>tokens/s</span><span><i class="k-b"></i>当前 batch</span></p>
+<p class="lab-note">峰值算力按 BF16 990 / FP8 1979 TFLOPS；INT4 权重仍以 BF16 计算，不提高算力峰值，只降带宽。忽略 kernel 效率与网络开销。</p>
+</section>
+
+<section class="lab-how"><h2>怎么读</h2><ul>
+<li>小 batch 时吞吐随 batch 近似线性增长；70B 在 2k 上下文下到 batch 512 仍是带宽受限。</li>
+<li>70B bf16、3.35 TB/s 的理论上限约 24 token/s；量化到 INT4 后约翻四倍。</li>
+<li>405B 才会在 batch≈360 之后切到算力受限；70B 的 KV 读取随 batch 线性增长，看不到拐点。</li>
+</ul></section>
+<section class="iv-related"><h2>相关题目</h2><ul>
+<li><a href="../q/t1q9.html">H100 上 70B、batch=1 的 roofline 计算</a></li>
+<li><a href="../q/t1q0.html">prefill 与 decode 为什么一个算力受限、一个带宽受限</a></li>
+</ul></section>
+</article></main>
+<script src="../assets/lab-roofline.js" defer></script>
+<footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

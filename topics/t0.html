@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM 内部机制与架构 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="LLM 内部机制与架构：注意力、KV 缓存、位置编码、MoE、缩放定律——所有后续问题的地基。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t0)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">LLM 内部机制与架构</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T0</p>
+<h1>LLM 内部机制与架构</h1>
+<p class="iv-meta"><span class="iv-kind">16 道题</span><span class="iv-min">15 道附原文答案</span><span class="iv-min">16 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">注意力、KV 缓存、位置编码、MoE、缩放定律——所有后续问题的地基。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">16 / 16 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="解释缩放点积注意力(scaled dot-product attention),以及 1/sqrt(d_k) 缩放因子的作用。" data-cat="t0">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q0.html">解释缩放点积注意力(scaled dot-product attention)，以及 1/sqrt(d_k) 缩放因子的作用。</a></h3>
+<div class="q-tags"><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>注意力就是 softmax(QKᵀ/√d_k)·V：先算每个 query 与所有 key 的相似度，归一化成权重，再对 value 加权求和。除以 √d_k 是把点积的方差拉回 1，防止 softmax 进入饱和区、梯度消失。</p><ul><li>若 q、k 各分量独立、均值 0 方差 1，则 q·k 的方差是 d_k，标准差随 √d_k 增长；不缩放时 d_k=128 的 logits 量级约 ±11，softmax 会接近 one-hot。</li><li>softmax 饱和后最大概率接近 1，梯度 ∂p/∂z 接近 0，反向传播几乎学不动，且对权重初始化极其敏感。</li><li>除以 √d_k 后方差恒为 1，logits 落在 softmax 的敏感区间，训练稳定、可用较大学习率。</li><li>工程上还要乘 causal mask（上三角置 -inf），以及按 1/√d_k 预先缩放 q 以省一次除法。</li></ul><pre><code>Attention(Q,K,V) = softmax(QKᵀ / √d_k + M) V
+Var(q·k) = d_k  →  Var((q·k)/√d_k) = 1
+d_k=128 时未缩放 logits 标准差 ≈ 11.3</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/scaling-dot-product-attention" target="_blank" rel="noopener">注意力中 √dₖ 缩放因子背后的数学</a> · <a href="https://outcomeschool.com/blog/math-behind-attention-qkv" target="_blank" rel="noopener">注意力背后的数学：Q、K、V</a></p></div></details>
+<details class="iv-answer iv-answer-small"><summary>常见错误说法</summary><div class="iv-answer-body"><ul class="iv-wrong"><li><p class="iv-wrong-a">为了数值稳定把 softmax 前的 logits 直接截断——会改变分布，正确答案是减最大值（log-sum-exp 技巧）。</p></li></ul></div></details>
+</div></li><li class="q-item" data-filter-item data-search="什么是 KV 缓存?在大规模场景下它对显存有什么影响?请推导公式。" data-cat="t0">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q1.html">什么是 KV 缓存？在大规模场景下它对显存有什么影响？请推导公式。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/xai.html">xAI</a><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/character-ai.html">Character.AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>KV 缓存把每层每个已生成 token 的 K、V 存下来，decode 时不再重算历史，只算新 token 的 Q。显存随 batch × 序列长度线性增长，是长上下文和高并发服务的第一大开销。</p><ul><li>公式：bytes = 2 × L × H_kv × d_head × S × B × bytes_per_elem，其中 2 是 K 和 V，L 是层数，H_kv 是 KV 头数（GQA 后小于注意力头数）。</li><li>以 70B（80 层、8 个 KV 头、head_dim 128、bf16）为例：每 token 约 320 KB；单条 32k 上下文约 10 GB，并发 32 条就是 320 GB。</li><li>它把 decode 从 O(S²) 的重算变成 O(S) 的读取，代价是显存；于是有了 MQA/GQA、MLA、PagedAttention、KV 量化、前缀共享这一整套优化。</li><li>估算时要和权重一起算：70B 的 bf16 权重已经 140 GB，KV 往往是压垮并发的最后一根稻草。</li></ul><pre><code>per_token = 2 · L · H_kv · d_head · dtype_bytes
+70B: 2·80·8·128·2 = 327,680 B ≈ 0.31 MiB/token
+32k 上下文 ≈ 10 GiB / 条</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/kv-cache-in-llms" target="_blank" rel="noopener">什么是 LLM 中的 KV Cache？</a> · <a href="https://outcomeschool.com/blog/kv-cache-compression" target="_blank" rel="noopener">KV Cache 压缩</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是多查询注意力(MQA)和分组查询注意力(GQA)?它们分别牺牲了什么?" data-cat="t0">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q2.html">什么是多查询注意力(MQA)和分组查询注意力(GQA)？它们分别牺牲了什么？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/didi.html">滴滴</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>MQA 让所有 query 头共享一组 K/V，GQA 让每 G 个 query 头共享一组。两者都按比例压缩 KV 缓存和 decode 时的显存带宽，牺牲的是表达能力和训练稳定性：MQA 最激进，GQA 是质量与成本的折中。</p><ul><li>MHA：H 个 query 头对应 H 组 KV，KV 缓存最大；MQA：1 组 KV，缓存降到 1/H，但质量下降、训练易不稳。</li><li>GQA：H/G 组 KV（Llama 3 70B 用 8 组、64 个 query 头），缓存降到 G/H，质量接近 MHA，是当前主流。</li><li>收益主要来自 decode：decode 是显存带宽受限，KV 越小每步读得越少，batch 才能开大。</li><li>实现上就是把 K、V 投影成 H_kv 组，前向时 repeat_kv 到 H 组；不能简单在 head 维求平均。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/grouped-query-attention" target="_blank" rel="noopener">分组查询注意力(Grouped Query Attention)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是多头潜在注意力(MLA)?DeepSeek 为什么要引入它?" data-cat="t0">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q3.html">什么是多头潜在注意力(MLA)？DeepSeek 为什么要引入它？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/deepseek.html">DeepSeek</a><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/meituan.html">美团</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>MLA 不缓存完整 K/V，而是把每个 token 的 K/V 联合压缩成一个低秩隐向量（DeepSeek-V2 为 512 维）连同一个小型解耦 RoPE key 一起缓存。相对 MHA 把 KV 缓存压掉约 93%，质量反而略好，代价是实现复杂。</p><ul><li>做法：K = W_dk · c，V = W_dv · c，c 是低秩 latent；缓存 c（加 RoPE 部分）而不是 K、V 本身，相当于把 KV 缓存做了可学习的低秩分解。</li><li>DeepSeek-V2 报告：KV 缓存比 MHA 少 93%，最大生成吞吐提升 5.76 倍；同时因为低秩瓶颈起到正则作用，效果不降。</li><li>推理时可以把 W_dk、W_dv 吸收进相邻矩阵（absorb），避免每步显式解压，否则低秩反而变慢。</li><li>代价：训练要同时学压缩与解压，kernel 实现复杂，生态支持不如 GQA 广。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/kv-cache-compression" target="_blank" rel="noopener">KV Cache 压缩</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释 FlashAttention。它并没有减少 FLOPs,为什么却更快?" data-cat="t0">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q4.html">解释 FlashAttention。它并没有减少 FLOPs，为什么却更快？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>FlashAttention 不是近似，而是 IO 感知的精确注意力：把 Q/K/V 分块塞进 SRAM，在线 softmax 累加，从不把 T×T 的注意力矩阵写回 HBM。FLOPs 不变，HBM 读写大幅减少，所以更快、显存降到 O(T)。</p><ul><li>标准实现要把 S=QKᵀ 写回 HBM 再读出来做 softmax，HBM 带宽成为瓶颈；FlashAttention 用 tiling + 在线 softmax（running max/sum）分块计算。</li><li>反向传播不保存注意力矩阵，用输出和 softmax 统计量重算，用算力换显存。</li><li>实际收益：长序列上 2–4 倍加速，显存从 O(T²) 降到 O(T)，是长上下文可行的前提之一。</li><li>它不是稀疏或线性注意力，结果与标准注意力数值等价（浮点误差内）。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/decoding-flash-attention" target="_blank" rel="noopener">解读 LLM 中的 Flash Attention</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="字节对编码(Byte Pair Encoding)是如何工作的?它有哪些失效场景(数字、代码、非拉丁文字)?" data-cat="t0">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q5.html">字节对编码(Byte Pair Encoding)是如何工作的？它有哪些失效场景(数字、代码、非拉丁文字)？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/sarvam.html">Sarvam AI</a><a class="iv-tag" href="../companies/huggingface.html">Hugging Face</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>BPE 从字符（或字节）出发，反复合并语料中最高频的相邻符号对，直到词表达到目标大小；编码时按学到的合并顺序贪心应用。失效点在数字切分不一致、代码缩进与标识符、以及非拉丁文字（每字符消耗多个 token）。</p><ul><li>训练：统计相邻 pair 频次 → 合并最高频 pair → 更新语料 → 重复 V 次；合并表就是词表，顺序不能乱。</li><li>数字：&#x27;1234&#x27; 与 &#x27;1235&#x27; 可能切成不同片段，模型学不到位值关系，算术容易错；缓解是数字逐位切分或加分隔符。</li><li>代码：缩进空格、下划线命名、长标识符被切碎；中文/泰文等每字常占 1–3 个 token，等于变相缩短上下文、抬高成本。</li><li>字节级 BPE（GPT-2 起）保证任何输入都可编码、无 UNK，但 UTF-8 多字节字符仍会被切成多个 token。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/bpe-in-llms" target="_blank" rel="noopener">字节对编码</a> · <a href="https://www.youtube.com/watch?v=sK2s9I84EVI" target="_blank" rel="noopener">大语言模型(LLM)中的分词</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="Transformer 中的位置编码是什么?它是如何演进的(正弦式 → 可学习 → RoPE → ALiBi)?" data-cat="t0">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q6.html">Transformer 中的位置编码是什么？它是如何演进的(正弦式 → 可学习 → RoPE → ALiBi)？</a></h3>
+<div class="q-tags"><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>位置编码给无序的自注意力注入顺序信息，演进路线是：正弦式固定编码 → 可学习绝对编码 → RoPE 旋转相对编码 → ALiBi 线性偏置。今天主流是 RoPE，因为它是相对的、可外推、实现便宜。</p><ul><li>正弦式（原版 Transformer）：不同频率的 sin/cos，无需训练，但外推差、表达固定。</li><li>可学习绝对编码（BERT/GPT-2）：简单，但超过最大长度就没有对应向量。</li><li>RoPE（LLaMA、Qwen、多数开源模型）：把位置写成旋转矩阵作用在 q、k 上，点积只依赖相对距离。</li><li>ALiBi（BLOOM 等）：直接给注意力分数加 -m·|i-j| 的线性惩罚，零参数、外推好，但被 RoPE + 插值方案后来居上。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.substack.com/p/positional-embeddings-in-llms" target="_blank" rel="noopener">LLM 中的位置嵌入</a> · <a href="https://outcomeschool.com/blog/math-behind-rope-rotary-position-embedding" target="_blank" rel="noopener">RoPE(旋转位置编码)背后的数学</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释 RoPE,以及位置插值 / YaRN 如何把上下文扩展到训练长度之外。" data-cat="t0">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q7.html">解释 RoPE，以及位置插值 / YaRN 如何把上下文扩展到训练长度之外。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>RoPE 把 q、k 按位置旋转一个角度，使内积只与相对位置有关。要超出训练长度，位置插值把位置索引按 1/s 压缩进训练区间；YaRN 进一步做 NTK-aware 的基频调整、分段缩放和注意力温度修正，少量微调即可扩到 32k–128k。</p><ul><li>旋转角 θ_i = base^(-2i/d)，base 默认 10000；每对维度转一个频率，低频维度负责长距离。</li><li>直接外推会在训练长度之外崩掉：未见过的角度导致注意力分布失控；位置插值（PI）线性压缩位置，代价是高频分辨率下降。</li><li>YaRN：NTK-aware 改 base（如 10000 → 500000）保住高频、分段插值保住低频、再按 √t 调整注意力温度；通常还需几百步微调。</li><li>工程上要同时改 tokenizer 的最大长度、RoPE scaling 配置和推理框架参数，改错一处就会出现复读或胡言乱语。</li></ul><pre><code>q&#x27;_m = R(θ, m) q,  k&#x27;_n = R(θ, n) k
+q&#x27;ᵀk&#x27; = qᵀ R(θ, n-m) k   → 只依赖相对位置 n-m</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/math-behind-rope-rotary-position-embedding" target="_blank" rel="noopener">RoPE(旋转位置编码)背后的数学</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="Chinchilla 缩放定律讲了什么?它与早期关于缩放的直觉有何不同?" data-cat="t0">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q8.html">Chinchilla 缩放定律讲了什么？它与早期关于缩放的直觉有何不同？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>Chinchilla 说在固定算力下，参数量和数据量应同比例增长，最优约每参数 20 个 token；此前 Kaplan 等人的结论偏向了“模型越大越好”，导致大模型训练不足。</p><ul><li>Chinchilla 70B 用 1.4T token 训练，在同等算力下全面超过 280B 的 Gopher，说明当时的大模型“饿着”训练。</li><li>结论修正了缩放配方：算力 C 下，N_opt ∝ C^0.5，D_opt ∝ C^0.5，比例约 D/N ≈ 20。</li><li>今天实际训练普遍“过度训练”（Llama 3 8B 用 15T token，远超 20×8B），因为推理成本远大于训练成本，小模型多喂数据更划算。</li><li>面试延伸：这是“训练最优”与“推理最优”的区别，答题时要主动说出后者。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是混合专家(mixture-of-experts)架构?它如何在不增加 FLOPs 的前提下扩展模型容量?" data-cat="t0">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q9.html">什么是混合专家(mixture-of-experts)架构？它如何在不增加 FLOPs 的前提下扩展模型容量？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/cohere.html">Cohere</a><a class="iv-tag" href="../companies/deepseek.html">DeepSeek</a><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/zhipu.html">Zhipu AI</a><a class="iv-tag" href="../companies/alibaba-qwen.html">Alibaba</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/meituan.html">美团</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>MoE 把每个 block 的 FFN 换成 E 个专家加一个路由器，每个 token 只激活 top-k 个专家。总参数量随 E 增长、容量变大，但每 token 的 FLOPs 只按 k 计算，所以能“不加算力地加容量”。</p><ul><li>路由：gate 打分 → top-k（常用 k=2）→ 加权求和专家输出；负载均衡靠 aux loss 或 capacity factor 约束。</li><li>收益：同等 FLOPs 下质量更好（Mixtral 8×7B 总参 47B、激活 13B）；代价是显存要装下全部专家。</li><li>工程难点：专家并行带来的 all-to-all 通信、负载不均导致的热点专家、batch 小时专家利用不足。</li><li>推理时的 batch 越大越划算，单条低并发场景反而不如稠密模型。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/mixture-of-experts" target="_blank" rel="noopener">混合专家(Mixture of Experts)详解</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释预训练、监督微调与偏好优化之间的区别。" data-cat="t0">
+<span class="q-num">11</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q10.html">解释预训练、监督微调与偏好优化之间的区别。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/scale.html">Scale AI</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>预训练学“下一个 token”的通用语言能力，用海量无标注语料；监督微调（SFT）用人工写的指令-回答对教会模型听指令、按格式回答；偏好优化（RLHF/DPO/GRPO）用成对比较把输出分布往人更喜欢的方向推。</p><ul><li>预训练：目标 p(x_t | x_&lt;t)，学到的是世界知识与语言分布，不理解“什么是有用的回答”。</li><li>SFT：交叉熵在高质量示范上继续训练，负责格式、语气、任务遵循；数据质量远比数量重要。</li><li>偏好优化：在 chosen/rejected 对上优化相对偏好，负责有用性、无害性、风格；这一步最容易引入对齐税。</li><li>顺序不能反：没有预训练知识，SFT 学不会知识；没有 SFT 的格式，偏好优化难以稳定。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/decoding-instructgpt" target="_blank" rel="noopener">解读 InstructGPT</a> · <a href="https://outcomeschool.com/blog/reinforcement-learning-from-human-feedback-rlhf" target="_blank" rel="noopener">基于人类反馈的强化学习(RLHF)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="比较贪婪解码、束搜索、top-k、top-p 与温度采样。各自在什么情况下会失效?" data-cat="t0">
+<span class="q-num">12</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q11.html">比较贪婪解码、束搜索、top-k、top-p 与温度采样。各自在什么情况下会失效？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/google-deepmind.html">Google DeepMind</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>贪婪每步取 argmax，确定但易复读；束搜索保留 k 条候选，适合翻译等有唯一答案的任务，开放生成会平淡；top-k 固定截断 k 个候选；top-p 按累积概率截断，随分布形状自适应；温度缩放 logits 改变分布陡峭度。</p><ul><li>贪婪/温度为 0：可复现，但容易循环、缺乏多样性，不适合创作。</li><li>束搜索：最大化序列概率，BLEU 类指标好，但开放对话会退化成安全废话，且成本 ×k。</li><li>top-k：k 固定，分布平坦时截掉合理候选、分布尖锐时引入垃圾；top-p（nucleus）按累积概率 p 截断，更自适应，通常 p=0.9–0.95。</li><li>温度与 top-p 会互相影响：高温 + 低 top-p 常常等于把尾部噪声放大后再硬截断，调参要一起看。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-temperature-control-llm-output" target="_blank" rel="noopener">温度如何控制 LLM 的输出？</a> · <a href="https://outcomeschool.com/blog/how-do-top-k-and-top-p-sampling-work" target="_blank" rel="noopener">Top-k 与 Top-p 采样是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="长上下文中的&quot;中间遗忘&quot;(lost-in-the-middle)问题是什么?如何缓解?" data-cat="t0">
+<span class="q-num">13</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q12.html">长上下文中的&quot;中间遗忘&quot;(lost-in-the-middle)问题是什么？如何缓解？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>长上下文模型对开头和结尾的信息召回好，对中间段落明显变差，呈 U 形曲线，这就是 lost-in-the-middle。缓解靠把关键信息放在首尾、先检索重排再截断、以及针对长上下文做训练和位置鲁棒性评估。</p><ul><li>成因与训练数据的位置分布、注意力衰减、以及位置编码在长距离上的分辨率下降都有关。</li><li>产品侧最有效：把问题与关键文档放在 prompt 末尾，检索结果按相关性排序而不是按时间堆叠。</li><li>评估要用“大海捞针”之外的多人称、多跳任务，单针检索会高估长上下文能力。</li><li>结构化提示（先给提纲再给细节）、显式引用编号，也能显著降低中间信息丢失。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/lost-in-the-middle-problem-in-llms" target="_blank" rel="noopener">LLM 中的中间遗忘问题</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="为什么现代 Transformer 把 LayerNorm 放在每个 block 之前?什么是 RMSNorm?" data-cat="t0">
+<span class="q-num">14</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q13.html">为什么现代 Transformer 把 LayerNorm 放在每个 block 之前？什么是 RMSNorm？</a></h3>
+<div class="q-tags"><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>Pre-LN 把归一化放在子层之前，残差路径上是一条干净的恒等通路，梯度可以直达底层，因此训练稳定、对 warmup 不敏感，深层模型才能训得起来。RMSNorm 去掉均值中心化、只除以均方根，少一次减法和求均值，速度更快、效果相当。</p><ul><li>Post-LN（原版）在残差相加后归一化，深层时梯度容易爆炸，需要精心的 warmup。</li><li>Pre-LN 的代价是表达力略降（有研究用 Post-LN 初始化技巧追回），但工程上稳定优先。</li><li>RMSNorm：y = x / sqrt(mean(x²) + ε) · γ，不减均值、不加偏置；LLaMA 系列默认。</li><li>还有 QK-Norm（对 q、k 单独归一化）用于超深模型或低精度训练的稳定性。</li></ul><pre><code>LayerNorm: (x - μ) / √(σ² + ε) · γ + β
+RMSNorm:   x / √(mean(x²) + ε) · γ</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/rmsnorm-root-mean-square-layer-normalization" target="_blank" rel="noopener">RMSNorm(均方根层归一化)</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释 SwiGLU,以及为什么门控激活在现代 LLM 的 MLP 模块中取代了 ReLU/GELU。" data-cat="t0">
+<span class="q-num">15</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q14.html">解释 SwiGLU，以及为什么门控激活在现代 LLM 的 MLP 模块中取代了 ReLU/GELU。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/meta.html">Meta</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>SwiGLU 是带门控的前馈层：FFN(x) = (Swish(W₁x) ⊙ W₃x) W₂，一条支路做非线性激活当门，去乘另一条线性支路。相比 ReLU/GELU，同等参数量下困惑度更低，已经成为 LLaMA、PaLM 等模型的标准配置。</p><ul><li>门控让网络可以学着“按输入内容开关通道”，比逐元素激活表达力更强。</li><li>代价是多一个投影矩阵，通常把隐藏维从 4d 降到 8/3·d，保持总参数量不变。</li><li>PaLM 论文的消融显示同参数预算下 SwiGLU 最好；但 kernel 更复杂，低精度下要注意数值范围。</li><li>相关变体：GeGLU、ReGLU，结论类似——门控比激活函数本身更重要。</li></ul><pre><code>SwiGLU(x) = (Swish(xW₁) ⊙ xW₃) W₂
+Swish(z) = z · sigmoid(βz)</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/feed-forward-networks-in-llms" target="_blank" rel="noopener">LLM 中的前馈网络</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="请逐张量地讲一遍仅解码器(decoder-only)Transformer 的一次前向传播都发生了什么。" data-cat="t0">
+<span class="q-num">16</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t0q15.html">请逐张量地讲一遍仅解码器(decoder-only)Transformer 的一次前向传播都发生了什么。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>token → embedding → 每层（RMSNorm → QKV 投影 → 分头 + RoPE → 因果注意力 → 输出投影 → 残差 → RMSNorm → SwiGLU → 残差）→ 最终 norm → lm_head → logits → 采样。要能说清每一步的张量形状和参数量来源。</p><ul><li>输入 [B,T] → embedding [B,T,d]；每层 QKV 投影产生 [B,T,H·d_head] 三份，GQA 时 K/V 只有 H_kv 份。</li><li>注意力：scores [B,H,T,T] = QKᵀ/√d + mask，softmax 后乘 V 得 [B,H,T,d_head]，拼回 [B,T,d]，再过 W_o。</li><li>MLP：升维到 8/3·d 或 4d，SwiGLU 门控后降回 d；整个 block 两次残差相加。</li><li>最后 lm_head [d,V]（常与 embedding 共享权重）得 logits [B,T,V]；训练时算交叉熵，推理时取最后一位采样。</li></ul><pre><code>params/layer ≈ 4d² (attn, GQA 更少) + 3·d·d_ff (SwiGLU)
+7B ≈ 32 层 × (attn 0.10B + mlp 0.11B) + embedding</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/decoding-transformer-architecture" target="_blank" rel="noopener">解读 Transformer 架构</a></p></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

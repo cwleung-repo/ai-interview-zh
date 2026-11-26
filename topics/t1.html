@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推理服务与 GPU 性能 · 面试题 · AI 工程面试题库</title>
+<meta name="description" content="推理服务与 GPU 性能：prefill/decode、连续批处理、PagedAttention、量化与并行策略。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article" style="--group:var(--t1)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol><li><a href="../index.html">目录</a></li><li>主题</li><li aria-current="page">推理服务与 GPU 性能</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">Topic · T1</p>
+<h1>推理服务与 GPU 性能</h1>
+<p class="iv-meta"><span class="iv-kind">15 道题</span><span class="iv-min">12 道附原文答案</span><span class="iv-min">15 道有本站要点</span></p>
+</header>
+<p class="iv-lede" style="margin-bottom:26px">prefill/decode、连续批处理、PagedAttention、量化与并行策略。</p>
+<div class="iv-controls iv-controls-slim">
+<div class="iv-search"><label class="iv-search-label" for="filterInput">在本主题内搜索题目</label><input id="filterInput" type="search" placeholder="输入关键词" aria-label="在本主题内搜索题目"></div>
+<div class="iv-toolbar">
+<button class="btn" id="expandAll" type="button">全部展开</button>
+<button class="btn" id="collapseAll" type="button">全部收起</button>
+<span class="iv-count" id="filterCount" role="status" aria-live="polite">15 / 15 道</span>
+</div>
+<p id="filterEmpty" class="iv-empty" hidden>没有匹配的题目，换个关键词试试。</p>
+</div>
+<h2 class="iv-label">题目</h2>
+<ol class="q-list"><li class="q-item" data-filter-item data-search="解释 prefill 和 decode 两个阶段。为什么 prefill 受算力限制,而 decode 受显存带宽限制?" data-cat="t1">
+<span class="q-num">01</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q0.html">解释 prefill 和 decode 两个阶段。为什么 prefill 受算力限制，而 decode 受显存带宽限制？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><a class="iv-tag" href="../companies/alibaba-taotian.html">阿里巴巴(淘天、阿里云)</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>prefill 一次并行处理整段 prompt，矩阵乘规模大、算术强度高，是算力受限；decode 每步只处理一个新 token，却要把全部权重和 KV 缓存从显存读一遍，算术强度极低，是显存带宽受限。</p><ul><li>算术强度（FLOPs / Byte）决定落在 roofline 的哪一段：prefill 约为 O(T)，decode 约为 O(batch)。</li><li>decode 每生成一个 token 都要读一遍权重，所以 batch=1 时 GPU 算力利用率通常只有个位数百分比。</li><li>这解释了两条优化主线：prefill 用 FlashAttention、更大 tile、FP8；decode 用 GQA/MLA、量化、连续批处理、投机解码。</li><li>服务指标上：prefill 决定 TTFT，decode 决定 TPOT/ITL。</li></ul><pre><code>decode 算术强度 ≈ 2·B·N_params / (2·N_params + KV_bytes)
+B=1 时 ≈ 1 FLOP/Byte，远低于 H100 的 ~295 FLOP/Byte 拐点</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/prefill-vs-decode-llm-inference-optimization" target="_blank" rel="noopener">Prefill 与 Decode:LLM 推理优化</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是连续批处理(在途批处理)?它为什么取代了静态批处理?" data-cat="t1">
+<span class="q-num">02</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q1.html">什么是连续批处理(在途批处理)？它为什么取代了静态批处理？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/anthropic.html">Anthropic</a><a class="iv-tag" href="../companies/xai.html">xAI</a><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>连续批处理在每一步 decode 时重新组批：谁生成完就立刻退出、新请求立刻补位，而不是等整批结束。它取代静态批处理，因为静态批要等最长序列、还要为 padding 浪费算力，GPU 利用率低、尾延迟差。</p><ul><li>迭代级调度：每个 decode step 前，调度器按 token 预算选择 running + waiting 请求组成新 batch。</li><li>静态批的浪费：一个 8k 请求和一个 100 token 请求同批，短请求结束后槽位空转。</li><li>配套机制：chunked prefill（把长 prompt 切块混入 decode 批）、优先级/公平调度、抢占与重算。</li><li>效果：同等 GPU 下吞吐常见 2–10 倍提升，且 p99 更平稳。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/continuous-batching-in-llms" target="_blank" rel="noopener">LLM 中的连续批处理</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="PagedAttention 是如何工作的?它解决了 KV 缓存的什么碎片化问题?" data-cat="t1">
+<span class="q-num">03</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q2.html">PagedAttention 是如何工作的？它解决了 KV 缓存的什么碎片化问题？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>PagedAttention 把 KV 缓存切成固定大小的块（如 16 个 token），用块表把逻辑位置映射到物理块，像操作系统的虚拟内存。它消除了预留最大长度造成的内部碎片和变长分配造成的外部碎片，显存浪费从 60–80% 降到 4% 以下。</p><ul><li>传统做法按 max_len 预分配连续显存，实际用量远小于预留；PagedAttention 按需分配块，最后一块才可能有少量浪费。</li><li>块表支持共享：同一条 prompt 的多个采样、beam search、前缀缓存都可以 copy-on-write 共享物理块。</li><li>代价是注意力 kernel 要按块索引，访存不连续，需要专门实现（vLLM 的核心）。</li><li>省下的显存直接换成更大的 batch，这是 vLLM 吞吐优势的主要来源。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/paged-attention-in-llms" target="_blank" rel="noopener">LLM 中的 Paged Attention</a> · <a href="https://outcomeschool.com/blog/how-does-vllm-work" target="_blank" rel="noopener">vLLM 是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是投机解码(speculative decoding)?为什么它不会降低输出质量?什么情况下它没有帮助?" data-cat="t1">
+<span class="q-num">04</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q3.html">什么是投机解码(speculative decoding)？为什么它不会降低输出质量？什么情况下它没有帮助？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>投机解码用一个小 draft 模型先连续猜 k 个 token，再用目标模型一次前向并行验证，按拒绝采样规则接受前缀。它不改变输出分布，因为验证阶段严格按目标模型的概率接受/拒绝；当 draft 命中率低、draft 本身太慢或目标模型已是算力受限（大 batch）时，收益会消失甚至变负。</p><ul><li>正确性来自 speculative sampling：对每个候选 token，以 min(1, p_target/p_draft) 接受，拒绝时从修正分布重采样。</li><li>加速比 ≈ 接受率 × 每次验证的 token 数 / 验证开销；典型 1.5–3 倍。</li><li>不适合：高并发大 batch（decode 已变成算力受限）、draft 与目标分布差异大、任务高度不确定（创意写作）。</li><li>变体：Medusa/EAGLE 用额外头或特征预测，免去独立 draft 模型；与量化、SGLang 的树形验证可叠加。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/speculative-decoding" target="_blank" rel="noopener">投机解码</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释前缀缓存 / 提示缓存(prompt caching)。何时该用它?什么会使已缓存的前缀失效?" data-cat="t1">
+<span class="q-num">05</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q4.html">解释前缀缓存 / 提示缓存(prompt caching)。何时该用它？什么会使已缓存的前缀失效？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/character-ai.html">Character.AI</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>前缀缓存把相同前缀（系统提示、few-shot 示例、长文档）算过的 KV 存下来复用，命中时省掉 prefill，主要降低 TTFT 和 prefill 成本。前缀中任何一个 token 变化、换了模型或适配器、缓存被淘汰，都会让缓存失效。</p><ul><li>匹配是严格按 token 前缀做的：在开头插入一句日期，后面全部失效——所以要把稳定内容放前面、易变内容放后面。</li><li>常见收益场景：固定 system prompt 的客服、代码助手的仓库上下文、多轮对话的历史前缀。</li><li>缓存按块存储时可以做部分命中（prefix sharing），这也是 PagedAttention 的副产品。</li><li>注意隐私：多租户共享缓存要做租户隔离，否则可能读到别人的上下文。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-prompt-caching-work" target="_blank" rel="noopener">提示缓存是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里?" data-cat="t1">
+<span class="q-num">06</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q5.html">在推理服务中比较 FP16、BF16、FP8、INT8、INT4 与 FP4。每往下降一档会坏在哪里？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/mistral.html">Mistral AI</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/character-ai.html">Character.AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>FP16 动态范围小、易溢出；BF16 与 FP32 同指数范围，训练首选；FP8（E4M3 权重/激活、E5M2 梯度）在 H100 上翻倍算力；INT8 需要逐通道 scale；INT4/NF4 一般只压权重、配 group scale；FP4（NVFP4）靠块级缩放，精度损失最大但显存最省。</p><ul><li>每降一档的主要风险：激活离群值（需 per-token/per-channel scale 或 SmoothQuant）、累积误差、以及 kernel/硬件支持不完整。</li><li>权重-only 量化（INT4/NF4）对生成质量影响小，因为 decode 是带宽受限，收益直接体现在吞吐。</li><li>KV 缓存量化（FP8/INT8）能显著提升并发，但要小心长上下文下的误差累积。</li><li>训练侧：BF16 是默认；FP8 训练需要延迟缩放（delayed scaling）和 amax 历史，否则梯度下溢。</li></ul><pre><code>显存 ↓ 与算力 ↑ 不是同一件事
+H100 SXM: BF16 ~990 TFLOPS, FP8 ~1979 TFLOPS, HBM 3.35 TB/s</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-model-quantization-work" target="_blank" rel="noopener">模型量化是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="比较张量并行、流水线并行、数据并行、序列并行与专家并行。什么时候要把它们组合使用?" data-cat="t1">
+<span class="q-num">07</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q6.html">比较张量并行、流水线并行、数据并行、序列并行与专家并行。什么时候要把它们组合使用？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/google-deepmind.html">Google DeepMind</a><a class="iv-tag" href="../companies/meta.html">Meta</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>张量并行切矩阵、走 NVLink，适合节点内；流水线并行切层、跨节点，有气泡；数据并行复制模型、同步梯度，最外层；序列并行切序列维，配合长上下文；专家并行切 MoE 专家，靠 all-to-all。真实训练是 TP×PP×DP（×EP）的组合。</p><ul><li>TP 通信量最大，一般 ≤8（单机 NVLink 域）；PP 通信少但有 bubble，用 interleaved/1F1B 缓解；DP 通信是梯度 all-reduce，可用 ZeRO/FSDP 分片。</li><li>选择顺序：先让单层放得下（TP），再让模型层数铺开（PP），最后用 DP 扩吞吐。</li><li>序列并行（SP/Ring Attention）在长上下文时把序列切到多卡，避免单卡激活爆炸。</li><li>EP 用于 MoE，专家放不同卡，需要高速 all-to-all；通信规划不好会成为瓶颈。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="估算服务一个 70B 模型所需的 GPU 显存:权重、KV 缓存、激活值、碎片。" data-cat="t1">
+<span class="q-num">08</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q7.html">估算服务一个 70B 模型所需的 GPU 显存：权重、KV 缓存、激活值、碎片。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>70B 模型 bf16 权重约 140 GB；KV 缓存按每 token 约 320 KB 算，32k 上下文单条 10 GB；激活在 decode 时很小、prefill 时随 batch×seq 增长；再加 5–10% 的碎片与 workspace。结论：短上下文、单条请求 2×80 GB 勉强；32k 上下文或要并发就得上 3–4 张 80 GB，或者做 KV 量化。</p><ul><li>权重：70e9 × 2 B = 140 GB；INT8 减半、INT4 约 35 GB。</li><li>KV：2 × 80 层 × 8 KV 头 × 128 × 2 B = 320 KB/token；32k × 32 并发 ≈ 320 GB——通常先卡在 KV 上；单条 32k 的 170 GB 已经超过 2×80 GB。</li><li>激活：prefill 时约 batch × seq × hidden × 层数 × 几倍，FlashAttention 后大幅下降。</li><li>框架开销：CUDA context、NCCL buffer、碎片，按 5–10% 预留，否则会出现“算着够却 OOM”。</li></ul><pre><code>总显存 ≈ 权重 + KV×并发 + 激活峰值 + 10% 余量
+140 GB + 10 GB×B + ~20 GB</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/kv-cache-in-llms" target="_blank" rel="noopener">什么是 LLM 中的 KV Cache？</a> · <a href="https://outcomeschool.com/blog/paged-attention-in-llms" target="_blank" rel="noopener">LLM 中的 Paged Attention</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是 TTFT、TPOT、ITL 和吞吐?它们之间如何相互权衡?" data-cat="t1">
+<span class="q-num">09</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q8.html">什么是 TTFT、TPOT、ITL 和吞吐？它们之间如何相互权衡？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/apple.html">Apple</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>TTFT 是首 token 延迟（排队 + prefill），TPOT 是每输出 token 的平均时间，ITL 是相邻 token 间隔（用户感知的“流畅度”），吞吐是单位时间服务的 token 数。核心权衡：batch 越大吞吐越高但 TPOT/ITL 越差；chunked prefill 用 TTFT 换 ITL 平稳。</p><ul><li>TTFT 受 prompt 长度、排队深度、prefill 算力影响；TPOT 受 decode 带宽、batch、KV 长度影响。</li><li>SLO 通常写成 p95 TTFT &lt; X ms 且 p95 TPOT &lt; Y ms，再在这个约束下最大化吞吐。</li><li>吞吐与延迟不是单调关系：超过某个 batch 后，每 token 时间线性上升，单位时间产出反而下降。</li><li>测量要区分服务端与端到端（含网络、网关、流式解析），否则会低估真实体验。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/prefill-vs-decode-llm-inference-optimization" target="_blank" rel="noopener">Prefill 与 Decode:LLM 推理优化</a> · <a href="https://www.youtube.com/watch?v=XD8DD4cEHu0" target="_blank" rel="noopener">LLM 中的首 token 延迟问题</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="做一下 roofline 计算:一张 H100 在 batch size 为 1 时,为一个 70B 模型每秒能产生多少 token?" data-cat="t1">
+<span class="q-num">10</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q9.html">做一下 roofline 计算：一张 H100 在 batch size 为 1 时，为一个 70B 模型每秒能产生多少 token？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>batch=1 的 decode 是纯带宽题：每 token 要把 140 GB 权重读一遍，H100 的 3.35 TB/s 理论极限约 24 token/s，实际 15–20 token/s。算力根本不是瓶颈——这也说明为什么量化能近乎线性提速。</p><ul><li>roofline：bf16 每参数读 2 字节、算 2 FLOP，算术强度 ≈ 1 FLOP/Byte，远低于 H100 拐点 ~295，所以性能 = 带宽 / 字节数。</li><li>加上 KV 读取和 kernel 开销，实测通常再打 20–30% 折扣。</li><li>若权重量化到 INT8，字节减半，理论上限翻倍到 ~48 token/s；INT4 约 ~96 token/s。</li><li>batch 增大后逐渐转为算力受限，roofline 的点会向右移动。</li></ul><pre><code>tokens/s ≈ HBM_BW / model_bytes
+= 3.35e12 / 1.4e11 ≈ 24 tok/s (70B bf16)</code></pre><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/prefill-vs-decode-llm-inference-optimization" target="_blank" rel="noopener">Prefill 与 Decode:LLM 推理优化</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈?" data-cat="t1">
+<span class="q-num">11</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q10.html">什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈？</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">3 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>vLLM 是通用默认选项（PagedAttention、生态最广）；SGLang 在前缀复用、结构化输出和高并发 agent 负载上更强；TensorRT-LLM 在固定模型、固定 GPU 上性能最好但要编译、灵活性差；自研只在极端规模或有特殊 kernel 需求时考虑。</p><ul><li>选型先看模型支持：新架构（MLA、MoE、混合注意力）通常 vLLM/SGLang 跟进最快。</li><li>看负载形态：多轮/agent（前缀命中高）偏 SGLang；离线大批量偏 TensorRT-LLM/vLLM。</li><li>看团队：自研栈的隐性成本是持续跟进新模型和 kernel，通常不划算。</li><li>可以组合：网关层做路由，后端按模型/负载选不同引擎。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/how-does-vllm-work" target="_blank" rel="noopener">vLLM 是如何工作的？</a> · <a href="https://outcomeschool.com/blog/how-does-sglang-work" target="_blank" rel="noopener">SGLang 是如何工作的？</a> · <a href="https://outcomeschool.com/blog/how-does-tensorrt-llm-work" target="_blank" rel="noopener">TensorRT-LLM 是如何工作的？</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="你如何把 LLM 服务成本降低 10 倍?请列举所有可用的手段并排序。" data-cat="t1">
+<span class="q-num">12</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q11.html">你如何把 LLM 服务成本降低 10 倍？请列举所有可用的手段并排序。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/microsoft.html">Microsoft</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/cursor.html">Cursor</a><span class="iv-tag">2 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>按收益/成本排序：1) 量化（FP8/INT4，近乎线性省显存带宽）；2) 提高 GPU 利用率（连续批处理、前缀缓存）；3) 路由到小模型/蒸馏；4) 投机解码；5) 压缩 prompt 与输出长度；6) P/D 分离与自动扩缩容；7) 更便宜的硬件/spot。多数系统是几项叠加才到 10 倍。</p><ul><li>先测量：把成本拆成 prefill token、decode token、缓存命中率、GPU 空闲率，否则优化会打空。</li><li>最快见效的往往是“少发 token”：提示压缩、缓存、结构化输出限制长度，成本直接按 token 线性下降。</li><li>量化 + 连续批处理通常就能拿到 3–5 倍；再叠加路由与蒸馏才能到 10 倍。</li><li>不要忽略尾部和重试：失败重试、超长上下文、无效 agent 循环是隐性成本大头。</li></ul><p class="q-src">原文答案：<a href="https://www.youtube.com/watch?v=jV2sCj4lHYk" target="_blank" rel="noopener">LLM 推理优化</a> · <a href="https://outcomeschool.com/blog/llm-inference-optimization" target="_blank" rel="noopener">LLM 推理优化</a></p></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="一次没有改模型的发布之后,p99 延迟翻倍了。请讲讲你的排查思路。" data-cat="t1">
+<span class="q-num">13</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q12.html">一次没有改模型的发布之后，p99 延迟翻倍了。请讲讲你的排查思路。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/openai.html">OpenAI</a><a class="iv-tag" href="../companies/amazon.html">Amazon</a><a class="iv-tag" href="../companies/databricks.html">Databricks</a><a class="iv-tag" href="../companies/perplexity.html">Perplexity</a></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>先确认是“真的变慢”还是“测量变了”，再按层排查：流量结构（prompt 变长、并发上升、缓存命中下降）→ 部署配置（batch/ max_num_seqs、chunked prefill、量化开关）→ 基础设施（GPU 降频、邻居干扰、网络、NCCL）→ 上游（网关、重试风暴、tokenizer/模板改动）。</p><ul><li>对比发布前后的 p50/p99、TTFT/TPOT、输入输出 token 分布、缓存命中率，先定位是排队、prefill 还是 decode。</li><li>常见元凶：新 prompt 模板让前缀缓存全失效；max_num_seqs 调小；某租户流量暴涨；KV 碎片导致频繁抢占。</li><li>用 trace 把一次请求拆成网关 → 排队 → prefill → decode → 流式回传，逐段对比。</li><li>回滚验证是最快的二分：回滚后 p99 恢复即锁定发布内容，再逐项灰度。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="什么是分块预填充(chunked prefill)?为什么它能改善混合流量下的尾延迟?" data-cat="t1">
+<span class="q-num">14</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q13.html">什么是分块预填充(chunked prefill)？为什么它能改善混合流量下的尾延迟？</a></h3>
+<div class="q-tags"></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>分块预填充把长 prompt 切成固定 token 预算的块，和 decode 请求混在同一批里跑，避免一个 32k prompt 独占 GPU 造成其他请求的 ITL 尖刺。它把长 prefill 的延迟摊平，主要改善混合流量下的尾延迟。</p><ul><li>调度器每步设一个 token 预算（如 2048），先满足 decode，再用剩余预算推进 prefill 块。</li><li>代价：被切开的请求 TTFT 略增，但 p99 ITL 显著下降。</li><li>与 chunked prefill 配套的是优先级和抢占策略，否则长请求仍可能饿死短请求。</li><li>注意与 FlashAttention 的块大小、KV 写入对齐，否则会有额外开销。</li></ul></div></details>
+
+</div></li><li class="q-item" data-filter-item data-search="解释预填充/解码分离(prefill/decode disaggregation)式服务,以及它何时才划算。" data-cat="t1">
+<span class="q-num">15</span>
+<div class="q-body">
+<h3><a class="q-link" href="../q/t1q14.html">解释预填充/解码分离(prefill/decode disaggregation)式服务，以及它何时才划算。</a></h3>
+<div class="q-tags"><a class="iv-tag" href="../companies/moonshot.html">Moonshot AI</a><a class="iv-tag" href="../companies/groq.html">Groq</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a><span class="iv-tag">1 条原文答案</span></div>
+<details class="q-answer"><summary>本站答题要点 + 原文答案</summary>
+<div class="q-answer-body"><p>P/D 分离把 prefill 和 decode 放到不同 GPU 池：prefill 池吃算力、decode 池吃带宽，KV 通过 NVLink/IB 传输。它在两类阶段资源需求差异大、且流量规模足够大时才划算；短 prompt 或小集群下，传输开销会吃掉收益。</p><ul><li>收益来源：各自按最优并行策略扩容，避免“一个池子两种负载互相拖累”；decode 池可以做更激进的量化。</li><li>成本：KV 传输带宽（32k 上下文的 KV 可达 GB 级）、额外一跳延迟、调度复杂度。</li><li>适合：长 prompt + 长输出、稳定高负载、集群内有高速互联（NVLink/IB/RDMA）。</li><li>不适合：prompt 很短、QPS 低、或网络只有普通以太网。</li></ul><p class="q-src">原文答案：<a href="https://outcomeschool.com/blog/prefill-decode-disaggregation" target="_blank" rel="noopener">LLM 推理中的 Prefill-Decode 分离</a></p></div></details>
+
+</div></li></ol>
+</article>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

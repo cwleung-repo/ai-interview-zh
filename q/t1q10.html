@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>什么情况下你会选择 vLLM、SGLang… · 推理服务与 GPU 性能 · AI 工程面试题库</title>
+<meta name="description" content="什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈？">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}
+r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));})();</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Quiz", "name": "什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈？", "inLanguage": "zh-CN", "educationalLevel": "working", "learningResourceType": "Interview question", "about": "推理服务与 GPU 性能", "isAccessibleForFree": true, "isPartOf": {"@type": "Course", "name": "AI 工程面试题库", "url": "https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn"}, "hasPart": [{"@type": "Question", "name": "什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈？", "acceptedAnswer": {"@type": "Answer", "text": "vLLM 是通用默认选项（PagedAttention、生态最广）；SGLang 在前缀复用、结构化输出和高并发 agent 负载上更强；TensorRT-LLM 在固定模型、固定 GPU 上性能最好但要编译、灵活性差；自研只在极端规模或有特殊 kernel 需求时考虑。"}}]}</script></head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header"><div class="header-inner">
+<a href="../index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / 面试题库</a>
+<nav class="header-nav" aria-label="站点导航">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../labs.html">可视化</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" class="header-github" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题" type="button"><span id="themeIcon">N</span></button>
+</nav></div></header>
+
+<main id="main" class="iv-page" tabindex="-1">
+<article class="iv-article iv-question" style="--group:var(--t1)">
+<nav class="iv-crumbs" aria-label="面包屑"><ol>
+<li><a href="../index.html">目录</a></li>
+<li><a href="../topics/t1.html">推理服务与 GPU 性能</a></li>
+<li aria-current="page">第 11 题</li></ol></nav>
+<header class="iv-q-head">
+<p class="iv-kicker">推理服务与 GPU 性能 · Question 11</p>
+<h1 class="q-title q-long">什么情况下你会选择 vLLM、SGLang、TensorRT-LLM 还是自研栈？</h1>
+<p class="iv-meta">
+<span class="iv-kind">有答题要点</span>
+<span class="iv-min">4 家公司出现</span>
+<span class="iv-min">3 条原文答案</span>
+</p>
+<p class="iv-meta" style="margin-top:10px"><a class="iv-tag" href="../topics/t1.html">推理服务与 GPU 性能</a></p>
+</header>
+
+<section class="iv-section" aria-labelledby="spec">
+<h2 id="spec" class="iv-label">本题信息</h2>
+<dl class="iv-spec">
+<div><dt>主题</dt><dd><a href="../topics/t1.html">推理服务与 GPU 性能</a></dd></div>
+<div><dt>出现于</dt><dd>4 家公司</dd></div>
+<div><dt>原文答案</dt><dd>3 条链接</dd></div>
+</dl>
+<p class="iv-try">先自己口述一遍答案，再展开对照。面试里能讲清取舍，比背结论重要。</p>
+</section>
+
+<section class="iv-answers" aria-labelledby="answer">
+<h2 id="answer" class="iv-label">答案</h2>
+<details class="iv-answer"><summary>展开简短答案</summary><div class="iv-answer-body"><p>vLLM 是通用默认选项（PagedAttention、生态最广）；SGLang 在前缀复用、结构化输出和高并发 agent 负载上更强；TensorRT-LLM 在固定模型、固定 GPU 上性能最好但要编译、灵活性差；自研只在极端规模或有特殊 kernel 需求时考虑。</p></div></details>
+<details class="iv-answer"><summary>展开完整答案（要点）</summary>
+<div class="iv-answer-body iv-prose"><ul><li>选型先看模型支持：新架构（MLA、MoE、混合注意力）通常 vLLM/SGLang 跟进最快。</li><li>看负载形态：多轮/agent（前缀命中高）偏 SGLang；离线大批量偏 TensorRT-LLM/vLLM。</li><li>看团队：自研栈的隐性成本是持续跟进新模型和 kernel，通常不划算。</li><li>可以组合：网关层做路由，后端按模型/负载选不同引擎。</li></ul></div></details>
+</section>
+
+
+
+<section class="iv-section"><h2 class="iv-label">出现于</h2><p class="iv-meta"><a class="iv-tag" href="../companies/nvidia.html">NVIDIA</a><a class="iv-tag" href="../companies/together.html">Together AI</a><a class="iv-tag" href="../companies/tencent.html">腾讯</a><a class="iv-tag" href="../companies/bytedance.html">字节跳动</a></p>
+<p class="iv-try" style="border-top:0;margin-top:10px">公司页里有这家公司的岗位、流程与专属题。</p></section>
+
+<section class="iv-section"><h2 class="iv-label">原文答案链接</h2>
+<ul class="iv-answers-list"><li><a href="https://outcomeschool.com/blog/how-does-vllm-work" target="_blank" rel="noopener">vLLM 是如何工作的？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/how-does-sglang-work" target="_blank" rel="noopener">SGLang 是如何工作的？</a><span class="iv-src">Outcome School</span></li><li><a href="https://outcomeschool.com/blog/how-does-tensorrt-llm-work" target="_blank" rel="noopener">TensorRT-LLM 是如何工作的？</a><span class="iv-src">Outcome School</span></li></ul>
+<p class="iv-try" style="border-top:0;margin-top:10px">链接指向 Outcome School 等公开来源，非本站内容。</p></section>
+
+
+<section class="iv-related"><h2>同主题的其他题</h2><ul><li><a href="../q/t1q7.html">估算服务一个 70B 模型所需的 GPU 显存：权重、KV 缓存…</a></li><li><a href="../q/t1q8.html">什么是 TTFT、TPOT、ITL 和吞吐？它们之间如何相互权衡？</a></li><li><a href="../q/t1q9.html">做一下 roofline 计算：一张 H100 在 batch si…</a></li><li><a href="../q/t1q11.html">你如何把 LLM 服务成本降低 10 倍？请列举所有可用的手段并排序…</a></li><li><a href="../q/t1q12.html">一次没有改模型的发布之后，p99 延迟翻倍了。请讲讲你的排查思路。</a></li><li><a href="../q/t1q13.html">什么是分块预填充(chunked prefill)…</a></li></ul></section>
+
+<button class="btn" id="copyLink" type="button">复制本页链接</button>
+</article>
+<nav class="iv-pager" aria-label="同主题翻页">
+<a href="../q/t1q9.html" rel="prev"><span>上一题</span>做一下 roofline 计算：一张 H100 在 batch si…</a>
+<a class="iv-pager-up" href="../topics/t1.html"><span>主题</span>推理服务与 GPU 性能</a>
+<a href="../q/t1q11.html" rel="next"><span>下一题</span>你如何把 LLM 服务成本降低 10 倍？请列举所有可用的手段并排序…</a>
+</nav>
+</main><footer class="iv-site-foot">
+<nav class="footer-links" aria-label="页脚">
+<a href="../index.html">目录</a>
+<a href="../companies.html">公司</a>
+<a href="../search.html">搜索</a>
+<a href="../about.html">关于</a>
+<a href="https://github.com/ninetyhe-90/ai-engineering-interview-questions-company-wise-zh-cn" target="_blank" rel="noopener">题目来源仓库</a>
+<a href="https://github.com/pallavi-shekhar/ai-engineering-interview-questions-company-wise" target="_blank" rel="noopener">英文原版</a>
+</nav>
+<p>AI 工程面试题库 · 中文版 · 按公司分类 · 题目整理自公开面经，答案链接指向原文；答题要点为本站整理，非官方标准答案。</p>
+<p>构建于 2026-11-06 · 静态站点，无追踪脚本。</p>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>
